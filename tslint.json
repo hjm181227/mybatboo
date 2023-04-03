@@ -1,0 +1,20 @@
+{
+  "extends": [
+    "tslint-ionic-rules",
+    "tslint-angular"
+  ],
+  "rules": {
+    "no-inferrable-types": false,
+    "linebreak-style": false,
+    "no-reference": false,
+    "import-blacklist": [
+      true,
+      "@angular/material",
+      "rxjs/Rx",
+      "ngx-bootstrap",
+      "rxjs/index",
+      "ngx-bootstrap/modal"
+    ],
+    "array-type": false
+  }
+}

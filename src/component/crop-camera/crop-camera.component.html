@@ -1,0 +1,7 @@
+Take Picture
+<ng-container *ngIf="imageUrl">
+  <img [src]="imageUrl">
+</ng-container>
+<ng-container *ngIf="exif">
+  {{imageUri | json}}
+</ng-container>

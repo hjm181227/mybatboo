@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">mybatboo</string>
+    <string name="title_activity_main">mybatboo</string>
+    <string name="package_name">com.mybatboo.app</string>
+    <string name="custom_url_scheme">com.mybatboo.app</string>
+</resources>
