@@ -4,15 +4,16 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && npx cap sync",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "android": "npm run build && npx cap sync android && npx cap run android",
-    "ios": "npm run build && npx cap sync ios && npx cap run ios"
+    "android": "npx cap run android",
+    "ios": "npx cap run ios"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^15.2.0",
+    "@angular/cdk": "^15.2.6",
     "@angular/common": "^15.2.0",
     "@angular/compiler": "^15.2.0",
     "@angular/core": "^15.2.0",
@@ -26,7 +27,8 @@
     "@capacitor/core": "latest",
     "@capacitor/geolocation": "^4.1.0",
     "@capacitor/ios": "^4.7.1",
-    "@capacitor/toast": "^4.1.0",
+    "@types/node": "^18.15.11",
+    "ng-zorro-antd": "^15.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "tslint": "^6.1.3",

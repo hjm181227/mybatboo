@@ -1,0 +1,7 @@
+$header-height: 52px;
+$safe-area-inset-top: constant(safe-area-inset-top);
+$safe-area-inset-top: env(safe-area-inset-top);
+$safe-area-inset-bottom: constant(safe-area-inset-bottom);
+$safe-area-inset-bottom: env(safe-area-inset-bottom);
+
+$full-height: calc((1vh * 100) - #{$safe-area-inset-top} - #{$safe-area-inset-bottom});
