@@ -6,10 +6,18 @@ import { AppRoutingModule } from "../app.route";
 import { SharedModule } from "../module/shared/shared.module";
 import { AppComponent } from './app.component';
 import { RouterModule } from "@angular/router";
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
+import { _getGlobalReducers, GLOBAL_EFFECTS, REDUCERS_TOKEN } from "../ngrx";
+import { StorageService } from "../service/storage.service";
 
 @NgModule({
   declarations: [
     AppComponent
+  ],
+  providers: [
+    { provide: REDUCERS_TOKEN, useFactory: _getGlobalReducers },
+    StorageService
   ],
   imports: [
     AppRoutingModule,
@@ -17,9 +25,10 @@ import { RouterModule } from "@angular/router";
     BrowserModule,
     RouterModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    StoreModule.forRoot(REDUCERS_TOKEN),
+    EffectsModule.forRoot(GLOBAL_EFFECTS),
   ],
-  providers: [],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {
