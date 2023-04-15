@@ -10,6 +10,7 @@ import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { _getGlobalReducers, GLOBAL_EFFECTS, REDUCERS_TOKEN } from "../ngrx";
 import { StorageService } from "../service/storage.service";
+import { httpInterceptorProviders } from "../config/http-interceptor";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { StorageService } from "../service/storage.service";
   ],
   providers: [
     { provide: REDUCERS_TOKEN, useFactory: _getGlobalReducers },
-    StorageService
+    StorageService,
+    ...httpInterceptorProviders,
   ],
   imports: [
     AppRoutingModule,

@@ -1,7 +1,7 @@
 <div class="login-container">
   <div class="login-form">
     <h1 class="login-form-title">로그인</h1>
-    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <form [formGroup]="formGroup">
       <nz-form-item>
         <nz-form-label>아이디</nz-form-label>
         <nz-form-control>
@@ -16,11 +16,15 @@
       </nz-form-item>
       <nz-form-item>
         <nz-form-control>
-          <button nz-button nzType="primary" type="submit">로그인</button>
+          <button nz-button nzType="primary" (click)="onSubmit()">로그인</button>
         </nz-form-control>
 
         <nz-form-control>
-          <button nz-button nzType="primary" type="submit">회원가입</button>
+          <button nz-button nzType="primary" (click)="onRegister()">회원가입</button>
+        </nz-form-control>
+
+        <nz-form-control>
+          <button nz-button nzType="primary" (click)="onWithdraw()">회원정지</button>
         </nz-form-control>
       </nz-form-item>
     </form>
