@@ -30,12 +30,13 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src/scss"
+                "src/styles"
               ]
             },
             "styles": [
-              "src/scss/styles.scss",
-              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
+              "src/styles/styles.scss",
+              "src/styles/styles.less",
+              "node_modules/ng-zorro-antd/button/style/index.min.css"
             ],
             "scripts": []
           },
@@ -98,12 +99,13 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src/scss"
+                "src/styles"
               ]
             },
             "styles": [
-              "src/scss/styles.scss",
-              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
+              "src/styles/styles.scss",
+              "src/styles/styles.less",
+              "node_modules/ng-zorro-antd/button/style/index.min.css"
             ],
             "scripts": []
           }

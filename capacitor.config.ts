@@ -4,7 +4,10 @@ const config: CapacitorConfig = {
   appId: 'com.mybatboo.app',
   appName: 'mybatboo',
   webDir: 'dist/mybatboo',
-  bundledWebRuntime: false
+  bundledWebRuntime: false,
+  server: {
+    url: 'http://15.164.23.13:8080',
+  }
 };
 
 export default config;
