@@ -1,7 +1,98 @@
-$header-height: 52px;
 $safe-area-inset-top: constant(safe-area-inset-top);
 $safe-area-inset-top: env(safe-area-inset-top);
 $safe-area-inset-bottom: constant(safe-area-inset-bottom);
 $safe-area-inset-bottom: env(safe-area-inset-bottom);
 
-$full-height: calc((1vh * 100) - #{$safe-area-inset-top} - #{$safe-area-inset-bottom});
+$box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.08), 0px 4px 12px 0px rgba(0, 0, 0, 0.08);
+
+@mixin CssColorVars() {
+  --grayLightest: #E8EBED;
+  --grayLighter: #C9CDD2;
+  --grayLight: #9EA4AA;
+  --gray: #72787F;
+  --grayDark: #454C53;
+  --grayDarker: #26282B;
+  --grayDarkest: #1B1D1F;
+  --grayLightest-rgb: #{toRGB(#E8EBED)};
+  --grayLighter-rgb: #{toRGB(#C9CDD2)};
+  --grayLight-rgb: #{toRGB(#9EA4AA)};
+  --gray-rgb: #{toRGB(#72787F)};
+  --grayDark-rgb: #{toRGB(#454C53)};
+  --grayDarker-rgb: #{toRGB(#26282B)};
+  --grayDarkest-rgb: #{toRGB(#1B1D1F)};
+
+  --black: #000000;
+  --black-rgb: #{toRGB(#000000)};
+
+  --greenLight: #1FD67D;
+  --green: #06BC67;
+  --greenDark: #0B9D59;
+  --greenLight-rgb: #{toRGB(#1FD67D)};
+  --green-rgb: #{toRGB(#06BC67)};
+  --greenDark-rgb: #{toRGB(#0B9D59)};
+
+  --orangeLight: #FF8861;
+  --orange: #FD671C;
+  --orangeDark: #F04800;
+  --orangeLight-rgb: #{toRGB(#FF8861)};
+  --orange-rgb: #{toRGB(#FD671C)};
+  --orangeDark-rgb: #{toRGB(#F04800)};
+
+  // red 변경시 kokomu primary도 함께 수정
+  --redLighter: #FD8795;
+  --redLight: #FB4B60;
+  --red: #FA243C;
+  --redDark: #DC0412;
+  --redDarker: #B40418;
+  --redLighter-rgb: #{toRGB(#FD8795)};
+  --redLight-rgb: #{toRGB(#FB4B60)};
+  --red-rgb: #{toRGB(#FA243C)};
+  --redDark-rgb: #{toRGB(#DC0412)};
+  --redDarker-rgb: #{toRGB(#B40418)};
+
+  --white: #FFFFFF;
+  --white-rgb: #{toRGB(#FFFFFF)};
+
+  // blue 변경시 mms primary도 함께 수정
+  --blueLighter: #C7E1FF;
+  --blueLight: #58A6FF;
+  --blue: #2188FF;
+  --blueDark: #0166D6;
+  --blueDarker: #0056B8;
+  --blueLighter-rgb: #{toRGB(#C7E1FF)};
+  --blueLight-rgb: #{toRGB(#58A6FF)};
+  --blue-rgb: #{toRGB(#2188FF)};
+  --blueDark-rgb: #{toRGB(#0166D6)};
+  --blueDarker-rgb: #{toRGB(#0056B8)};
+
+  --yellowLighter: #FFF5B1;
+  --yellowLight: #FFEA7F;
+  --yellow: #FFD33D;
+  --yellowDark: #F9C513;
+  --yellowLighter-rgb: #{toRGB(#FFF5B1)};
+  --yellowLight-rgb: #{toRGB(#FFEA7F)};
+  --yellow-rgb: #{toRGB(#FFD33D)};
+  --yellowDark-rgb: #{toRGB(#F9C513)};
+
+
+  --purpleLight: #B083F0;
+  --purple: #6F42C1;
+  --purpleDark: #5A32A3;
+  --purpleLight-rgb: #{toRGB(#B083F0)};
+  --purple-rgb: #{toRGB(#6F42C1)};
+  --purpleDark-rgb: #{toRGB(#5A32A3)};
+
+  --tealLight: #98C6CD;
+  --teal: #449DA7;
+  --tealDark: #3F8A92;
+  --tealLight-rgb: #{toRGB(#98C6CD)};
+  --teal-rgb: #{toRGB(#449DA7)};
+  --tealDark-rgb: #{toRGB(#3F8A92)};
+
+  --hoverWeak: rgba(230, 232, 235, 0.25);
+  --hoverStrong: rgba(230, 232, 235, 0.7);
+
+  --backdrop: rgba(0, 0, 0, 0.5);
+
+  --transparent: rgba(255, 255, 255, 0);
+}

@@ -1,6 +1,11 @@
-@import 'variables';
+$safe-area-inset-top: constant(safe-area-inset-top);
+$safe-area-inset-top: env(safe-area-inset-top);
+$safe-area-inset-bottom: constant(safe-area-inset-bottom);
+$safe-area-inset-bottom: env(safe-area-inset-bottom);
 
 :host {
   display: block;
-  height: $full-height;
+  height: 100%;
+  padding-top: calc(#{$safe-area-inset-top});
+  padding-bottom: calc(#{$safe-area-inset-bottom});
 }

@@ -27,7 +27,8 @@
       "es2017",
       "dom",
       "esnext.asynciterable"
-    ]
+    ],
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src/**/*.ts",

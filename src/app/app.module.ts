@@ -11,10 +11,18 @@ import { EffectsModule } from "@ngrx/effects";
 import { _getGlobalReducers, GLOBAL_EFFECTS, REDUCERS_TOKEN } from "../ngrx";
 import { StorageService } from "../service/storage.service";
 import { httpInterceptorProviders } from "../config/http-interceptor";
+import { AppHeaderComponent } from "../component/app-header/app-header.component";
+import { DefaultLayoutComponent } from "../page/default-layout/default-layout.component";
+import { LottieModule } from "ngx-lottie";
+
+export function playerFactory() {
+  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
+}
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DefaultLayoutComponent
   ],
   providers: [
     { provide: REDUCERS_TOKEN, useFactory: _getGlobalReducers },
@@ -22,6 +30,7 @@ import { httpInterceptorProviders } from "../config/http-interceptor";
     ...httpInterceptorProviders,
   ],
   imports: [
+    AppHeaderComponent,
     AppRoutingModule,
     SharedModule,
     BrowserModule,
@@ -30,6 +39,7 @@ import { httpInterceptorProviders } from "../config/http-interceptor";
     BrowserAnimationsModule,
     StoreModule.forRoot(REDUCERS_TOKEN),
     EffectsModule.forRoot(GLOBAL_EFFECTS),
+    LottieModule.forRoot({ player: playerFactory })
   ],
   bootstrap: [ AppComponent ]
 })

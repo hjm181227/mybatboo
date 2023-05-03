@@ -1,0 +1,8 @@
+:host {
+  > router-outlet + ::ng-deep * {
+    display: block;
+    padding-top: calc(var(--page-header-height, 0px) + var(--secondary-bar-height, 0px));
+    padding-bottom: var(--bottom-fixed-bar-height);
+  }
+}
+

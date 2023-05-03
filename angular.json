@@ -35,8 +35,7 @@
             },
             "styles": [
               "src/styles/styles.scss",
-              "src/styles/styles.less",
-              "node_modules/ng-zorro-antd/button/style/index.min.css"
+              "src/styles/styles.less"
             ],
             "scripts": []
           },
@@ -45,8 +44,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",

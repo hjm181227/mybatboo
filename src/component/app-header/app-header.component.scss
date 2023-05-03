@@ -1,8 +1,31 @@
+@import 'header';
+
 :host {
+  display: flex;
+  align-items: center;
   position: fixed;
   padding: 0 12px;
   width: 100%;
   height: $header-height;
   background: #fff;
   box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.04);
+
+  .app-image {
+    display: flex;
+    width: fit-content;
+    gap: 8px;
+    align-items: center;
+
+    img {
+      border-radius: 10px;
+      display: block;
+      width: 36px;
+      height: 36px;
+    }
+
+    span {
+      font-size: 20px;
+      font-weight: 700;
+    }
+  }
 }

@@ -1,0 +1,21 @@
+$font-size: variableWithHook("icon-font-size");
+$color: variableWithHook("icon-color");
+$content: variableWithHook("icon-name");
+
+mp-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: content-box;
+  width: $font-size;
+  height: $font-size;
+
+  font-size: $font-size !important;
+  color: $color;
+
+  &.material-icons:after,
+  &.material-icons-outlined:after {
+    display: block;
+    content: $content;
+  }
+}

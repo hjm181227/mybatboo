@@ -1,12 +1,25 @@
-<div class="tab-group">
-  <div class="tab">
-    Main
+<div class="tab-bar">
+  <div class="tab-item"
+       [class.active]="activeTab.value === 'home'"
+       (click)="changeTab('home')"
+  >
+    <span nz-icon nzType="home" [nzTheme]="activeTab.value === 'home' ? 'fill' : 'outline'"></span>
+    <span>홈</span>
   </div>
-  <div class="tab">
-    Camera
-    <crop-camera></crop-camera>
+  <div class="tab-item pop-up"
+       [class.active]="activeTab.value === 'camera'"
+       (click)="changeTab('camera')"
+  >
+    <span nz-icon
+          nzType="camera"
+    ></span>
+    <span>작물 진단</span>
   </div>
-  <div class="tab">
-    My Page
+  <div class="tab-item"
+       [class.active]="activeTab.value === 'user'"
+       (click)="changeTab('user')"
+  >
+    <span nz-icon nzType="user"></span>
+    <span>내 정보</span>
   </div>
 </div>
