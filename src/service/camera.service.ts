@@ -19,11 +19,11 @@ export class CameraService {
   takePicture() {
     const image = Camera.getPhoto({
       quality: 90,
-      width: 614,
-      height: 614,
+      width: window.innerWidth,
+      height: window.innerWidth,
       resultType: CameraResultType.Base64,
       source: CameraSource.Camera,
-      saveToGallery: true
+      allowEditing: false
     });
 
     image.then(image => {
@@ -32,7 +32,7 @@ export class CameraService {
       this.exif = image.exif;
       this.convertPhotoToFile(image).then(img => {
         console.log('before: ', image, '\nafter: ', img);
-        // this.requestDiagnosis(img)
+        this.requestDiagnosis(img)
       });
     });
     image.catch(err => console.log(err));

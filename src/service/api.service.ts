@@ -19,14 +19,24 @@ export class ApiService {
 
   // 이미지(capacitor/camera의 Photo)와 디바이스의 geolocation을 서버로 전송
   public sendImageAndLocation(image: File, geolocation?: GeolocationPosition): Observable<any> {
-    const url = `${this.apiUrl}/savefile`;
+    const url = `${this.apiUrl}/crop/diagnosis`;
     const formData = new FormData();
     const headers = new HttpHeaders();
+    const requestInput = {
+      userId: 10,
+      userLatitude: 0,
+      userLongitude: 0,
+      regDate: new Date(),
+      cropType: 1
+    };
+    console.log(requestInput, image);
     headers.append('Content-Type', 'multipart/form-data');
 
-    formData.append('file', image, 'test-image');
-    formData.append('userName', 'fe');
-    formData.append('saveName', 'fe-test2');
+    formData.append('requestInput', JSON.stringify(requestInput));
+
+    formData.append('image', image, 'test-image');
+    // formData.append('userName', 'fe');
+    // formData.append('saveName', 'fe-test2');
     return this.http.post(url, formData, { headers, withCredentials: true }).pipe(
       catchError(err => err)
     );
