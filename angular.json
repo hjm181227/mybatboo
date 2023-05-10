@@ -19,6 +19,7 @@
           "options": {
             "outputPath": "dist/mybatboo",
             "index": "src/index.html",
+            "inlineStyleLanguage": "scss",
             "main": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -26,17 +27,34 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/@mapiacompany/styled-components/assets/",
+                "output": "/assets/"
+              }
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src/styles"
+                "src/styles",
+                "node_modules/@mapiacompany/style-utils",
+                "node_modules"
               ]
             },
             "styles": [
               "src/styles/styles.scss",
-              "src/styles/styles.less"
+              {
+                "input": "node_modules/@mapiacompany/styled-components/scss/line-awesome/line-awesome.scss",
+                "bundleName": "styles-lineawesome",
+                "inject": false
+              },
+              {
+                "input": "node_modules/@mapiacompany/styled-components/scss/material-design-icons/material-design-icons.scss",
+                "bundleName": "styles-material",
+                "inject": false
+              }
             ],
+            "aot": true,
             "scripts": []
           },
           "configurations": {
@@ -103,8 +121,16 @@
             },
             "styles": [
               "src/styles/styles.scss",
-              "src/styles/styles.less",
-              "node_modules/ng-zorro-antd/button/style/index.min.css"
+              {
+                "input": "projects/styled-components/scss/line-awesome/line-awesome.scss",
+                "bundleName": "styles-lineawesome",
+                "inject": false
+              },
+              {
+                "input": "projects/styled-components/scss/material-design-icons/material-design-icons.scss",
+                "bundleName": "styles-material",
+                "inject": false
+              }
             ],
             "scripts": []
           }

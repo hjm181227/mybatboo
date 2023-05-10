@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { SharedModule } from "../../module/shared/shared.module";
+import { SyntaxSharedModule } from "../../module/shared/syntax-shared.module";
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
-    SharedModule
+    SyntaxSharedModule
   ],
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.scss']

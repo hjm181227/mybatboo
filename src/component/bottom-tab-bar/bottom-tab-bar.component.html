@@ -3,23 +3,24 @@
        [class.active]="activeTab.value === 'home'"
        (click)="changeTab('home')"
   >
-    <span nz-icon nzType="home" [nzTheme]="activeTab.value === 'home' ? 'fill' : 'outline'"></span>
+    <mp-icon name="home" type="outlined" size="30px"></mp-icon>
+<!--    <span nz-icon nzType="home" [nzTheme]="activeTab.value === 'home' ? 'fill' : 'outline'"></span>-->
     <span>홈</span>
   </div>
   <div class="tab-item pop-up"
        [class.active]="activeTab.value === 'camera'"
        (click)="takePicture()"
   >
-    <span nz-icon
-          nzType="camera"
-    ></span>
+<!--    <span nz-icon-->
+<!--          nzType="camera"-->
+<!--    ></span>-->
     <span>작물 진단</span>
   </div>
   <div class="tab-item"
        [class.active]="activeTab.value === 'user'"
-       (click)="changeTab('user')"
+       (click)="changeTab('user');loadDiagnosis()"
   >
-    <span nz-icon nzType="user"></span>
+<!--    <span nz-icon nzType="user"></span>-->
     <span>내 정보</span>
   </div>
 </div>

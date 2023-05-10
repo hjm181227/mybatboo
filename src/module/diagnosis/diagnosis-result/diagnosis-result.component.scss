@@ -1,0 +1,9 @@
+@import "@mapiacompany/style-utils";
+
+@include set-bs-modal-style(diagnosis-result-modal, 100vw, var(--full-height), 0) {
+  display: block;
+  border-radius: 0;
+  width: 100vw;
+  height: var(--full-height);
+  margin: 0;
+}

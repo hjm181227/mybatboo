@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SharedModule } from "../../module/shared/shared.module";
+import { SyntaxSharedModule } from "../../module/shared/syntax-shared.module";
 import { FormControl, FormGroup } from "@angular/forms";
 import { AuthService } from "../../service/auth.service";
 import { tap } from "rxjs/operators";
@@ -8,7 +8,7 @@ import { tap } from "rxjs/operators";
   selector: 'app-login',
   standalone: true,
   imports: [
-    SharedModule,
+    SyntaxSharedModule,
   ],
   templateUrl: './login.component.html',
   styleUrls: [ './login.component.scss' ]

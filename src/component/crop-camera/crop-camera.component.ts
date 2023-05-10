@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SharedModule } from "../../module/shared/shared.module";
+import { SyntaxSharedModule } from "../../module/shared/syntax-shared.module";
 import { ApiService } from "../../service/api.service";
 import { catchError, tap } from "rxjs";
 import { CameraService } from "../../service/camera.service";
@@ -8,7 +8,7 @@ import { CameraService } from "../../service/camera.service";
   selector: 'crop-camera',
   standalone: true,
   imports: [
-    SharedModule
+    SyntaxSharedModule
   ],
   templateUrl: './crop-camera.component.html',
   styleUrls: [ './crop-camera.component.scss' ]

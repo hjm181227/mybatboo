@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { SharedModule } from "../../module/shared/shared.module";
+import { SyntaxSharedModule } from "../../module/shared/syntax-shared.module";
 
 @Component({
   selector: 'app-disease-list-item',
   standalone: true,
   imports: [
-    SharedModule
+    SyntaxSharedModule
   ],
   templateUrl: './disease-list-item.component.html',
   styleUrls: ['./disease-list-item.component.scss']

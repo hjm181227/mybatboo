@@ -26,8 +26,8 @@ const routes: Routes = [
     loadComponent: () => import('./page/login/login.component').then(c => c.LoginComponent)
   },
   {
-    path: 'diangosis/:diagnosisId',
-    loadComponent: () => import('./page/diagnosis-result/diagnosis-result.component').then(c => c.DiagnosisResultComponent)
+    path: 'diagnosis/:diagnosisId',
+    loadComponent: () => import('./module/diagnosis/diagnosis-result/diagnosis-result.component').then(c => c.DiagnosisResultComponent),
   },
 ];
 

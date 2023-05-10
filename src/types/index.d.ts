@@ -1,16 +1,19 @@
 /// <reference path="./user.d.ts" />
 /// <reference path="./diagnosis.d.ts" />
 
-import type { MpColor as MpColorType } from "../module/styled-component/color-palette";
 import {
+  MpColor as MpColorType,
   Percent as PercentType,
   PixelNumber as PixelNumberType,
   PixelNumbers as PixelNumbersType,
-  Variant as VariantType
-} from "../module/styled-component/util/style-types";
+  Variant as VariantType,
+  MpOption as MpOptionType
+} from "@mapiacompany/styled-components"
 
 declare global {
   type User = UserPublic;
+
+  type MpOption = MpOptionType;
   type MpColor = MpColorType;
   type Percent = PercentType;
   type PixelNumber = PixelNumberType;
