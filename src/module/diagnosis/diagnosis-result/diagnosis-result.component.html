@@ -1,1 +1,44 @@
-<p>disgnosis-result works!</p>
+<page-header height="64px" [title]="'진단 결과'">
+  <mp-icon left name="arrow_back" (click)="close()"></mp-icon>
+</page-header>
+<ng-container *ngIf="diagnosisResult$ | async as result">
+  <div class="crop-image" *ngLet="bgColor$ | async as bgColor">
+    <img [src]="result?.imagePath" alt="crop image">
+  </div>
+
+  <div class="content-wrapper">
+    <div class="crop-info" *ngIf="result">
+<!--      <crop-type-badge [cropType]="result.cropType"></crop-type-badge>-->
+      <crop-type-badge [cropType]="0"></crop-type-badge>
+      <!--      <mp-badge [label]="result.cropType | cropName"-->
+      <!--                color="blue"-->
+      <!--                variant="weak"-->
+      <!--                size="s"-->
+      <!--      ></mp-badge>-->
+      <span>{{ result.regDate | date: 'yyyy.MM.dd HH:mm' }}</span>
+    </div>
+    <div class="disease-list">
+      <div class="disease-wrapper">
+        <span class="title">가장 유사한 결과</span>
+        <disease-list-item [diseaseItem]="result.diagnosisItems[1]"/>
+      </div>
+
+      <ng-container *ngIf="result?.diagnosisItems.length > 1">
+        <div class="disease-wrapper">
+          <span class="title">다른 유사 결과</span>
+          <disease-list-item [diseaseItem]="result.diagnosisItems[0]"/>
+<!--          <disease-list-item-->
+<!--            *ngFor="let item of result.diagnosisItems.slice(1, result.diagnosisItems.length)"-->
+<!--            [diseaseItem]="item"/>-->
+        </div>
+      </ng-container>
+    </div>
+
+    <mp-callout
+      color="green" variant="weak" size="s"
+      [description]="'진단 결과에 대해 더 궁금한게 있다면 전문가에게 질문을 남겨보세요.'">
+      <mp-icon left name="help_outlined" size="18px"></mp-icon>
+      <mp-icon right name="chevron_right" size="18px" color="greenDark"></mp-icon>
+    </mp-callout>
+  </div>
+</ng-container>

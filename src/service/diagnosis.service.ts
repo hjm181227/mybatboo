@@ -1,14 +1,25 @@
 import { Injectable } from '@angular/core';
+import { ApiService } from "./api.service";
+import { CameraService } from "./camera.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DiagnosisService {
 
-  constructor() { }
+  constructor(
+    private api: ApiService,
+    private cameraService: CameraService
+  ) { }
+
+  startDiagnosis() {
+    const image = this.cameraService.takePicture();
+    let userLocation;
+  }
 
   captureImage() {
     // 작물 이미지 촬영
+    const image = this.cameraService.takePicture();
   }
 
   getUserLocation() {

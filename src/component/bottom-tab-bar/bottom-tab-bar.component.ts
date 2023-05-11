@@ -39,7 +39,7 @@ export class BottomTabBarComponent {
     import('../../module/diagnosis/diagnosis-result/diagnosis-result.component').then(c => {
       this.modalService.show(c.DiagnosisResultComponent, {
         initialState: {
-          diagnosisId: 40
+          diagnosisId: 64
         }
       })
     })

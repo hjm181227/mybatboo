@@ -1,5 +1,6 @@
 /// <reference path="./user.d.ts" />
 /// <reference path="./diagnosis.d.ts" />
+/// <reference path="./api-response.d.ts" />
 
 import {
   MpColor as MpColorType,

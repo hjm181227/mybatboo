@@ -1,0 +1,62 @@
+@import "@mapiacompany/style-utils";
+
+$background-color: variableWithHook('page-header-background');
+
+:host {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+
+  &.is-modal {
+    border-top-right-radius: 14px;
+    border-top-left-radius: 14px;
+  }
+
+  background-color: $background-color;
+}
+
+:host-context(.tab-bar-hidden.header-hidden) {
+  // app-header와 tab-bar가 없을 때 page-header는 상단에 고정
+  transform: translateY(0);
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: auto 0; // 높이를 임의로 늘렸을 경우 중앙 정렬되게 하기 위해 넣어둠
+
+  > * {
+    flex: 1;
+  }
+
+  .title, .title ::ng-deep .center {
+    @include text-ellipsis;
+    flex: 1.5;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.58; // paragrpah line-height (Framer 설정 따라감)
+    color: var(--text-color, var(--grayDark));
+    white-space: nowrap;
+  }
+
+  .left-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .right-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 4px 0 0;
+  }
+}
+
+.flex ::ng-deep + .actions {
+  width: 100%;
+  margin-top: 12px;
+}

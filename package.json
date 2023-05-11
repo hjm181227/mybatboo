@@ -40,6 +40,7 @@
     "@types/node": "^18.15.11",
     "bootstrap": "~4.6.2",
     "cordova-plugin-camera-preview": "^0.12.3",
+    "fast-average-color": "^9.3.0",
     "graphql": "16.6.0",
     "graphql-tag": "^2.12.6",
     "lottie-web": "^5.11.0",

@@ -1,0 +1,16 @@
+<div class="flex">
+  <div class="left-container">
+    <ng-content select="[left]"></ng-content>
+  </div>
+  <div class="center title" #titleDiv>
+    {{ title }}
+    <ng-content select="mp-text[center]"></ng-content>
+    <ng-content select=".center"></ng-content>
+  </div>
+
+  <div class="right-container">
+    <ng-content select="[right]"></ng-content>
+  </div>
+</div>
+
+<ng-content select=".actions"></ng-content>

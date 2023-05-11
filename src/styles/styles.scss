@@ -4,10 +4,11 @@
 @import "header";
 @import "@mapiacompany/styled-components/scss/all";
 @import "bootstrap";
+@import "@mapiacompany/styled-components/scss/mp-color";
 
 :root {
-  --full-height: calc(var(--vh, 1vh) * 100);
-  @include CssColorVars;
+  --full-height: calc(var(--vh, 1vh) * 100 - #{$safe-area-inset-top} - #{$safe-area-inset-bottom});
+  @include mpCssVars;
 }
 
 a:-webkit-any-link {

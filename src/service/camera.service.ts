@@ -16,7 +16,7 @@ export class CameraService {
     public api: ApiService,
   ) {}
 
-  takePicture() {
+  takePicture(): File {
     const image = Camera.getPhoto({
       quality: 90,
       width: window.innerWidth,
@@ -26,16 +26,24 @@ export class CameraService {
       allowEditing: false
     });
 
+    let imgFile: File;
+
     image.then(image => {
       this.imageUri = image;
       this.imageUrl = image.webPath || '';
       this.exif = image.exif;
       this.convertPhotoToFile(image).then(img => {
         console.log('before: ', image, '\nafter: ', img);
-        this.requestDiagnosis(img)
+        imgFile = img;
+        // this.requestDiagnosis(img)
       });
     });
-    image.catch(err => console.log(err));
+    image.catch(err => {
+      console.log(err);
+      imgFile = null;
+    });
+
+    return imgFile;
 
     // Can be set to the src of an image now
   }

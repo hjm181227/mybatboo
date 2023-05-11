@@ -46,7 +46,7 @@ export class ApiService {
 
   }
 
-  public getDiagnosisResult(recordId: number): Observable<any> {
+  public getDiagnosisResult(recordId: number): Observable<ApiResponse<DiagnosisRecord>> {
     // return of({
     //   cropType: CropType.pepper,
     //   diagnosisResults: [
@@ -60,7 +60,9 @@ export class ApiService {
     //   regDate: new Date(),
     //   imagePath: 'http://localhost:8080/fe-test2.jpg'
     // });
-    return this.http.get(`${this.apiUrl}/crop/diagnosisRecord?diagnosisRecordId=${recordId}`);
+    return this.http.get(`${this.apiUrl}/crop/diagnosisRecord?diagnosisRecordId=${recordId}`).pipe(
+      map(res => res as ApiResponse<DiagnosisRecord>),
+    );
   }
 
   public loadCurrentUser(): Observable<User> {
