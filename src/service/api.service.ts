@@ -18,18 +18,18 @@ export class ApiService {
   }
 
   // 이미지(capacitor/camera의 Photo)와 디바이스의 geolocation을 서버로 전송
-  public sendImageAndLocation(image: File, geolocation?: GeolocationPosition): Observable<any> {
+  public requestDiagnosis({ image, geolocation, cropType }: DiagnosisRequestInput): Observable<ApiResponse<DiagnosisRecord>> {
     const url = `${this.apiUrl}/crop/diagnosis`;
     const formData = new FormData();
     const headers = new HttpHeaders();
+    const { latitude, longitude } = geolocation;
     const requestInput = {
       userId: 10,
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: latitude,
+      userLongitude: longitude,
       regDate: new Date(),
-      cropType: 1
+      cropType
     };
-    console.log(requestInput, image);
     headers.append('Content-Type', 'multipart/form-data');
 
     formData.append('requestInput', JSON.stringify(requestInput));
@@ -38,12 +38,9 @@ export class ApiService {
     // formData.append('userName', 'fe');
     // formData.append('saveName', 'fe-test2');
     return this.http.post(url, formData, { headers, withCredentials: true }).pipe(
-      catchError(err => err)
+      catchError(err => err),
+      map(res => res as ApiResponse<DiagnosisRecord>)
     );
-  }
-
-  public requestDiagnosis(recordId: number) {
-
   }
 
   public getDiagnosisResult(recordId: number): Observable<ApiResponse<DiagnosisRecord>> {

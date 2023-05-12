@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Capacitor } from "@capacitor/core";
-import { catchError, tap } from "rxjs";
+import { catchError, Observable, tap } from "rxjs";
 import { ApiService } from "./api.service";
 
 @Injectable({
@@ -16,40 +16,37 @@ export class CameraService {
     public api: ApiService,
   ) {}
 
-  takePicture(): File {
+  takePicture(): Promise<Photo | void> {
     const image = Camera.getPhoto({
       quality: 90,
       width: window.innerWidth,
       height: window.innerWidth,
-      resultType: CameraResultType.Base64,
+      resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
       allowEditing: false
     });
 
-    let imgFile: File;
+    return image;
 
-    image.then(image => {
+    let imgFile: Promise<File>
+
+
+
+    return image.then(image => {
       this.imageUri = image;
       this.imageUrl = image.webPath || '';
       this.exif = image.exif;
+      return image;
       this.convertPhotoToFile(image).then(img => {
         console.log('before: ', image, '\nafter: ', img);
-        imgFile = img;
         // this.requestDiagnosis(img)
       });
     });
-    image.catch(err => {
-      console.log(err);
-      imgFile = null;
-    });
-
-    return imgFile;
 
     // Can be set to the src of an image now
   }
-
   async convertPhotoToFile(photo: Photo): Promise<File> {
-    const base64Data = photo.base64String;
+    const base64Data = await this.getBase64Data(photo);
 
     const fileName = `image_${new Date().getTime()}.jpg`;
     const contentType = this.getContentType(base64Data);
@@ -98,15 +95,36 @@ export class CameraService {
     return contentType;
   }
 
-  requestDiagnosis(image: File) {
-    console.log('file', image);
-    this.api.sendImageAndLocation(image).pipe(
-      tap(res => console.log(res)),
-      catchError(err => {
-        console.log(err);
-        return err;
-      })
-    ).subscribe();
-  }
+  //
 
+  // async convertPhotoToFile(photo: Photo): Promise<File> {
+  //   const base64Data = photo.base64String;
+  //
+  //   const fileName = `image_${new Date().getTime()}.jpg`;
+  //   const contentType = this.getContentType(base64Data);
+  //
+  //   const byteCharacters = atob(base64Data);
+  //   const byteArrays = [];
+  //
+  //   for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+  //     const slice = byteCharacters.slice(offset, offset + 512);
+  //     const byteNumbers = new Array(slice.length);
+  //
+  //     for (let i = 0; i < slice.length; i++) {
+  //       byteNumbers[i] = slice.charCodeAt(i);
+  //     }
+  //
+  //     const byteArray = new Uint8Array(byteNumbers);
+  //     byteArrays.push(byteArray);
+  //   }
+  //
+  //   const file = new File(byteArrays, fileName, { type: contentType });
+  //   return file;
+  // }
+  //
+  // getContentType(base64Data: string): string {
+  //   const block = base64Data.split(';')[0];
+  //   const contentType = block.split(':')[1];
+  //   return contentType;
+  // }
 }

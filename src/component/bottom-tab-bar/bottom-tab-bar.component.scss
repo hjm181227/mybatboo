@@ -22,10 +22,6 @@
 
       > span {
         font-size: 16px;
-
-        &:first-of-type {
-          font-size: 20px;
-        }
       }
 
       &.active {
@@ -37,18 +33,13 @@
       &.pop-up {
         padding-top: 26px;
 
-        > span[nz-icon] {
-          font-size: 36px;
+        > mp-icon {
           position: absolute;
-          top: -30px;
-          width: 64px;
-          height: 64px;
-          display: block;
-          padding: 12px;
+          top: -36px;
           border: 2px solid var(--grayLighter);
-          background: var(--grayLightest);
-          color: var(--greenDark);
-          border-radius: 100%;
+          //background: var(--grayLightest);
+          //color: var(--greenDark);
+          //border-radius: 100%;
         }
       }
     }

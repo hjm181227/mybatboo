@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, Renderer2, RendererStyleFlags2 } from '@angular/core';
 import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { ApiService } from "../../../service/api.service";
-import { BehaviorSubject, catchError, EMPTY, iif, map, Observable, switchMap, tap } from "rxjs";
+import { BehaviorSubject, catchError, EMPTY, iif, map, Observable, of, switchMap, tap } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { AbstractBaseComponent } from "@mapiacompany/armory";
 import { BsModalRef } from "@mapiacompany/ngx-bootstrap-modal";
@@ -29,6 +29,7 @@ import { MpCallout } from "@mapiacompany/styled-components";
 })
 export class DiagnosisResultComponent extends AbstractBaseComponent {
   @Input() diagnosisId: number;
+  @Input() diagnosisRecord: DiagnosisRecord;
 
   diagnosisResult$: BehaviorSubject<DiagnosisRecord> = new BehaviorSubject<DiagnosisRecord>(null);
 
@@ -57,14 +58,16 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
   ngOnInit() {
     this.subscribeOn(
       iif(
-        () => !!this.diagnosisId,
-        this.api.getDiagnosisResult(this.diagnosisId),
+        () => !!this.diagnosisRecord,
+        // this.api.getDiagnosisResult(this.diagnosisId),
+        of(this.diagnosisRecord),
         this.route.params.pipe(
           map(({ diagnosisId }) => diagnosisId),
-          switchMap(diagnosisId => this.api.getDiagnosisResult(diagnosisId))
+          switchMap(diagnosisId => this.api.getDiagnosisResult(diagnosisId)),
+          map(res => res.data)
         )
       ).pipe(
-        map(res => this.diagnosisResult$.next(res.data)),
+        map(res => this.diagnosisResult$.next(res)),
         tap(console.log)
       )
     )

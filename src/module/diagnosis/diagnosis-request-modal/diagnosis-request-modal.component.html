@@ -1,0 +1,69 @@
+<page-header height="64px" [title]="'진단 결과'">
+  <div class="back-button" left (click)="close()">
+    <mp-icon name="chevron_left" color="green" size="28px"></mp-icon>
+    <span>Back</span>
+  </div>
+</page-header>
+<div class="image-preview">
+  <img [src]="cropPhoto.webPath" alt="crop-image">
+</div>
+<div class="crop-type-selector">
+  <mp-button
+    [style.border]="cropType.value === 0 ? '1px solid var(--green)' : '1px solid var(--grayLight)'"
+    label="고추"
+    [variant]="cropType.value === 0 ? 'weak' : 'void'"
+    [color]="cropType.value === 0 ? 'greenDark' : 'grayDark'"
+    (click)="selectCropType(0)"
+  >
+    <img left class="crop-icon-img" src="/assets/images/pepper.png" alt="">
+  </mp-button>
+  <mp-button
+    [style.border]="cropType.value === 1 ? '1px solid var(--green)' : '1px solid var(--grayLight)'"
+    label="딸기"
+    [variant]="cropType.value === 1 ? 'weak' : 'void'"
+    [color]="cropType.value === 1 ? 'greenDark' : 'grayDark'"
+    (click)="selectCropType(1)"
+  >
+    <img left class="crop-icon-img" src="/assets/images/strawberry.png" alt="">
+  </mp-button>
+  <mp-button
+    [style.border]="cropType.value === 2 ? '1px solid var(--green)' : '1px solid var(--grayLight)'"
+    label="상추"
+    [variant]="cropType.value === 2 ? 'weak' : 'void'"
+    [color]="cropType.value === 2 ? 'greenDark' : 'grayDark'"
+    (click)="selectCropType(2)"
+  >
+    <img left class="crop-icon-img" src="/assets/images/lettuce.png" alt="">
+  </mp-button>
+  <mp-button
+    [style.border]="cropType.value === 3 ? '1px solid var(--green)' : '1px solid var(--grayLight)'"
+    label="토마토"
+    [variant]="cropType.value === 3 ? 'weak' : 'void'"
+    [color]="cropType.value === 3 ? 'greenDark' : 'grayDark'"
+    (click)="selectCropType(3)"
+  >
+    <img left class="crop-icon-img" src="/assets/images/tomato.png" alt="">
+  </mp-button>
+</div>
+<bottom-fixed-bar height="81px">
+  <mp-button
+    [style.border]="'1px solid var(--redLight)'"
+    label="다시 촬영하기"
+    variant="weak"
+    color="red"
+    size="m"
+    (click)="retakePhoto()"
+  >
+    <mp-icon left name="undo"></mp-icon>
+  </mp-button>
+  <mp-button
+    [style.border]="'1px solid var(--green)'"
+    label="진단 시작"
+    variant="weak"
+    color="greenDark"
+    size="m"
+    (click)="request()"
+  >
+    <mp-icon left name="send"></mp-icon>
+  </mp-button>
+</bottom-fixed-bar>

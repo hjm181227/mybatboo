@@ -32,6 +32,11 @@
                 "glob": "**/*",
                 "input": "node_modules/@mapiacompany/styled-components/assets/",
                 "output": "/assets/"
+              },
+              {
+                "glob": "fontawesome-pro/**/*",
+                "input": "scss",
+                "output": "./assets/"
               }
             ],
             "stylePreprocessorOptions": {

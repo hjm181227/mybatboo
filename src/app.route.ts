@@ -11,11 +11,11 @@ const routes: Routes = [
   //   path: 'main',
   //   loadComponent: () => import('./page/main-tab/main-tab.component').then(c => c.MainTabComponent)
   // },
-  // {
-  //   path: '',
-  //   pathMatch: 'full',
-  //   redirectTo: '/main'
-  // },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/main'
+  },
   {
     matcher: mainLayoutMatcher,
     loadChildren: () => import('./module/main-layout/main-layout.route').then(m => m.routes),

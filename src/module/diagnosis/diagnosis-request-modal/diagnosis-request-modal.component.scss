@@ -1,0 +1,69 @@
+@import "@mapiacompany/style-utils";
+
+@include set-bs-modal-style(diagnosis-request-modal, 100vw, var(--full-height), 0) {
+  display: block;
+  border-radius: 0;
+  width: 100vw;
+  height: var(--full-height);
+  margin: 0;
+}
+
+:host {
+  page-header {
+    box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.12);
+
+    .back-button {
+      display: flex;
+      align-items: center;
+
+      @include typo(18px, var(--green), 500);
+    }
+  }
+
+  .image-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.12);
+
+    img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 1 / 1;
+      //box-shadow: 0px 6px 16px 0px rgba(20, 20, 20, 0.08), 0px 0px 0px 1px rgba(20, 20, 20, 0.06);
+    }
+  }
+
+  .crop-type-selector {
+    padding: 24px;
+
+    @include grid-system((
+      columns: repeat(2, 1fr),
+      column-gap: 16px,
+      row-gap: 16px
+    ));
+
+    .crop-icon-img {
+      width: 36px;
+      height: 36px;
+    }
+
+    mp-button {
+      &.selected {
+        border: 1px solid var(--green);
+      }
+    }
+  }
+
+  bottom-fixed-bar {
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    mp-button {
+      flex: 1;
+    }
+  }
+}
