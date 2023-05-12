@@ -1,0 +1,21 @@
+$bar-height: var(--bottom-fixed-bar-height);
+
+:host {
+  display: block;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  flex-wrap: wrap; // display: flex가 들어갈 것을 고려해서 구성 (.empty-space가 밑에 라인에 hight를 차지하게 하기 위해)
+
+  // 해당 높이만큼은 차지
+  height: $bar-height;
+
+  // notch 하단 버튼 영역 부분은 백그라운드 컬러만 입혀진채로 공간 차지
+  .empty-space {
+    display: block;
+    width: 100%;
+    height: 0px;
+  }
+}

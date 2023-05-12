@@ -1,0 +1,104 @@
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/transition";
+@import "bootstrap/scss/modal";
+@import "mp-modal";
+
+$safe-area-inset-top: constant(safe-area-inset-top);
+$safe-area-inset-top: env(safe-area-inset-top);
+$safe-area-inset-bottom: constant(safe-area-inset-bottom);
+$safe-area-inset-bottom: env(safe-area-inset-bottom);
+
+.modal.bottom-sheet {
+  top: unset;
+  bottom: 0;
+  //height: var(--full-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+
+  // Shell div to position the modal with bottom padding
+  .modal-dialog {
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+
+    .modal-content {
+      overflow-y: scroll;
+      position: relative;
+      border-radius: 14px 14px 0 0;
+
+      > * {
+        max-height: calc(var(--full-height) - 32px);
+        overflow-y: scroll;
+        padding-top: var(--page-header-height, 62px);
+        padding-bottom: var(--bottom-fixed-bar-height);
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      top-panel, page-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+      }
+
+      .sticky-tab-bar {
+        top: 0;
+      }
+
+    }
+
+  }
+}
+
+.modal.bottom-up {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(100%);
+
+  &.show {
+    transform: translateY(1px);
+  }
+}
+
+
+.modal.drawer {
+  .modal-dialog {
+    position: absolute;
+    right: -100%;
+    transition: right var(--mp-drawer-show-duration, 0.3s) cubic-bezier(.23,1,.32,1);
+  }
+
+  &.show {
+    .modal-dialog {
+      right: 0;
+    }
+  }
+
+  &.show.level-2 {
+    .modal-dialog {
+      right: var(--mp-drawer-position, 100px);
+      transition: right var(--mp-drawer-show-duration, 0.3s) cubic-bezier(.23,1,.32,1);
+    }
+  }
+
+  &.show + bs-modal-backdrop {
+    z-index: 1050;
+  }
+
+  &.show.slide + bs-modal-backdrop {
+    opacity: 0;
+    transition: opacity var(--mp-drawer-hide-duration, 0.3s) cubic-bezier(.23,1,.32,1);
+  }
+
+  &.show.slide {
+    .modal-dialog {
+      right: 0;
+      transition: right var(--mp-drawer-slide-duration, 0.3s) cubic-bezier(.23,1,.32,1);
+    }
+  }
+}

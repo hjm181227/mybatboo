@@ -1,0 +1,17 @@
+@import "@mapiacompany/style-utils/utils";
+
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 12px  12px 16px;
+  box-shadow: 0px 6px 16px 0px rgba(20, 20, 20, 0.08), 0px 0px 0px 1px rgba(20, 20, 20, 0.06);
+  border-radius: 8px;
+
+  .disease-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    @include typo(13px, var(--grayDark), 500);
+  }
+}

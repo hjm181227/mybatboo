@@ -11,11 +11,11 @@ const routes: Routes = [
   //   path: 'main',
   //   loadComponent: () => import('./page/main-tab/main-tab.component').then(c => c.MainTabComponent)
   // },
-  // {
-  //   path: '',
-  //   pathMatch: 'full',
-  //   redirectTo: '/main'
-  // },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/main'
+  },
   {
     matcher: mainLayoutMatcher,
     loadChildren: () => import('./module/main-layout/main-layout.route').then(m => m.routes),
@@ -26,8 +26,8 @@ const routes: Routes = [
     loadComponent: () => import('./page/login/login.component').then(c => c.LoginComponent)
   },
   {
-    path: 'diangosis/:diagnosisId',
-    loadComponent: () => import('./page/diagnosis-result/diagnosis-result.component').then(c => c.DiagnosisResultComponent)
+    path: 'diagnosis/:diagnosisId',
+    loadComponent: () => import('./module/diagnosis/diagnosis-result/diagnosis-result.component').then(c => c.DiagnosisResultComponent),
   },
 ];
 

@@ -18,18 +18,18 @@ export class ApiService {
   }
 
   // 이미지(capacitor/camera의 Photo)와 디바이스의 geolocation을 서버로 전송
-  public sendImageAndLocation(image: File, geolocation?: GeolocationPosition): Observable<any> {
+  public requestDiagnosis({ image, geolocation, cropType }: DiagnosisRequestInput): Observable<ApiResponse<DiagnosisRecord>> {
     const url = `${this.apiUrl}/crop/diagnosis`;
     const formData = new FormData();
     const headers = new HttpHeaders();
+    const { latitude, longitude } = geolocation;
     const requestInput = {
       userId: 10,
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: latitude,
+      userLongitude: longitude,
       regDate: new Date(),
-      cropType: 1
+      cropType
     };
-    console.log(requestInput, image);
     headers.append('Content-Type', 'multipart/form-data');
 
     formData.append('requestInput', JSON.stringify(requestInput));
@@ -38,31 +38,28 @@ export class ApiService {
     // formData.append('userName', 'fe');
     // formData.append('saveName', 'fe-test2');
     return this.http.post(url, formData, { headers, withCredentials: true }).pipe(
-      catchError(err => err)
+      catchError(err => err),
+      map(res => res as ApiResponse<DiagnosisRecord>)
     );
   }
 
-  public requestDiagnosis(recordId: number) {
-
-  }
-
-  public getDiagnosisResult(recordId: number): Observable<DiagnosisRecord> {
-    return of({
-      cropType: CropType.pepper,
-      diagnosisResults: [
-        { diseaseCode: DiseaseCode.고추점무늬병, accuracy: 0.9, bbox: { x1: 0, x2: 100, y1: 0, y2: 100 } },
-        { diseaseCode: DiseaseCode.고추정상, accuracy: 0.9, bbox: { x1: 0, x2: 100, y1: 0, y2: 100 } },
-      ],
-      userId: 1,
-      userLatitude: 37.123,
-      userLongitude: 127.123,
-      recordId: 1,
-      regDate: new Date(),
-      imagePath: 'http://localhost:8080/fe-test2.jpg'
-    });
-    // return this.http.get(`${this.apiUrl}/diagnosis-record/${recordId}`).pipe(
-    //   catchError(err => err)
-    // )
+  public getDiagnosisResult(recordId: number): Observable<ApiResponse<DiagnosisRecord>> {
+    // return of({
+    //   cropType: CropType.pepper,
+    //   diagnosisResults: [
+    //     { diseaseCode: DiseaseCode.고추점무늬병, accuracy: 0.9, bbox: { x1: 0, x2: 100, y1: 0, y2: 100 } },
+    //     { diseaseCode: DiseaseCode.고추정상, accuracy: 0.9, bbox: { x1: 0, x2: 100, y1: 0, y2: 100 } },
+    //   ],
+    //   userId: 1,
+    //   userLatitude: 37.123,
+    //   userLongitude: 127.123,
+    //   recordId: 1,
+    //   regDate: new Date(),
+    //   imagePath: 'http://localhost:8080/fe-test2.jpg'
+    // });
+    return this.http.get(`${this.apiUrl}/crop/diagnosisRecord?diagnosisRecordId=${recordId}`).pipe(
+      map(res => res as ApiResponse<DiagnosisRecord>),
+    );
   }
 
   public loadCurrentUser(): Observable<User> {

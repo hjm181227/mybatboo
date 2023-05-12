@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { SharedModule } from "../../module/shared/shared.module";
+import { SyntaxSharedModule } from "../../module/shared/syntax-shared.module";
 import { AuthService } from "../../service/auth.service";
 import { FormControl, FormGroup } from "@angular/forms";
 import { tap } from "rxjs";
@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
   selector: 'app-register',
   standalone: true,
   imports: [
-    SharedModule
+    SyntaxSharedModule
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
