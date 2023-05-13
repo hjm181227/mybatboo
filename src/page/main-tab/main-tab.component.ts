@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { SyntaxSharedModule } from "../../module/shared/syntax-shared.module";
 import { BottomTabBarComponent } from "../../component/bottom-tab-bar/bottom-tab-bar.component";
 import { AnimationOptions, LottieModule } from "ngx-lottie";
+import { ApiService } from "../../service/api.service";
+import { FormControl } from "@angular/forms";
+import { map, tap } from "rxjs";
 
 @Component({
   selector: 'app-main-tab',
@@ -12,7 +15,7 @@ import { AnimationOptions, LottieModule } from "ngx-lottie";
     LottieModule
   ],
   templateUrl: './main-tab.component.html',
-  styleUrls: ['./main-tab.component.scss']
+  styleUrls: [ './main-tab.component.scss' ]
 })
 export class MainTabComponent {
   options: AnimationOptions = {
@@ -20,4 +23,25 @@ export class MainTabComponent {
     loop: false,
     autoplay: true,
   };
+  selectedOccurenceStep = new FormControl<'warning' | 'watch' | 'forecast'>('warning');
+  occurenceInfo$ = this.api.loadOccurenceInfo().pipe(
+    map(res => res.data),
+    tap(({ warningListSize, watchListSize, forecastListSize }) => {
+      console.log(watchListSize, warningListSize, forecastListSize);
+      if (warningListSize > 0) {
+        this.selectedOccurenceStep.patchValue('warning');
+      } else if (watchListSize > 0) {
+        this.selectedOccurenceStep.patchValue('watch');
+      } else if (forecastListSize > 0) {
+        this.selectedOccurenceStep.patchValue('forecast');
+      } else {
+        this.selectedOccurenceStep.patchValue(null);
+      }
+    })
+  );
+
+  constructor(
+    private api: ApiService,
+  ) {
+  }
 }

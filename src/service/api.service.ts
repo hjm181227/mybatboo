@@ -9,7 +9,8 @@ export class ApiService {
   private apiUrl = 'http://15.164.23.13:8080';
 
   constructor(
-    private http: HttpClient) {
+    private http: HttpClient
+  ) {
   }
 
   public getData() {
@@ -67,5 +68,11 @@ export class ApiService {
       tap(res => console.log('loadCurrentUser: ', res)),
       map(user => user as User)
     );
+  }
+
+  public loadOccurenceInfo(): Observable<ApiResponse<OccurenceInfoList>> {
+    return this.http.get(`${this.apiUrl}/crop/noticeList`).pipe(
+      map(res => res as ApiResponse<OccurenceInfoList>)
+    )
   }
 }

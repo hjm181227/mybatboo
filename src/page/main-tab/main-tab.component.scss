@@ -1,6 +1,62 @@
+@import "@mapiacompany/style-utils/utils";
+
 :host {
   display: block;
   height: calc(var(--full-height) - var(--header-height));
+
+  .occurrence-info {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    margin: 16px 16px 0 16px;
+    box-shadow: 0px 6px 16px 0px rgba(20, 20, 20, 0.08), 0px 0px 0px 1px rgba(20, 20, 20, 0.06);
+
+    .title {
+      @include typo(18px, var(--grayDark), 700);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .selector-wrapper {
+      display: flex;
+      gap: 12px;
+
+      mp-button {
+        flex: 1;
+
+        &.active {
+          background: white;
+          border-radius: 8px 8px 0 0;
+        }
+      }
+    }
+
+    .disease-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 180px;
+      overflow: scroll;
+      background: white;
+      padding: 16px 24px 16px 30px;
+      border-radius: 0 0 12px 12px;
+
+      ul {
+        list-style: square;
+
+        li {
+          @include typo(15px, var(--grayDark), 500);
+          padding: 4px 0;
+        }
+
+        li + li {
+          margin-top: 8px;
+        }
+      }
+    }
+  }
 
   .main-container {
     display: flex;

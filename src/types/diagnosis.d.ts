@@ -23,3 +23,12 @@ declare interface DiagnosisRequestInput {
   geolocation: { latitude: number, longitude: number },
   cropType: number
 }
+
+declare interface OccurenceInfoList {
+  forecastList: string[];
+  forecastListSize: number;
+  warningList: string[];
+  warningListSize: number;
+  watchList: string[];
+  watchListSize: number;
+}

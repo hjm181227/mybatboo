@@ -1,41 +1,98 @@
-<div class="occurrence-info">
-</div>
+<ng-container *ngIf="{
+  occurenceInfo: occurenceInfo$ | async
+} as d">
+  <div class="occurrence-info">
+    <div class="title">
+      <span>병해충 발생정보</span>
+      <mp-button
+        size="xs" variant="void" color="greenDark" label="전체 보기"
+      >
+        <mp-icon right name="chevron_right"></mp-icon>
+      </mp-button>
+    </div>
+    <mp-divider height="16px" direction="horizontal" size="1px"></mp-divider>
+    <!-- 경보 -->
+    <div class="selector-wrapper">
+      <mp-button
+        label="경보"
+        color="redDark"
+        size="s"
+        variant="void"
+        [class.active]="selectedOccurenceStep.value === 'warning'"
+        [postfix]="{ text: d.occurenceInfo?.warningListSize || '0' }"
+        [disabled]="d.occurenceInfo?.warningListSize === 0"
+        (click)="selectedOccurenceStep.patchValue('warning')"
+      ></mp-button>
+      <mp-button
+        label="주의보"
+        color="yellowDark"
+        size="s"
+        variant="void"
+        [class.active]="selectedOccurenceStep.value === 'watch'"
+        [postfix]="{ text: d.occurenceInfo?.watchListSize || '0' }"
+        [disabled]="d.occurenceInfo?.watchListSize === 0"
+        (click)="selectedOccurenceStep.patchValue('watch')"
+      ></mp-button>
+      <mp-button
+        label="예보"
+        color="greenDark"
+        size="s"
+        variant="void"
+        [class.active]="selectedOccurenceStep.value === 'forecast'"
+        [postfix]="{ text: d.occurenceInfo?.forecastListSize || '0' }"
+        [disabled]="d.occurenceInfo?.forecastListSize === 0"
+        (click)="selectedOccurenceStep.patchValue('forecast')"
+      ></mp-button>
+    </div>
+    <div class="disease-list">
+      <ng-container *ngIf="d.occurenceInfo && selectedOccurenceStep.value">
+        <ul>
+          <li *ngFor="let disease of d.occurenceInfo[selectedOccurenceStep.value + 'List']">{{disease}}</li>
+        </ul>
+      </ng-container>
+    </div>
+    <!-- 주의보 -->
+
+    <!-- 예보 -->
+
+  </div>
+</ng-container>
 <div class="main-container">
   <div class="section-wrapper">
-<!--    <nz-card class="map-card">-->
-<!--      <button nz-button nzType="primary" nzSize="small">주변 병해 정보 확인</button>-->
-<!--      <ng-lottie [options]="options"></ng-lottie>-->
-<!--    </nz-card>-->
-<!--    <nz-card nzTitle="내 작물 관리" [nzExtra]="extraTemplate">-->
-<!--      <p>Card content</p>-->
-<!--      <p>Card content</p>-->
-<!--      <p>Card content</p>-->
-<!--    </nz-card>-->
-<!--    <ng-template #extraTemplate>-->
-<!--      <a>더 보기</a>-->
-<!--    </ng-template>-->
+    <!--    <nz-card class="map-card">-->
+    <!--      <button nz-button nzType="primary" nzSize="small">주변 병해 정보 확인</button>-->
+    <!--      <ng-lottie [options]="options"></ng-lottie>-->
+    <!--    </nz-card>-->
+    <!--    <nz-card nzTitle="내 작물 관리" [nzExtra]="extraTemplate">-->
+    <!--      <p>Card content</p>-->
+    <!--      <p>Card content</p>-->
+    <!--      <p>Card content</p>-->
+    <!--    </nz-card>-->
+    <!--    <ng-template #extraTemplate>-->
+    <!--      <a>더 보기</a>-->
+    <!--    </ng-template>-->
   </div>
 
-<!--  <Card>-->
-<!--    <CardHeader-->
-<!--      [title]="'내 작물 관리'"-->
-<!--      [extra]="extra"-->
-<!--    >-->
-<!--      <ng-template #extra>-->
-<!--        <span>전체 보기</span>-->
-<!--      </ng-template>-->
-<!--    </CardHeader>-->
-<!--    <CardBody>-->
-<!--      <div>This is content of Card</div>-->
-<!--      <div>This is content of Card</div>-->
-<!--      <div>This is content of Card</div>-->
-<!--    </CardBody>-->
-<!--    <CardFooter [content]="'footer content'" [extra]="footerExtra">-->
-<!--      <ng-template #footerExtra>-->
-<!--        <div>extra footer content</div>-->
-<!--      </ng-template>-->
-<!--    </CardFooter>-->
-<!--  </Card>-->
+  <!--  <Card>-->
+  <!--    <CardHeader-->
+  <!--      [title]="'내 작물 관리'"-->
+  <!--      [extra]="extra"-->
+  <!--    >-->
+  <!--      <ng-template #extra>-->
+  <!--        <span>전체 보기</span>-->
+  <!--      </ng-template>-->
+  <!--    </CardHeader>-->
+  <!--    <CardBody>-->
+  <!--      <div>This is content of Card</div>-->
+  <!--      <div>This is content of Card</div>-->
+  <!--      <div>This is content of Card</div>-->
+  <!--    </CardBody>-->
+  <!--    <CardFooter [content]="'footer content'" [extra]="footerExtra">-->
+  <!--      <ng-template #footerExtra>-->
+  <!--        <div>extra footer content</div>-->
+  <!--      </ng-template>-->
+  <!--    </CardFooter>-->
+  <!--  </Card>-->
 
   <div class="search-section">
     <!--  -->
