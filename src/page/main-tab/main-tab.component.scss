@@ -4,6 +4,8 @@
   display: block;
   height: calc(var(--full-height) - var(--header-height));
   padding-top: 16px;
+  padding-bottom: calc(var(--tab-bar-height) + 32px);
+  overflow: scroll;
 
   .occurrence-info {
     display: flex;
@@ -70,26 +72,52 @@
     border: 1px solid #fcfcfc;
     gap: 12px;
 
-    > div, nz-card, Card {
+    > div {
       flex: 1;
     }
   }
 
-  .map-card {
+  .map-section {
     position: relative;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    box-shadow: 0px 6px 16px 0px rgba(20, 20, 20, 0.08), 0px 0px 0px 1px rgba(20, 20, 20, 0.06);
+    border-radius: 12px;
+    padding: 12px;
 
-    ::ng-deep .ant-card-body {
-      padding: 12px 0 0;
+    span {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      @include typo(16px, var(--grayDark), 700);
+    }
+  }
 
-      > [nz-button] {
-        margin: 0 auto -48px;
-        border-radius: 6px;
-        background: green;
+  .category-section {
+    display: block;
+    box-shadow: 0px 6px 16px 0px rgba(20, 20, 20, 0.08), 0px 0px 0px 1px rgba(20, 20, 20, 0.06);
+    padding: 12px;
+    border-radius: 12px;
+
+    span {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      @include typo(16px, var(--grayDark), 700);
+    }
+
+    ul {
+      list-style: square;
+
+      li {
+        @include typo(15px, var(--gray), 500);
+        margin-left: 12px;
+      }
+
+      li + li {
+        margin-top: 6px;
       }
     }
   }

@@ -75,4 +75,11 @@ export class ApiService {
       map(res => res as ApiResponse<OccurenceInfoList>)
     )
   }
+
+  public loadUserCategories(): Observable<ApiResponse<Category[]>> {
+    return this.http.get(`${this.apiUrl}/crop/category/list`).pipe(
+      map(res => res as ApiResponse<Category[]>),
+      tap(console.log)
+    )
+  }
 }

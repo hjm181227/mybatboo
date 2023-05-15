@@ -1,4 +1,5 @@
 /// <reference path="./user.d.ts" />
+/// <reference path="./category.d.ts" />
 /// <reference path="./diagnosis.d.ts" />
 /// <reference path="./api-response.d.ts" />
 

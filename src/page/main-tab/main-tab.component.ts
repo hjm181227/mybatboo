@@ -5,6 +5,9 @@ import { AnimationOptions, LottieModule } from "ngx-lottie";
 import { ApiService } from "../../service/api.service";
 import { FormControl } from "@angular/forms";
 import { map, tap } from "rxjs";
+import { Store } from "@ngrx/store";
+import { GlobalState } from "../../ngrx";
+import { selectCurrentUser } from "../../ngrx/user.state";
 
 @Component({
   selector: 'app-main-tab',
@@ -40,8 +43,15 @@ export class MainTabComponent {
     })
   );
 
+  currentUser$ = this.store$.select(selectCurrentUser);
+
+  categories$ = this.api.loadUserCategories().pipe(
+    map(res => res.data)
+  );
+
   constructor(
     private api: ApiService,
+    private store$: Store<GlobalState>
   ) {
   }
 }

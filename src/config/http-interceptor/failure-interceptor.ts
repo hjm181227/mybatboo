@@ -13,7 +13,7 @@ export class FailureInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let count = 0;
-    const retryCount = (req.method.toUpperCase() === 'GET' || req.url.includes('graphql') || req.url.includes('gql')) ? 5 : 0;
+    const retryCount = 0;
     return next.handle(req).pipe(
       retryWhen(errors =>
         errors.pipe(
