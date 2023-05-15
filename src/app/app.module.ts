@@ -18,6 +18,7 @@ import { provideStyledFontLoaders } from "../util/font-loader";
 import { ArmoryModule } from "@mapiacompany/armory";
 import { environment } from "../environments/environment";
 import { ModalModule } from "@mapiacompany/ngx-bootstrap-modal";
+import { MpAlertModule } from "@mapiacompany/styled-components";
 
 export function playerFactory() {
   return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
@@ -43,6 +44,7 @@ export function playerFactory() {
     ModalModule.forRoot({
       appId: `mybatboo`
     }),
+    // MpAlertModule.forRoot(AlertServiceImpl, 'MOBILE'),
   ],
   bootstrap: [ AppComponent ],
   providers: [

@@ -14,3 +14,15 @@
 a:-webkit-any-link {
   color: inherit;
 }
+
+:root {
+  mp-button {
+    $background-color: variableWithHook('button-background-color');
+
+    &:active {
+      button {
+        background-color: $background-color !important;
+      }
+    }
+  }
+}

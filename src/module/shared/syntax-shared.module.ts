@@ -42,6 +42,7 @@ const pipes = [
     ArmoryModule,
     CommonModule,
     RouterModule,
+    FormsModule,
     ReactiveFormsModule,
     TranslateModule,
     ...components,

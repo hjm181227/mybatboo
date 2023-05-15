@@ -1,0 +1,20 @@
+:host {
+  form {
+    mp-input {
+      display: block;
+      margin-bottom: 10px;
+
+      &:first-of-type {
+        margin-bottom: 20px;
+      }
+
+      &:last-of-type {
+        margin: 10px 0 28px 0;
+      }
+    }
+
+    mp-button {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<form
+  [formGroup]="formGroup" name="loginModalForm"
+  (ngSubmit)="login()"
+>
+  <mp-input
+    size="l" #email
+    name="email"
+    type="email"
+    [placeholder]="'이메일을 입력해주세요.'"
+    formControlName="email"
+    backgroundColor="white"
+    boxShadow="0 2px 4px 0 rgba(20, 20, 20, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.08)"
+  >
+    <mp-icon left name="mail_outline" />
+  </mp-input>
+
+  <mp-input
+    size="l" #password
+    name="password"
+    [placeholder]="'비밀번호를 입력해주세요.'"
+    [type]="passwordVisibility ? 'text' : 'password'"
+    formControlName="password"
+    backgroundColor="white"
+    boxShadow="0 2px 4px 0 rgba(20, 20, 20, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.08)"
+  >
+    <mp-icon left name="vpn_key" />
+    <mp-icon
+      right
+      [name]="!passwordVisibility ? 'visibility' : 'visibility_off'"
+      (click)="toggleVisibility()"
+    />
+  </mp-input>
+
+  <mp-button
+    type="submit"
+    [label]="'로그인'"
+    [color]="'green'"
+    [disabled]="formGroup.invalid || (status$ | async).pending"
+    [loading]="(status$ | async).pending"
+  />
+  <mp-button
+    [label]="'비밀번호 찾기'"
+    color="gray" size="s" variant="void"
+    (click)="changeTab.emit('find-password')"
+  />
+</form>

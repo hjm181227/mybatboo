@@ -1,0 +1,65 @@
+<ng-container *ngLet="status$ | async as status">
+  <form [formGroup]="formGroup">
+    <mp-input
+      [label]="'이메일'"
+      size="l"
+      type="email"
+      [autoFocus]="true"
+      [placeholder]="'이메일을 입력해주세요.'"
+      formControlName="email"
+      backgroundColor="white"
+      boxShadow="0 2px 4px 0 rgba(20, 20, 20, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.08)"
+      [helperError]="form.email | toHelperText : formErrors.email"
+    >
+      <mp-icon left name="mail_outline"></mp-icon>
+    </mp-input>
+
+    <mp-input
+      [label]="'비밀번호'"
+      size="l"
+      [placeholder]="'비밀번호를 입력해주세요.'"
+      [type]="passwordVisibility ? 'text' : 'password'"
+      [helperError]="form.password | toHelperText : formErrors.password"
+      formControlName="password"
+      backgroundColor="white"
+      boxShadow="0 2px 4px 0 rgba(20, 20, 20, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.08)"
+    >
+      <mp-icon
+        right
+        [name]="!passwordVisibility ? 'visibility' : 'visibility_off'"
+        (click)="$event.stopPropagation(); passwordVisibility = !passwordVisibility"
+      ></mp-icon>
+    </mp-input>
+    <mp-input
+      size="l"
+      [placeholder]="'비밀번호를 다시 입력해주세요.'"
+      [type]="passwordRepeatVisibility ? 'text' : 'password'"
+      [helperError]="formGroup | toHelperText : formErrors.passwordRepeat"
+      formControlName="passwordRepeat"
+      backgroundColor="white"
+      boxShadow="0 2px 4px 0 rgba(20, 20, 20, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.08)"
+    >
+      <mp-icon
+        right
+        [name]="!passwordRepeatVisibility ? 'visibility' : 'visibility_off'"
+        (click)="$event.stopPropagation(); passwordRepeatVisibility = !passwordRepeatVisibility"
+      ></mp-icon>
+    </mp-input>
+    <mp-input
+      [label]="'이름'"
+      size="l"
+      [placeholder]="'이름을 입력해주세요'"
+      [helperError]="form.name | toHelperText : formErrors.name"
+      formControlName="name"
+      backgroundColor="white"
+      boxShadow="0 2px 4px 0 rgba(20, 20, 20, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.08)"
+    ></mp-input>
+    <mp-button
+      [disabled]="formGroup.invalid || status.pending"
+      [loading]="status.pending"
+      (click)="registerSubmit()"
+      [label]="'회원가입'"
+      color="green"
+    />
+  </form>
+</ng-container>

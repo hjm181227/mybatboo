@@ -28,6 +28,7 @@
     "@capacitor/core": "^5.0.3",
     "@capacitor/geolocation": "^5.0.2",
     "@capacitor/ios": "^5.0.3",
+    "@capacitor/toast": "^5.0.2",
     "@ionic/angular": "^7.0.6",
     "@ionic/pwa-elements": "^3.1.1",
     "@mapiacompany/armory": "2.0.1",

@@ -1,0 +1,44 @@
+@import "@mapiacompany/style-utils";
+
+:host {
+  form {
+    mp-input {
+      display: block;
+    }
+
+    mp-button {
+      width: 100%;
+
+      &.wait {
+        cursor: wait;
+      }
+    }
+
+    a.action {
+      color: var(--link);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    mp-input + mp-button {
+      margin-top: 16px;
+    }
+
+    mp-input + mp-input, mp-button + mp-button {
+      margin-top: 10px;
+    }
+  }
+
+  .divider {
+    @include set-child-to-centroid;
+    @include typo(12px, var(--grayLight), 400);
+    gap: 14px;
+  }
+
+  mp-button {
+    width: 100%;
+    margin-top: 32px;
+  }
+}

@@ -1,7 +1,19 @@
-<div class="header">
-  <a class="app-image" routerLink="/main">
-    <img src="../../assets/images/plant_app_icon.png">
-    <span>내 밭을 부탁해</span>
-  </a>
-  <div class=""></div>
-</div>
+<!--<div class="header">-->
+<a class="app-image" routerLink="/main">
+  <img src="../../assets/images/plant_app_icon.png">
+  <span>내 밭을 부탁해</span>
+</a>
+<ng-container *ngLet="currentUser$ | async as currentUser">
+  <mp-button
+    *ngIf="!currentUser"
+    label="로그인"
+    variant="outline"
+    color="grayDark"
+    size="s"
+    (click)="goToLogin()"
+  >
+    <mp-icon right name="login"></mp-icon>
+  </mp-button>
+  <mp-icon-button *ngIf="currentUser" iconName="person" iconType="outlined" iconSize="24px" variant="void" size="m" color="greenDark"></mp-icon-button>
+</ng-container>
+<!--</div>-->

@@ -23,7 +23,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./page/login/login.component').then(c => c.LoginComponent)
+    loadComponent: () => import('./module/login/login-modal/login-modal.component').then(c => c.LoginModal)
   },
   {
     path: 'diagnosis/:diagnosisId',

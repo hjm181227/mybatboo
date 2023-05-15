@@ -1,0 +1,27 @@
+<page-header height="62px">
+  <mp-icon-button
+    left
+    size="m"
+    iconName="close" iconSize="16px"
+    borderRadius="8px"
+    color="gray"
+    variant="void"
+    (click)="modalRef.hide()"
+  ></mp-icon-button>
+  <mp-text center>{{tabName(tab)}}</mp-text>
+  <mp-button
+    right
+    variant="void"
+    color="gray"
+    size="s"
+    [label]="tabName(headerButton)"
+    (click)="tab = headerButton"
+  ></mp-button>
+</page-header>
+<div class="content" [ngSwitch]="tab">
+  <app-login *ngSwitchCase="'login'"></app-login>
+  <app-register
+    *ngSwitchCase="'register'"
+    (changeTab)="tab = $event"
+  ></app-register>
+</div>

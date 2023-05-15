@@ -5,7 +5,6 @@ import { tap } from "rxjs";
 import { Store } from "@ngrx/store";
 import { GlobalState } from "../ngrx";
 import { UserActions } from "./user.action";
-import { catchError } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +17,7 @@ export class AuthService {
     private userActions: UserActions
   ) { }
 
-  login(email: string, password: string, name?: string) {
+  login({ email, password }: { email: string, password: string }) {
     return this.http.post<{ token: string }>(`${environment.apiUrl}/member/signIn`, { email, password })
       .pipe(
         tap(res => {
@@ -27,18 +26,8 @@ export class AuthService {
       );
   }
 
-  register(name: string, email: string, password: string) {
-    const test = {
-      name: 'hjm',
-      email: 'test@hjm.com',
-      password: 'qwerqwer'
-    }
-    return this.http.post(`${environment.apiUrl}/member/signUp`, { ...test })
-      .pipe(
-        tap((token: any) => {
-          // localStorage.setItem('token', token);
-        })
-      );
+  register({ name, email, password }: { name: string, email: string, password: string }) {
+    return this.http.post(`${environment.apiUrl}/member/signUp`, { name, email, password });
   }
 
   withdraw() {

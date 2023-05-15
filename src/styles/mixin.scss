@@ -1,0 +1,5 @@
+@mixin set-bottom-sheet-top-panel($panel-height: 62px) {
+  :host-context(.bottom-sheet) {
+    --page-header-height: #{$panel-height};
+  }
+}
