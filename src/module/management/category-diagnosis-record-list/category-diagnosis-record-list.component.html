@@ -1,0 +1,11 @@
+<page-header height="64px" [title]="category.name">
+  <mp-icon left name="arrow_back" (click)="close()"></mp-icon>
+</page-header>
+<div class="record-container">
+  <ng-container *ngIf="records$ | async as records">
+    <div class="record-item" *ngFor="let record of records">
+      <img [src]="record.imagePath">
+      <span></span>
+    </div>
+  </ng-container>
+</div>

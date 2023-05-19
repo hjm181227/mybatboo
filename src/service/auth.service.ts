@@ -18,10 +18,10 @@ export class AuthService {
   ) { }
 
   login({ email, password }: { email: string, password: string }) {
-    return this.http.post<{ token: string }>(`${environment.apiUrl}/member/signIn`, { email, password })
+    return this.http.post<{ accessToken: string, refreshToken: string }>(`${environment.apiUrl}/member/signIn`, { email, password })
       .pipe(
         tap(res => {
-          this.userActions.afterLogin(res.token);
+          this.userActions.afterLogin(res);
         })
       );
   }

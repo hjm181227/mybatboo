@@ -1,5 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import {
+  HttpClient,
   HttpErrorResponse,
   HttpEvent,
   HttpHandler,
@@ -7,15 +8,18 @@ import {
   HttpRequest,
   HttpResponse
 } from '@angular/common/http';
-import { Observable, of, switchMap, throwError } from 'rxjs';
+import { concatMap, EMPTY, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { StorageService } from "../../service/storage.service";
+import { NavigateService } from "../../service/navigate.service";
+import { StorageService } from "@mapiacompany/armory";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   constructor(
     private injector: Injector,
-    private storage: StorageService
+    private storage: StorageService,
+    private http: HttpClient,
+    private navigate: NavigateService
   ) {
   }
 
@@ -26,16 +30,27 @@ export class TokenInterceptor implements HttpInterceptor {
           const isError = !!res.body?.error || !!res.body?.errors?.length;
           if (isError) {
             const errorTypes = [
-              'IAM_TOKEN_EXPIRED',
-              'IAM_UNAUTHORIZED',
-              'UNAUTHORIZED',
-              'EXPIRED_LOGIN_TOKEN',
+              'EXPIRED_TOKEN'
             ];
-            const tokenExpired = [ res.body?.error?.message, res.body?.errors[0]?.message ].some(msgOrCode => errorTypes.includes(msgOrCode));
+            console.log('res', res);
+            const tokenExpired = [ res.body?.error?.code, res.body?.errors[0]?.code ].some(msgOrCode => errorTypes.includes(msgOrCode));
             if (tokenExpired) {
-              // return AccessTokenRefresher.load(this.injector).pipe(
-              //   concatMap((token) => next.handle(this._addAuthHeader(req, token)))
-              // );
+              const refreshToken = this.storage.get('refreshToken');
+              return this.http.post<ApiResponse<{ accessToken: string }>>('http://15.164.23.13:8080/member/refresh', { refreshToken }).pipe(
+                map((res ) => res.data),
+                map(({ accessToken }) => accessToken),
+                tap(token => this.storage.set('token', token)),
+                catchError((error) => {
+                  if (error instanceof HttpErrorResponse && error.status < 500) {
+                    // 토큰 생성 과정에서 생긴 문제인 경우 (500 INTERNAL ERROR는 제외)
+                    this.storage.remove('token');
+                    this.storage.remove('refreshToken');
+                  }
+                  this.navigate.openLoginModal();
+                  return EMPTY;
+                }),
+                concatMap((token) => next.handle(this._addAuthHeader(req, token)))
+              )
               // 로그인 만료
             }
           }
@@ -44,17 +59,29 @@ export class TokenInterceptor implements HttpInterceptor {
       }),
       catchError((err: HttpErrorResponse) => {
         const errorTypes = [
-          'IAM_TOKEN_EXPIRED',
-          'IAM_UNAUTHORIZED',
-          'UNAUTHORIZED',
-          'EXPIRED_LOGIN_TOKEN',
+          'EXPIRED_TOKEN'
         ];
         const tokenExpired = [ err?.message, err?.error?.message, err?.error?.code ].some(msgOrCode => errorTypes.includes(msgOrCode));
+        console.log('token-interceptor', err, tokenExpired);
         if (tokenExpired) {
-          // 로그인 만료
+          const refreshToken = this.storage.get('refreshToken');
+          return this.http.post<ApiResponse<{ accessToken: string }>>('http://15.164.23.13:8080/member/refresh', { refreshToken }).pipe(
+            map((res ) => res.data?.accessToken),
+            tap(token => this.storage.set('token', token)),
+            catchError((error) => {
+              if (error instanceof HttpErrorResponse && error.status < 500) {
+                // 토큰 생성 과정에서 생긴 문제인 경우 (500 INTERNAL ERROR는 제외)
+                this.storage.remove('token');
+                this.storage.remove('refreshToken');
+              }
+              this.navigate.openLoginModal();
+              return EMPTY;
+            }),
+            concatMap((token) => next.handle(this._addAuthHeader(req, token)))
+          )
         } else {
+          return throwError(() => err);
         }
-        return throwError(() => err);
       })
     );
   }

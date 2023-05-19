@@ -1,0 +1,79 @@
+@import "@mapiacompany/style-utils/utils";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: var(--full-height);
+  padding: 24px;
+
+  .title-section {
+    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    @include typo(24px, var(--grayDarker), 700);
+    white-space: pre-line;
+
+    .description {
+      @include typo(16px, var(--gray), 500);
+    }
+  }
+
+  .icon-section {
+    margin-top: 44px;
+    display: flex;
+    width: 160px;
+    height: 160px;
+    align-self: center;
+    position: relative;
+
+    .icon-wrapper {
+      position: absolute;
+
+      &:first-of-type {
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        z-index: 3;
+        height: 100.5px;
+        background: white;
+      }
+
+      &:last-of-type {
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        z-index: 2;
+      }
+    }
+  }
+
+  .content-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px;
+
+    .function {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      @include typo(15px, var(--grayDark), 500);
+    }
+  }
+
+  bottom-fixed-bar {
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    mp-button {
+      flex: 1;
+    }
+  }
+}

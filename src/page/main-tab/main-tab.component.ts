@@ -30,7 +30,6 @@ export class MainTabComponent {
   occurenceInfo$ = this.api.loadOccurenceInfo().pipe(
     map(res => res.data),
     tap(({ warningListSize, watchListSize, forecastListSize }) => {
-      console.log(watchListSize, warningListSize, forecastListSize);
       if (warningListSize > 0) {
         this.selectedOccurenceStep.patchValue('warning');
       } else if (watchListSize > 0) {

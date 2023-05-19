@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable, of, tap } from "rxjs";
+import { ParamsBuilder } from "../params.builder";
 
 @Injectable({
   providedIn: 'root'
@@ -64,9 +65,9 @@ export class ApiService {
   }
 
   public loadCurrentUser(): Observable<User> {
-    return this.http.get(`${this.apiUrl}/member/user`).pipe(
-      tap(res => console.log('loadCurrentUser: ', res)),
-      map(user => user as User)
+    return this.http.get(`${this.apiUrl}/member/currentUser`).pipe(
+      map(res => res as ApiResponse<User>),
+      map(res => res.data),
     );
   }
 
@@ -80,6 +81,12 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/crop/category/list`).pipe(
       map(res => res as ApiResponse<Category[]>),
       tap(console.log)
+    )
+  }
+
+  public loadCategoryDiagnosisRecords(categoryId: number): Observable<DiagnosisRecord[]> {
+    return this.http.get(`${this.apiUrl}/crop/category/record`, { params: ParamsBuilder.from({ categoryId }) }).pipe(
+      map(res => (res as ApiResponse<DiagnosisRecord[]>).data)
     )
   }
 }

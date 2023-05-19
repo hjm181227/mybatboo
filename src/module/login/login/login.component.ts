@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { MpInput } from "@mapiacompany/styled-components";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
@@ -20,6 +20,7 @@ import { ToastService } from "../../../service/toast.service";
 })
 export class LoginComponent {
   @Output() changeTab: EventEmitter<'find-password' | 'register'> = new EventEmitter();
+  @Input() onSuccess: () => void;
 
   form = {
     email: new FormControl<string>('', [
@@ -46,6 +47,7 @@ export class LoginComponent {
     this.authService.login({ email, password }).pipe(
       bindStatus(this.status$),
       tap(() => this.toast.show('로그인에 성공했습니다.')),
+      tap(() => this.onSuccess && this.onSuccess()),
       tap(() => this.modalRef.hide())
     ).subscribe();
   }

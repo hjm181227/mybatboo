@@ -72,7 +72,7 @@
     border: 1px solid #fcfcfc;
     gap: 12px;
 
-    > div {
+    .map-section, .category-section {
       flex: 1;
     }
   }

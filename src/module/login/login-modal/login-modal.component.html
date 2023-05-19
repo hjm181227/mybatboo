@@ -19,7 +19,7 @@
   ></mp-button>
 </page-header>
 <div class="content" [ngSwitch]="tab">
-  <app-login *ngSwitchCase="'login'"></app-login>
+  <app-login *ngSwitchCase="'login'" [onSuccess]="onSuccess"></app-login>
   <app-register
     *ngSwitchCase="'register'"
     (changeTab)="tab = $event"

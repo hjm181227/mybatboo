@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
-import { StorageService } from "../../service/storage.service";
+import { StorageService } from "@mapiacompany/armory";
 
 @Injectable()
 export class JWTInterceptor implements HttpInterceptor {

@@ -20,13 +20,13 @@
     <div class="disease-list">
       <div class="disease-wrapper">
         <span class="title">가장 유사한 결과</span>
-        <disease-list-item [diseaseItem]="result.diagnosisItems[1]"/>
+        <disease-list-item [diseaseItem]="result.diagnosisResults[1]"/>
       </div>
 
-      <ng-container *ngIf="result?.diagnosisItems.length > 1">
+      <ng-container *ngIf="result?.diagnosisResults.length > 1">
         <div class="disease-wrapper">
           <span class="title">다른 유사 결과</span>
-          <disease-list-item [diseaseItem]="result.diagnosisItems[0]"/>
+          <disease-list-item [diseaseItem]="result.diagnosisResults[0]"/>
 <!--          <disease-list-item-->
 <!--            *ngFor="let item of result.diagnosisItems.slice(1, result.diagnosisItems.length)"-->
 <!--            [diseaseItem]="item"/>-->

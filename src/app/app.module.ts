@@ -9,16 +9,13 @@ import { RouterModule } from "@angular/router";
 import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { _getGlobalReducers, GLOBAL_EFFECTS, REDUCERS_TOKEN } from "../ngrx";
-import { StorageService } from "../service/storage.service";
 import { httpInterceptorProviders } from "../config/http-interceptor";
-import { AppHeaderComponent } from "../component/app-header/app-header.component";
 import { DefaultLayoutComponent } from "../page/default-layout/default-layout.component";
 import { LottieModule } from "ngx-lottie";
 import { provideStyledFontLoaders } from "../util/font-loader";
-import { ArmoryModule } from "@mapiacompany/armory";
+import { ArmoryModule, StorageService } from "@mapiacompany/armory";
 import { environment } from "../environments/environment";
 import { ModalModule } from "@mapiacompany/ngx-bootstrap-modal";
-import { MpAlertModule } from "@mapiacompany/styled-components";
 
 export function playerFactory() {
   return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
@@ -30,7 +27,6 @@ export function playerFactory() {
     DefaultLayoutComponent
   ],
   imports: [
-    AppHeaderComponent,
     AppRoutingModule,
     SyntaxSharedModule,
     BrowserModule,

@@ -4,11 +4,12 @@ import { Action, Store } from "@ngrx/store";
 import { EMPTY, of} from "rxjs";
 import { catchError, filter, mergeMap, tap, withLatestFrom } from "rxjs/operators";
 import { ngrxUserActions } from "./user.reducer";
-import { StorageService } from "../service/storage.service";
 import { Router } from "@angular/router";
 import { selectCurrentUser } from "./user.state";
 import { ApiService } from "../service/api.service";
 import { GlobalState } from "./global";
+import { StorageService } from "@mapiacompany/armory";
+import { ToastService } from "../service/toast.service";
 
 @Injectable()
 export class UserEffects implements OnInitEffects {
@@ -29,7 +30,7 @@ export class UserEffects implements OnInitEffects {
           this.storage.remove('refreshToken');
         }),
         tap(() => {
-          this.router.navigate([ '/login' ]);
+          this.router.navigate([ '/onboarding' ]);
           // location.reload();
         })
       ),
@@ -50,7 +51,8 @@ export class UserEffects implements OnInitEffects {
             ];
             if (!prevUser || prevUser.userId !== currentUser.userId) {
               sideEffects.push(
-
+                //
+                // 진단 기록 목록 가져오기
               );
             }
 
@@ -58,12 +60,13 @@ export class UserEffects implements OnInitEffects {
           }),
           catchError((err) => {
             if (err.error instanceof Error) {
+              console.log('client-side error', err.error.message);
               // client-side error
             } else if (err.status < 500) {
-              switch (err.error.state) {
-                case 'INVALID_LOGIN_HASH': // 계정 정보가 바껴서 새로 로그인해야하는 경우
-                case 'EXPIRED_LOGIN_TOKEN': // 마지막 로그인 이후 30일이 지난 경우
-                  // this.alert.error(err);
+              console.log('user.effect.ts - loadCurrentUser$', err);
+              switch (err.error.code) {
+                case 'INVALID_TOKEN': // 토큰 만료
+                  this.toast.show(err.error.message);
                   return of(ngrxUserActions.logout());
               }
             }
@@ -80,7 +83,8 @@ export class UserEffects implements OnInitEffects {
     private storage: StorageService,
     private router: Router,
     private api: ApiService,
-    private store: Store<GlobalState>
+    private store: Store<GlobalState>,
+    private toast: ToastService
   ) {
   }
 

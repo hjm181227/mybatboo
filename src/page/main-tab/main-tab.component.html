@@ -68,15 +68,21 @@
       </span>
       <ng-lottie [options]="options"></ng-lottie>
     </div>
-    <div class="category-section" *ngIf="categories$ | async as categories">
+    <a
+      class="category-section"
+      *ngIf="categories$ | async as categories"
+      [routerLink]="['/my-crops']"
+    >
       <span class="section-title">
         내 작물 관리
         <mp-icon name="chevron_right" size="20px" color="grayLight"></mp-icon>
       </span>
       <ul class="categories">
-        <li *ngFor="let category of categories">{{category.name === 'unclassified' ? '미분류된 작물' : category.name}} ({{category.count || 0}})</li>
+        <li *ngFor="let category of categories">{{category.name === 'unclassified' ? '미분류된 작물' : category.name}}
+          ({{category.cnt || 0}})
+        </li>
       </ul>
-    </div>
+    </a>
     <!--    <nz-card class="map-card">-->
     <!--      <button nz-button nzType="primary" nzSize="small">주변 병해 정보 확인</button>-->
     <!--      <ng-lottie [options]="options"></ng-lottie>-->

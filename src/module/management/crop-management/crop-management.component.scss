@@ -1,0 +1,12 @@
+@import "@mapiacompany/style-utils/utils";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 16px;
+
+  .page-title {
+    @include typo(18px, var(--grayDark), 600);
+  }
+}

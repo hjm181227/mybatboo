@@ -1,0 +1,20 @@
+<div class="page-title">
+  내 작물 관리{{ currentCategory.value ? ' > ' + (currentCategory.value | categoryName) : '' }}
+</div>
+<div class="category-list" *ngIf="categories$ | async as categories">
+  <ng-container *ngFor="let category of categories">
+    <div class="category-wrapper">
+      <mp-button
+        variant="weak"
+        size="m"
+        color="yellow"
+        [label]="category.name | categoryName"
+        [style.border]="'1px solid var(--grayLighter)'"
+        [postfix]="{ text: (category.cnt || 0).toString() }"
+        (click)="openRecordList(category)"
+      >
+        <mp-icon left name="folder"></mp-icon>
+      </mp-button>
+    </div>
+  </ng-container>
+</div>

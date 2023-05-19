@@ -1,0 +1,30 @@
+<div class="title-section">
+  <span class="title">{{'로그인하고 \n 작물을 진단해보세요!'}}</span>
+  <span class="description">{{'로그인이 필요한 서비스입니다.'}}</span>
+</div>
+<div class="icon-section">
+  <div class="icon-wrapper">
+    <mp-icon name="las la-seedling" type="la" size="160px" color="green"></mp-icon>
+  </div>
+  <div class="icon-wrapper">
+    <mp-icon name="las la-seedling" type="la" size="160px" color="#8b4513c7"></mp-icon>
+  </div>
+</div>
+<div class="content-section">
+  <div class="function" *ngFor="let func of functions">
+    <mp-icon
+      name="check" type="filled" color="green"
+      backgroundColor="rgba(11,157,89,0.08)" padding="5px"
+      borderRadius="50px" size="18px"
+    ></mp-icon>
+    <span>{{func}}</span>
+  </div>
+</div>
+<bottom-fixed-bar
+  height="81px"
+>
+  <mp-button
+    color="green" label="로그인 / 회원가입 하기" (click)="goToLogin()"
+    [loading]="(status$ | async).pending"
+  ></mp-button>
+</bottom-fixed-bar>

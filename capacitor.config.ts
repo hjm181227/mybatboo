@@ -9,6 +9,11 @@ const config: CapacitorConfig = {
   //   url: 'http://15.164.23.13:8080',
   //   hostname: ''
   // }
+  plugins: {
+    CapacitorHttp: {
+      enabled: true,
+    },
+  }
 };
 
 export default config;

@@ -65,7 +65,7 @@ export class DiagnosisRequestModalComponent extends AbstractBaseComponent {
   }
 
   retakePhoto() {
-    this.modalRef.hide();
+    this.close();
     this.diagnosisService.startDiagnosis();
   }
 
@@ -84,6 +84,7 @@ export class DiagnosisRequestModalComponent extends AbstractBaseComponent {
           map((res: ApiResponse<DiagnosisRecord>) => res.data),
           tap(res => {
             // this.router.navigate([ '/diagnosis', res.recordId ]);
+            this.close();
             import('../diagnosis-result/diagnosis-result.component').then(c => {
               this.modalService.show(c.DiagnosisResultComponent, {
                 initialState: {

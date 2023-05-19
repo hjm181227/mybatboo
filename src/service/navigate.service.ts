@@ -9,9 +9,14 @@ export class NavigateService {
     private bottomSheet: MpBottomSheetService
   ) {
   }
-  openLoginModal() {
+
+  openLoginModal(onSuccess: () => void = () => {}) {
     import('../module/login/login-modal/login-modal.component').then(c => {
-      this.bottomSheet.show(c.LoginModal, { ignoreBackdropClick: true })
+      this.bottomSheet.show(c.LoginModal, {
+        ignoreBackdropClick: true, initialState: {
+          onSuccess
+        }
+      })
     })
   }
 }
