@@ -3,3 +3,15 @@
     --page-header-height: #{$panel-height};
   }
 }
+
+@mixin set-bottom-sheet-height($height: calc(var(--full-height) - 32px), $max-height: auto) {
+  :host-context(.bottom-sheet) {
+    height: $height;
+    max-height: $max-height !important;
+  }
+
+  :host {
+    padding-top: var(--page-header-height);
+    padding-bottom: var(--bottom-fixed-bar-height);
+  }
+}

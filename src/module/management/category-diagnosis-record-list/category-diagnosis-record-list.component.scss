@@ -1,0 +1,47 @@
+@import "@mapiacompany/style-utils/utils";
+@import "mixin";
+
+@include set-bottom-sheet-height(auto);
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .record-container {
+    @include grid-system((
+      columns: 1fr 1fr,
+      column-gap: 16px,
+    ));
+    padding: 12px;
+
+    .record-item {
+      display: flex;
+      flex-direction: column;
+      padding: 12px;
+      gap: 24px;
+      border-radius: 12px;
+      box-shadow: 0px 6px 16px 0px rgba(20, 20, 20, 0.08), 0px 0px 0px 1px rgba(20, 20, 20, 0.06);
+
+      img {
+        margin: 0 auto;
+        width: 100px;
+        height: 100px;
+        border-radius: 12px;
+      }
+
+      span {
+        @include typo(13px, var(--gray), 500);
+      }
+    }
+  }
+
+  .empty {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    @include typo(18px, var(--gray), 500);
+  }
+}

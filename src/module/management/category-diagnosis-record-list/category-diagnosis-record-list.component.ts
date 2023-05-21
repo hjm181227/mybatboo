@@ -6,13 +6,15 @@ import { ApiService } from "../../../service/api.service";
 import { PageHeaderComponent } from "../../shared/component/page-header/page-header.component";
 import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { BsModalRef } from "@mapiacompany/ngx-bootstrap-modal";
+import { CategoryNamePipe } from "../../../pipe/category-name.pipe";
 
 @Component({
   selector: 'app-category-diagnosis-record-list',
   standalone: true,
   imports: [
     SyntaxSharedModule,
-    PageHeaderComponent
+    PageHeaderComponent,
+    CategoryNamePipe
   ],
   templateUrl: './category-diagnosis-record-list.component.html',
   styleUrls: [ './category-diagnosis-record-list.component.scss' ]
@@ -37,6 +39,7 @@ export class CategoryDiagnosisRecordListComponent extends AbstractBaseComponent 
   }
 
   ngOnInit() {
+    this.modalRef.setClass('diagnosis-record-list-modal');
   }
 
   close() {

@@ -1,5 +1,6 @@
 declare interface DiagnosisRecord {
   cropType: number,
+  id: number,
   diagnosisResults: DiagnosisItem[],
   diagnosisRecordId: number,
   userId: number,

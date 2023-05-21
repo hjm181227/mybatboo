@@ -1,7 +1,7 @@
-import { Component, ElementRef, Input, Renderer2, RendererStyleFlags2 } from '@angular/core';
+import { Component, ElementRef, Input, Optional, Renderer2, RendererStyleFlags2 } from '@angular/core';
 import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { ApiService } from "../../../service/api.service";
-import { BehaviorSubject, catchError, EMPTY, iif, map, Observable, of, switchMap, tap } from "rxjs";
+import { BehaviorSubject, catchError, combineLatest, EMPTY, iif, map, of, switchMap, tap } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { AbstractBaseComponent } from "@mapiacompany/armory";
 import { BsModalRef } from "@mapiacompany/ngx-bootstrap-modal";
@@ -46,14 +46,20 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
   );
 
   constructor(
+    @Optional() private modalRef: BsModalRef,
     private api: ApiService,
     private route: ActivatedRoute,
-    private modalRef: BsModalRef,
     private renderer: Renderer2,
     private elementRef: ElementRef
   ) {
     super();
   }
+
+  obs$ = combineLatest([
+    this.route.params.pipe(
+      map(({ diagnosisId }) => diagnosisId),
+    ),
+  ])
 
   ngOnInit() {
     this.subscribeOn(
@@ -61,8 +67,13 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
         () => !!this.diagnosisRecord,
         // this.api.getDiagnosisResult(this.diagnosisId),
         of(this.diagnosisRecord),
-        this.route.params.pipe(
-          map(({ diagnosisId }) => diagnosisId),
+        iif(
+          () => !!this.diagnosisId,
+          of(this.diagnosisId),
+          this.route.params.pipe(
+            map(({ diagnosisId }) => +diagnosisId)
+          )
+        ).pipe(
           switchMap(diagnosisId => this.api.getDiagnosisResult(diagnosisId)),
           map(res => res.data)
         )
@@ -76,6 +87,10 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
   }
 
   close() {
-    this.modalRef.hide();
+    if (this.modalRef) {
+      this.modalRef.hide();
+    } else {
+      history.back();
+    }
   }
 }
