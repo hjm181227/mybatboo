@@ -1,0 +1,56 @@
+<page-header height="64px" title="카테고리 수정">
+  <mp-icon-button
+    left
+    size="m"
+    iconName="close" iconSize="16px"
+    borderRadius="8px"
+    color="gray"
+    variant="void"
+    (click)="modalRef.hide()"
+  ></mp-icon-button>
+</page-header>
+<form [formGroup]="formGroup">
+  <mp-input
+    [label]="'이름'"
+    size="l"
+    type="text"
+    [autoFocus]="true"
+    [placeholder]="'카테고리 이름을 입력해주세요.'"
+    [helperError]="form.name | toHelperText : errorMessages"
+    formControlName="name"
+    backgroundColor="white"
+    boxShadow="0 2px 4px 0 rgba(20, 20, 20, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.08)"
+  >
+    <mp-icon left name="folder" type="outlined"></mp-icon>
+  </mp-input>
+  <mp-label [textContent]="'메모'" size="14px"></mp-label>
+  <mp-textarea
+    formControlName="memo" #textArea
+    [placeholder]="'이 카테고리에 대한 메모를 작성해보세요(200자 이내)'"
+    [maxLength]="300"
+    [autoFocus]="true"
+    [helperText]="form.memo.value.length >= 200 ? '메모는 최대 200자까지 작성 가능합니다.': ''"
+    [height]="'200px'"
+    padding="14px"
+    backgroundColor="white"
+    boxShadow="0 2px 4px 0 rgba(20, 20, 20, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.08)">
+  </mp-textarea>
+</form>
+<div class="buttons-wrapper">
+  <mp-button
+    label="취소"
+    size="m"
+    color="gray"
+    variant="weak"
+    (click)="modalRef.hide()"
+  ></mp-button>
+  <mp-button
+    label="저장"
+    size="m"
+    color="green"
+    variant="fill"
+    [disabled]="formGroup.invalid"
+    [loading]="(status$ | async).pending"
+    (click)="updateCategory()"
+  ></mp-button>
+</div>

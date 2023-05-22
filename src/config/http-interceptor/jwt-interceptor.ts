@@ -24,7 +24,7 @@ export class JWTInterceptor implements HttpInterceptor {
     if (isApi) {
       if (!req.params.get('skipHeaders')) {
         const token = this.storage.get('token');
-        if (token) {
+        if (token && token !== 'undefined') {
           Object.assign(headers, {
             Authorization: `Bearer ${token}`
           });

@@ -1,0 +1,29 @@
+@import "@mapiacompany/style-utils/utils";
+
+:host {
+  form {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+
+    mp-input {
+      margin-bottom: 16px;
+    }
+
+    mp-label {
+      padding: 0 4px;
+      margin: 0 0 6px;
+    }
+  }
+
+  .buttons-wrapper {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+    padding: 0 24px 24px;
+
+    mp-button {
+      flex: 1;
+    }
+  }
+}

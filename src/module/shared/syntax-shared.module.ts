@@ -12,7 +12,7 @@ import {
   MpIconButton, MpPositionLeftDirective, MpPositionRightDirective,
   MpText
 } from "@mapiacompany/styled-components";
-import { ArmoryModule, LetDirective } from "@mapiacompany/armory";
+import { ArmoryModule, LetDirective, ToHelperTextPipe } from "@mapiacompany/armory";
 import { TranslateModule } from "@mapiacompany/ngx-translate";
 
 const components = [
@@ -34,6 +34,7 @@ const directives = [
 ];
 
 const pipes = [
+  ToHelperTextPipe
 ];
 
 @NgModule({

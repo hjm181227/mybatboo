@@ -1,20 +1,35 @@
 <div class="page-title">
   내 작물 관리{{ currentCategory.value ? ' > ' + (currentCategory.value | categoryName) : '' }}
+
+  <mp-button
+    label="카테고리 추가" size="xs"
+    variant="weak" color="gray"
+    (click)="addCategory()"
+  >
+    <mp-icon left name="add_circle"></mp-icon>
+  </mp-button>
 </div>
 <div class="category-list" *ngIf="categories$ | async as categories">
   <ng-container *ngFor="let category of categories">
-    <div class="category-wrapper">
-      <mp-button
-        variant="weak"
-        size="m"
-        color="yellow"
-        [label]="category.name | categoryName"
-        [style.border]="'1px solid var(--grayLighter)'"
-        [postfix]="{ text: (category.cnt || 0).toString() }"
-        (click)="openRecordList(category)"
-      >
-        <mp-icon left name="folder"></mp-icon>
-      </mp-button>
+    <div class="category-wrapper" (click)="openRecordList(category)">
+      <div class="category-name">
+        <span>{{category.name | categoryName}} ({{category.cnt || 0}})</span>
+        <mp-icon name="chevron_right" size="24px" color="grayLight"></mp-icon>
+      </div>
+      <div class="unclassified-label" *ngIf="category.name === 'unclassified'">
+        병해 진단 후 카테고리가 설정되지 않은 작물들입니다.
+      </div>
+      <div class="action-buttons" *ngIf="category.name !== 'unclassified'">
+        <mp-button label="수정" size="xs" variant="void" color="gray"
+                   (click)="editCategory(category, $event)"
+        >
+          <mp-icon left name="edit"></mp-icon>
+        </mp-button>
+        <mp-button label="삭제" size="xs" variant="void" color="redLighter"
+                   (click)="deleteCategory(category.id, $event)">
+          <mp-icon left name="delete"></mp-icon>
+        </mp-button>
+      </div>
     </div>
   </ng-container>
 </div>

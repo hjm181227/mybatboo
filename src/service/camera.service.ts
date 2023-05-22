@@ -22,8 +22,8 @@ export class CameraService {
       width: window.innerWidth,
       height: window.innerWidth,
       resultType: CameraResultType.Uri,
-      source: CameraSource.Camera,
-      allowEditing: false
+      source: CameraSource.Prompt,
+      allowEditing: true
     });
 
     return image;

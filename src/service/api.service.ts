@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, Observable, of, tap } from "rxjs";
+import { catchError, map, Observable, tap } from "rxjs";
 import { ParamsBuilder } from "../params.builder";
 
 @Injectable({
@@ -20,7 +20,11 @@ export class ApiService {
   }
 
   // 이미지(capacitor/camera의 Photo)와 디바이스의 geolocation을 서버로 전송
-  public requestDiagnosis({ image, geolocation, cropType }: DiagnosisRequestInput): Observable<ApiResponse<DiagnosisRecord>> {
+  public requestDiagnosis({
+                            image,
+                            geolocation,
+                            cropType
+                          }: DiagnosisRequestInput): Observable<ApiResponse<DiagnosisRecord>> {
     const url = `${this.apiUrl}/crop/diagnosis`;
     const formData = new FormData();
     const headers = new HttpHeaders();
@@ -84,9 +88,42 @@ export class ApiService {
     )
   }
 
+
+  // ////////////////////////
+  // 내 작물관리 (카테고리) 관련 api
+
   public loadCategoryDiagnosisRecords(categoryId: number): Observable<DiagnosisRecord[]> {
     return this.http.get(`${this.apiUrl}/crop/category/record`, { params: ParamsBuilder.from({ categoryId }) }).pipe(
       map(res => (res as ApiResponse<DiagnosisRecord[]>).data)
     )
   }
+
+  public createCategory(categoryName: string): Observable<Category> {
+    return this.http.post(`${this.apiUrl}/crop/category/create`, {}, {
+      params: ParamsBuilder.from({ name: categoryName })
+    }).pipe(
+      map(res => (res as ApiResponse<Category>).data)
+    )
+  }
+
+  public deleteCategory(categoryId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/crop/category/delete`, {
+      params: ParamsBuilder.from({ categoryId })
+    })
+  }
+
+  public updateCategory(categoryId: number, editInfo: { name: string, memo: string }): Observable<any> {
+    return this.http.put(`${this.apiUrl}/crop/category/update`, {}, {
+      params: ParamsBuilder.from({ id: categoryId, changeName: editInfo.name, changeMemo: editInfo.memo })
+    })
+  }
+
+  public loadCategoryByName(name: string) {
+    return this.http.get(`${this.apiUrl}/crop/category/name`, { params: ParamsBuilder.from({ name }) }).pipe(
+      map(res => (res as ApiResponse<Category>).data),
+    )
+  }
+
+  ////
+  //////////////////////////
 }
