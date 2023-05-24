@@ -36,10 +36,9 @@ export class TokenInterceptor implements HttpInterceptor {
             const tokenExpired = [ res.body?.error?.code, res.body?.errors[0]?.code ].some(msgOrCode => errorTypes.includes(msgOrCode));
             if (tokenExpired) {
               const refreshToken = this.storage.get('refreshToken');
-              return this.http.post<ApiResponse<{ accessToken: string }>>('http://15.164.23.13:8080/member/refresh', { refreshToken }).pipe(
-                map((res ) => res.data),
+              return this.http.post<{ message: string, accessToken: string, status: string}>('http://15.164.23.13:8080/member/refresh', { refreshToken }).pipe(
                 map(({ accessToken }) => accessToken),
-                tap(token => this.storage.set('token', token)),
+                tap(token => token && this.storage.set('token', token)),
                 catchError((error) => {
                   if (error instanceof HttpErrorResponse && error.status < 500) {
                     // 토큰 생성 과정에서 생긴 문제인 경우 (500 INTERNAL ERROR는 제외)
@@ -65,8 +64,8 @@ export class TokenInterceptor implements HttpInterceptor {
         console.log('token-interceptor', err, tokenExpired);
         if (tokenExpired) {
           const refreshToken = this.storage.get('refreshToken');
-          return this.http.post<ApiResponse<{ accessToken: string }>>('http://15.164.23.13:8080/member/refresh', { refreshToken }).pipe(
-            map((res ) => res.data?.accessToken),
+          return this.http.post<{ accessToken: string, message: string, status: string}>('http://15.164.23.13:8080/member/refresh', { refreshToken }).pipe(
+            map(({ accessToken } ) => accessToken),
             tap(token => this.storage.set('token', token)),
             catchError((error) => {
               if (error instanceof HttpErrorResponse && error.status < 500) {

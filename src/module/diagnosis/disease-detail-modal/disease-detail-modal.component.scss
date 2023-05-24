@@ -1,0 +1,7 @@
+@import "mixin";
+
+@include set-bottom-sheet-height(var(--full-height));
+
+:host {
+
+}

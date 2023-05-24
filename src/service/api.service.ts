@@ -19,6 +19,9 @@ export class ApiService {
     return this.http.get(url);
   }
 
+  ////////////////////////////////
+  // 작물 진단 관련 api
+
   // 이미지(capacitor/camera의 Photo)와 디바이스의 geolocation을 서버로 전송
   public requestDiagnosis({
                             image,
@@ -67,6 +70,12 @@ export class ApiService {
       map(res => res as ApiResponse<DiagnosisRecord>),
     );
   }
+                              ////
+  ////////////////////////////////
+
+
+  ////////////////////////////////
+  ////  유저 정보 관련 api
 
   public loadCurrentUser(): Observable<User> {
     return this.http.get(`${this.apiUrl}/member/currentUser`).pipe(
@@ -75,16 +84,21 @@ export class ApiService {
     );
   }
 
-  public loadOccurenceInfo(): Observable<ApiResponse<OccurenceInfoList>> {
-    return this.http.get(`${this.apiUrl}/crop/noticeList`).pipe(
-      map(res => res as ApiResponse<OccurenceInfoList>)
-    )
-  }
-
   public loadUserCategories(): Observable<ApiResponse<Category[]>> {
     return this.http.get(`${this.apiUrl}/crop/category/list`).pipe(
       map(res => res as ApiResponse<Category[]>),
       tap(console.log)
+    )
+  }
+                              ////
+  ////////////////////////////////
+
+
+
+  // 병해 발생 정보 api
+  public loadOccurenceInfo(): Observable<ApiResponse<OccurenceInfoList>> {
+    return this.http.get(`${this.apiUrl}/crop/noticeList`).pipe(
+      map(res => res as ApiResponse<OccurenceInfoList>)
     )
   }
 
@@ -124,6 +138,6 @@ export class ApiService {
     )
   }
 
-  ////
+                        ////
   //////////////////////////
 }

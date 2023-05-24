@@ -40,7 +40,10 @@ export class UserEffects implements OnInitEffects {
   loadCurrentUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ngrxUserActions.loadCurrentUser.BEGIN),
-      filter(() => !!this.storage.get('token')),
+      filter(() => {
+        const token = this.storage.get('token');
+        return !!token && token !== 'undefined';
+      }),
       mergeMap(({ context }) =>
         this.api.loadCurrentUser().pipe(
           withLatestFrom(this.store.select(selectCurrentUser)), // 로그인 시도하기 전 유저 정보

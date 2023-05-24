@@ -105,7 +105,7 @@ export class CropManagementComponent extends AbstractBaseComponent {
         tap(() => this.toast.show('카테고리가 삭제되었습니다.')),
         tap(() => this.loader$.next(null)),
       )),
-    )
+    ).subscribe()
   }
 
   categoryNameValidator(): AsyncValidatorFn {

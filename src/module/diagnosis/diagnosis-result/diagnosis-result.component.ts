@@ -44,6 +44,11 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
     }),
     catchError(() => EMPTY),
   );
+  obs$ = combineLatest([
+    this.route.params.pipe(
+      map(({ diagnosisId }) => diagnosisId),
+    ),
+  ])
 
   constructor(
     @Optional() private modalRef: BsModalRef,
@@ -54,12 +59,6 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
   ) {
     super();
   }
-
-  obs$ = combineLatest([
-    this.route.params.pipe(
-      map(({ diagnosisId }) => diagnosisId),
-    ),
-  ])
 
   ngOnInit() {
     this.subscribeOn(
@@ -83,7 +82,9 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
       )
     )
 
-    this.modalRef.setClass('diagnosis-result-modal');
+    if (this.modalRef) {
+      this.modalRef.setClass('diagnosis-result-modal');
+    }
   }
 
   close() {

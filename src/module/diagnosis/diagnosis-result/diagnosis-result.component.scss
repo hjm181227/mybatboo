@@ -19,6 +19,7 @@
     align-items: center;
     padding: 24px;
     background: var(--image-container-bg-color, #fcfcfc);
+    border-bottom: 1px solid var(--grayLightest);
 
     img {
       width: 100%;

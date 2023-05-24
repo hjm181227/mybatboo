@@ -12,6 +12,7 @@ declare interface DiagnosisRecord {
 
 declare interface DiagnosisItem {
   diseaseCode: number,
+  sickKey: string,
   accuracy: number,
   boxX1: number,
   boxX2: number,
@@ -26,10 +27,16 @@ declare interface DiagnosisRequestInput {
 }
 
 declare interface OccurenceInfoList {
-  forecastList: string[];
+  forecastList: OccurenceInfo[];
   forecastListSize: number;
-  warningList: string[];
+  warningList: OccurenceInfo[];
   warningListSize: number;
-  watchList: string[];
+  watchList: OccurenceInfo[];
   watchListSize: number;
+}
+
+declare interface OccurenceInfo {
+  cropName: string,
+  sickNameKor: string,
+  sickKey: string
 }

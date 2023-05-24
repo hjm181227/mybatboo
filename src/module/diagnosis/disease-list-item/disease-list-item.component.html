@@ -3,10 +3,12 @@
   <span>일치율: {{diseaseItem.accuracy}}%</span>
 </div>
 <mp-button
+  *ngIf="isSick"
   label="상세 정보"
   color="gray"
   variant="outline"
   size="xs"
+  (click)="openDiseaseDetailModal()"
 >
   <mp-icon right name="chevron_right" size="20px"></mp-icon>
 </mp-button>

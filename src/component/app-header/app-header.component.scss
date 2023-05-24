@@ -9,6 +9,7 @@
   width: 100%;
   height: $header-height;
   background: #fff;
+  border-bottom: 1px solid var(--grayLightest);
 
   .app-image {
     display: flex;

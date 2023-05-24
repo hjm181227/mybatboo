@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { DiseaseNamePipe } from "../../../pipe/disease-name.pipe";
+import { MpBottomSheetService } from "@mapiacompany/ngx-bootstrap-modal";
+import { NavigateService } from "../../../service/navigate.service";
 
 @Component({
   selector: 'disease-list-item',
@@ -10,9 +12,30 @@ import { DiseaseNamePipe } from "../../../pipe/disease-name.pipe";
     DiseaseNamePipe
   ],
   templateUrl: './disease-list-item.component.html',
-  styleUrls: ['./disease-list-item.component.scss']
+  styleUrls: [ './disease-list-item.component.scss' ]
 })
 export class DiseaseListItem {
   @Input() diseaseItem: DiagnosisItem;
 
+  get isSick() {
+    switch (this.diseaseItem?.diseaseCode) {
+      case 0:
+      case 3:
+      case 6:
+      case 9:
+        return false;
+      default:
+        return true;
+    }
+  }
+
+  constructor(
+    private bottomSheet: MpBottomSheetService,
+    private navigate: NavigateService
+  ) {
+  }
+
+  openDiseaseDetailModal() {
+    this.navigate.openDiseaseDetailModal({ diseaseCode: this.diseaseItem.diseaseCode });
+  }
 }
