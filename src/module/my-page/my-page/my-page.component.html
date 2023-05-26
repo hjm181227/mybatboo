@@ -1,0 +1,22 @@
+<ng-container *ngIf="currentUser$ | async as currentUser">
+  <div class="user-info">
+    <mp-label [textContent]="'내 정보'"></mp-label>
+    <div class="info-wrapper">
+      <div class="info-item">
+        <span>이름</span>
+        <span>{{currentUser.name}}</span>
+      </div>
+      <div class="info-item">
+        <span>이메일</span>
+        <span>{{currentUser.email}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-list">
+    <mp-menu-cell *ngFor="let menu of menus" [label]="menu.label">
+      <mp-icon left [name]="menu.icon" type="outlined"></mp-icon>
+    </mp-menu-cell>
+  </div>
+</ng-container>
+<bottom-tab-bar activeTab="my-page"></bottom-tab-bar>

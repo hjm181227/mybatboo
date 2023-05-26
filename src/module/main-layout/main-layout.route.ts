@@ -1,19 +1,25 @@
 import { Routes } from "@angular/router";
-import { MainLayoutComponent } from "./component/main-layout/main-layout.component";
-import { AuthGuard } from "../../guard/auth-guard.service";
+import { TabBarLayoutComponent } from "./component/main-layout/tab-bar-layout.component";
 
 export const routes: Routes = [
   {
     path: '',
-    component: MainLayoutComponent,
+    component: TabBarLayoutComponent,
     children: [
       {
         path: 'main',
-        loadComponent: () => import('../../page/main-tab/main-tab.component').then(c => c.MainTabComponent)
+        loadComponent: () => import('../../page/main-tab/main-tab.component').then(c => c.MainTabComponent),
+        data: { type: 'home' }
       },
       {
-        path: 'my-crops',
-        loadComponent: () => import('../../module/management/crop-management/crop-management.component').then(c => c.CropManagementComponent)
+        path: 'my-page',
+        loadComponent: () => import('../my-page/my-page/my-page.component').then(c => c.MyPageComponent),
+        data: { tab: 'my-page' }
+      },
+      {
+        path: 'my-page/category',
+        loadComponent: () => import('../../module/management/crop-management/crop-management.component').then(c => c.CropManagementComponent),
+        data: { tab: 'my-page' }
       },
       {
         path: '',
@@ -21,6 +27,5 @@ export const routes: Routes = [
         redirectTo: '/main'
       }
     ],
-    // canActivate: [ AuthGuard ]
   }
 ]

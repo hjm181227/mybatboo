@@ -70,7 +70,8 @@ export class ApiService {
       map(res => res as ApiResponse<DiagnosisRecord>),
     );
   }
-                              ////
+
+  ////
   ////////////////////////////////
 
 
@@ -90,15 +91,39 @@ export class ApiService {
       tap(console.log)
     )
   }
-                              ////
+
+  ////
   ////////////////////////////////
 
+  ////////////////////////////////
+  //// 병해 검색 api
 
+  public searchDisease(input: { cropName: string, keyword: string, page: number, listNum: number }): Observable<DiseaseSearchList> {
+    return this.http.get<ApiResponse<DiseaseSearchList>>(`${this.apiUrl}/crop/sickList`, {
+      params: ParamsBuilder.from({
+        cropName: input.cropName,
+        sickNameKor: input.keyword,
+        displayCount: input.listNum,
+        startPoint: input.page - 1
+      })
+    }).pipe(
+      map(res => res.data),
+    )
+  }
+
+  public loadSickDetail(sickKey: string): Observable<DiseaseInfo> {
+    return this.http.get<ApiResponse<DiseaseInfo>>(`${this.apiUrl}/crop/sickDetail`, { params: ParamsBuilder.from({ sickKey }) }).pipe(
+      map(res => res.data)
+    )
+  }
+
+  ////
+  ////////////////////////////////
 
   // 병해 발생 정보 api
-  public loadOccurenceInfo(): Observable<ApiResponse<OccurenceInfoList>> {
-    return this.http.get(`${this.apiUrl}/crop/noticeList`).pipe(
-      map(res => res as ApiResponse<OccurenceInfoList>)
+  public loadOccurenceInfo(): Observable<OccurenceInfoList> {
+    return this.http.get<ApiResponse<OccurenceInfoList>>(`${this.apiUrl}/crop/noticeList`).pipe(
+      map((res: ApiResponse<OccurenceInfoList>) => res.data)
     )
   }
 
@@ -138,6 +163,6 @@ export class ApiService {
     )
   }
 
-                        ////
+  ////
   //////////////////////////
 }

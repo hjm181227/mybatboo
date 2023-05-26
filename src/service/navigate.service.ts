@@ -21,13 +21,14 @@ export class NavigateService {
     })
   }
 
-  openDiseaseDetailModal(inputs: { diseaseCode?: number, diseaseName?: string, cropName?: string }) {
+  openDiseaseDetailModal(inputs: { diseaseCode?: number, diseaseName?: string, cropName?: string, sickKey?: string }) {
     import('../module/diagnosis/disease-detail-modal/disease-detail-modal.component').then(c => {
       this.bottomSheet.show(c.DiseaseDetailModalComponent, {
         initialState: {
           diseaseCode: inputs.diseaseCode,
           diseaseName: inputs.diseaseName,
-          cropName: inputs.cropName
+          cropName: inputs.cropName,
+          sickKey: inputs.sickKey
         }
       })
     })

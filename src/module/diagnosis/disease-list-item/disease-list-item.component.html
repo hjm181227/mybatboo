@@ -1,6 +1,6 @@
 <div class="disease-info">
   <span>병명: {{diseaseItem.diseaseCode | diseaseName}}</span>
-  <span>일치율: {{diseaseItem.accuracy}}%</span>
+  <span>일치율: {{(diseaseItem.accuracy * 100).toFixed(2)}}%</span>
 </div>
 <mp-button
   *ngIf="isSick"

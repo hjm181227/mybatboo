@@ -49,14 +49,14 @@
     <div class="disease-list">
       <ng-container *ngIf="d.occurenceInfo && selectedOccurenceStep.value">
         <ul>
-          <li *ngFor="let disease of d.occurenceInfo[selectedOccurenceStep.value + 'List']">{{disease}}</li>
+          <li
+            *ngFor="let disease of d.occurenceInfo[selectedOccurenceStep.value + 'List']"
+          >
+            ({{disease.cropName}}) {{disease.sickNameKor}}
+          </li>
         </ul>
       </ng-container>
     </div>
-    <!-- 주의보 -->
-
-    <!-- 예보 -->
-
   </div>
 </ng-container>
 <div class="main-container">
@@ -71,7 +71,7 @@
     <a
       class="category-section"
       *ngIf="categories$ | async as categories"
-      [routerLink]="['/my-crops']"
+      [routerLink]="['/my-page', 'category']"
     >
       <span class="section-title">
         내 작물 관리
@@ -85,12 +85,17 @@
     </a>
   </div>
 
-  <div class="search-section">
-
-  </div>
+  <a
+    mpMenuCell
+    label="병해 정보 검색하기" color="grayDarkest" gap="24px"
+    [routerLink]="['/search']"
+  >
+    <mp-icon adornment name="search"></mp-icon>
+  </a>
 
   <div class="section-wrapper">
     <div class="guide-section"></div>
     <div class="inquiry-section"></div>
   </div>
 </div>
+<bottom-tab-bar activeTab="home"></bottom-tab-bar>

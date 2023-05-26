@@ -17,10 +17,15 @@ import { ArmoryModule, StorageService } from "@mapiacompany/armory";
 import { environment } from "../environments/environment";
 import { ModalModule } from "@mapiacompany/ngx-bootstrap-modal";
 import { AlertService, MpAlertModule } from "@mapiacompany/styled-components";
+import { AuthHandleMiddleware } from "../module/router-extend/auth-handle.middleware";
 
 export function playerFactory() {
   return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
 }
+
+export const ROUTE_INTERCEPTORS = [
+  AuthHandleMiddleware
+]
 
 @NgModule({
   declarations: [
@@ -48,6 +53,7 @@ export function playerFactory() {
     { provide: REDUCERS_TOKEN, useFactory: _getGlobalReducers },
     StorageService,
     ...httpInterceptorProviders,
+    ...ROUTE_INTERCEPTORS,
     provideStyledFontLoaders(),
     {
       provide: APP_INITIALIZER,
@@ -65,7 +71,7 @@ export function playerFactory() {
                   'Material Icons Round',
                 ]
               },
-            });;
+            });
 
             WebFont.load({
               events: true, classes: false,

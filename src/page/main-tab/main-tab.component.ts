@@ -8,6 +8,8 @@ import { map, tap } from "rxjs";
 import { Store } from "@ngrx/store";
 import { GlobalState } from "../../ngrx";
 import { selectCurrentUser } from "../../ngrx/user.state";
+import { selectRouteData } from "../../ngrx/router.selector";
+import { MpMenuCell } from "@mapiacompany/styled-components";
 
 @Component({
   selector: 'app-main-tab',
@@ -15,12 +17,17 @@ import { selectCurrentUser } from "../../ngrx/user.state";
   imports: [
     SyntaxSharedModule,
     BottomTabBarComponent,
-    LottieModule
+    LottieModule,
+    MpMenuCell
   ],
   templateUrl: './main-tab.component.html',
   styleUrls: [ './main-tab.component.scss' ]
 })
 export class MainTabComponent {
+  activeTab$ = this.store$.select(selectRouteData).pipe(
+    tap(console.log),
+    map(({ type }) => type),
+  );
   options: AnimationOptions = {
     path: '/assets/lottie/LottieMap.json',
     loop: false,
@@ -28,7 +35,6 @@ export class MainTabComponent {
   };
   selectedOccurenceStep = new FormControl<'warning' | 'watch' | 'forecast'>('warning');
   occurenceInfo$ = this.api.loadOccurenceInfo().pipe(
-    map(res => res.data),
     tap(({ warningListSize, watchListSize, forecastListSize }) => {
       if (warningListSize > 0) {
         this.selectedOccurenceStep.patchValue('warning');

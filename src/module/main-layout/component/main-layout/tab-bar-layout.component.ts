@@ -11,9 +11,9 @@ import { AppHeaderComponent } from "../../../../component/app-header/app-header.
     BottomTabBarComponent,
     AppHeaderComponent
   ],
-  templateUrl: './main-layout.component.html',
-  styleUrls: ['./main-layout.component.scss']
+  templateUrl: './tab-bar-layout.component.html',
+  styleUrls: ['./tab-bar-layout.component.scss']
 })
-export class MainLayoutComponent {
+export class TabBarLayoutComponent {
 
 }

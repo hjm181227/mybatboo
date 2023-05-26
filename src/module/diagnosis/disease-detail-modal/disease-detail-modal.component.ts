@@ -20,6 +20,7 @@ export class DiseaseDetailModalComponent {
   @Input() diseaseCode: number;
   @Input() diseaseName: string;
   @Input() cropName: string;
+  @Input() sickKey: string;
 
   details$;
 

@@ -44,21 +44,21 @@ export class RegisterComponent {
   ]);
   formErrors = {
     email: {
-      required: 'core.login-modal.email-placeholder',
-      email: 'core.login-modal.email-placeholder'
+      required: '이메일을 입력해주세요',
+      email: '이메일 형식이 올바르지 않습니다'
     },
     password: {
-      required: 'core.login-modal.password-placeholder',
-      minlength: 'core.login-modal.password-min-length'
+      required: '비밀번호를 입력해주세요',
+      minlength: '비밀번호는 6자리 이상 입력해주세요'
     },
     passwordRepeat: {
-      required: 'core.login-modal.password-placeholder',
-      minlength: 'core.login-modal.password-min-length',
-      requiredSameValue: 'core.login-modal.password-mismatch'
+      required: '위의 비밀번호를 다시 입력해주세요.',
+      minlength: '비밀번호는 6자리 이상 입력해주세요',
+      requiredSameValue: '비밀번호가 일치하지 않습니다'
     },
     name: {
-      required: 'register.name-placeholder',
-      maxlength: 'register.name-max-length'
+      required: '이름을 입력해주세요.',
+      maxlength: '이름은 50자 이하로 입력해주세요.'
     }
   };
 

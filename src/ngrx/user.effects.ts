@@ -10,6 +10,7 @@ import { ApiService } from "../service/api.service";
 import { GlobalState } from "./global";
 import { StorageService } from "@mapiacompany/armory";
 import { ToastService } from "../service/toast.service";
+import { UserActions } from "../service/user.action";
 
 @Injectable()
 export class UserEffects implements OnInitEffects {
@@ -87,7 +88,8 @@ export class UserEffects implements OnInitEffects {
     private router: Router,
     private api: ApiService,
     private store: Store<GlobalState>,
-    private toast: ToastService
+    private toast: ToastService,
+    private userActions: UserActions
   ) {
   }
 

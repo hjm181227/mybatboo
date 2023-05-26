@@ -2,6 +2,8 @@
 /// <reference path="./category.d.ts" />
 /// <reference path="./diagnosis.d.ts" />
 /// <reference path="./api-response.d.ts" />
+/// <reference path="./disease.d.ts" />
+/// <reference path="./inquiry.d.ts" />
 
 import {
   MpColor as MpColorType,

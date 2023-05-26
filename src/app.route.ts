@@ -4,14 +4,6 @@ import { mainLayoutMatcher } from "./module/main-layout/main-layout.matcher";
 import { AuthGuard } from "./guard/auth-guard.service";
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: DefaultLayoutComponent,
-  // },
-  // {
-  //   path: 'main',
-  //   loadComponent: () => import('./page/main-tab/main-tab.component').then(c => c.MainTabComponent)
-  // },
   {
     path: '',
     pathMatch: 'full',
@@ -30,7 +22,11 @@ const routes: Routes = [
     matcher: mainLayoutMatcher,
     loadChildren: () => import('./module/main-layout/main-layout.route').then(m => m.routes),
     runGuardsAndResolvers: 'pathParamsOrQueryParamsChange',
-    // canActivate: [ AuthGuard ]
+    canActivate: [ AuthGuard ]
+  },
+  {
+    path: 'search',
+    loadComponent: () => import('./module/search/disease-search/disease-search.component').then(c => c.DiseaseSearchComponent),
   },
   // {
   //   path: 'login',
@@ -39,7 +35,7 @@ const routes: Routes = [
   {
     path: 'diagnosis/:diagnosisId',
     loadComponent: () => import('./module/diagnosis/diagnosis-result/diagnosis-result.component').then(c => c.DiagnosisResultComponent),
-    // canActivate: [ AuthGuard ]
+    canActivate: [ AuthGuard ]
   },
 ];
 
