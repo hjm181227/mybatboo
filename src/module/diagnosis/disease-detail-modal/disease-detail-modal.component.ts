@@ -4,6 +4,9 @@ import { PageHeaderComponent } from "../../shared/component/page-header/page-hea
 import { BsModalRef } from "@mapiacompany/ngx-bootstrap-modal";
 import { ApiService } from "../../../service/api.service";
 import { DiseaseNamePipe } from "../../../pipe/disease-name.pipe";
+import { AbstractBaseComponent, AsyncStatus, bindStatus, observeProperty$ } from "@mapiacompany/armory";
+import { filter } from "rxjs/operators";
+import { BehaviorSubject, Observable, switchMap, tap } from "rxjs";
 
 @Component({
   selector: 'app-disease-detail-modal',
@@ -16,17 +19,28 @@ import { DiseaseNamePipe } from "../../../pipe/disease-name.pipe";
   templateUrl: './disease-detail-modal.component.html',
   styleUrls: ['./disease-detail-modal.component.scss']
 })
-export class DiseaseDetailModalComponent {
+export class DiseaseDetailModalComponent extends AbstractBaseComponent {
   @Input() diseaseCode: number;
   @Input() diseaseName: string;
   @Input() cropName: string;
   @Input() sickKey: string;
 
-  details$;
+  status$ = new BehaviorSubject(AsyncStatus.INITIAL);
+  sickDetail$: Observable<DiseaseDetail> = observeProperty$(this, 'sickKey').pipe(
+    filter(sickKey => !!sickKey),
+    switchMap(sickKey => this.api.loadSickDetail(sickKey).pipe(
+      bindStatus(this.status$),
+      tap(console.log)
+    ))
+  );
 
   constructor(
     public modalRef: BsModalRef,
     private api: ApiService
   ) {
+    super();
+  }
+
+  ngOnInit() {
   }
 }

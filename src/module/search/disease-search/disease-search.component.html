@@ -1,4 +1,4 @@
-<page-header height="64px" [title]="'병해 정보 검색'">
+<page-header height="64px" [title]="'병해 도감'">
   <mp-icon left name="arrow_back" (click)="close()"></mp-icon>
 </page-header>
 <form class="input-section"
@@ -26,12 +26,14 @@
   >
   </mp-input>
 </form>
-<div class="content-section">
-  <ng-container *ngIf="searchResult$ | async as result">
-    <mp-label [textContent]="'검색 결과 (' + result?.totalCnt + ')'" color="grayDark"/>
+<div class="content-section" *ngIf="{
+  result: searchResult$ | async,
+  status: searchStatus$ | async
+} as d">
+    <mp-label [textContent]="'검색 결과 (' + searchResult.totalCnt + ')'" color="grayDark"/>
     <mp-table
       colGap="4px"
-      rowGap="8px"
+      rowGap="12px"
       rowPadding="8px"
       bodyPadding="12px"
       [listNum]="10"
@@ -43,27 +45,23 @@
         <mp-col [flex]="1" align="center">작물명</mp-col>
         <mp-col [flex]="2" align="center">병해명 (영어)</mp-col>
       </mp-row>
-      <mp-row *ngFor="let disease of result?.sickList">
+      <mp-row
+        *ngFor="let disease of searchResult.sickList; trackBy: trackByFn"
+        (click)="openDiseaseDetailModal(disease)"
+      >
         <mp-col><img [src]="disease.thumbImg" [alt]="disease.sickNameKor"></mp-col>
         <mp-col align="center">{{disease.cropName}}</mp-col>
         <mp-col align="center">{{disease.sickNameKor}} ({{disease.sickNameEng}})</mp-col>
       </mp-row>
+
+      <mp-blank
+        *ngIf="searchResult.totalCnt === 0"
+        title="검색 결과가 없습니다."
+        minHeight="400px"
+      ></mp-blank>
     </mp-table>
     <mp-pagination bottom
-                   [result]="{ total: result.totalCnt, listNum: listNum, current: loader$.value }"
+                   [result]="{ total: searchResult.totalCnt, listNum: listNum, current: loader$.value }"
                    (changePage)="loader$.next($event)"
     ></mp-pagination>
-
-    <ng-container *ngIf="result.totalCnt === 0">
-      <mp-blank
-        title="검색 결과가 없습니다."
-        minHeight="200px"
-      ></mp-blank>
-    </ng-container>
-  </ng-container>
-
-  <ng-template #beforeSearch>
-    <div class="empty-placeholder">
-    </div>
-  </ng-template>
 </div>

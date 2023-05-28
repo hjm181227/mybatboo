@@ -8,12 +8,51 @@
     variant="void"
     (click)="modalRef.hide()"
   ></mp-icon-button>
-  <mp-text center>{{diseaseCode ? (diseaseCode | diseaseName) : diseaseName}}</mp-text>
+  <mp-text center>{{diseaseName ? diseaseName : (diseaseCode ? (diseaseCode | diseaseName) : diseaseName)}}</mp-text>
   <mp-button
     right
     variant="outline"
-    color="gray"
+    color="greenDark"
     size="s"
     [label]="'관련 농약'"
-  ></mp-button>
+  >
+    <mp-icon left type="outlined" name="medication"></mp-icon>
+  </mp-button>
 </page-header>
+<ng-container *ngIf="{
+  status: status$ | async,
+  sickDetail: sickDetail$ | async
+} as d">
+  <div class="info-section">
+    <div class="info-wrapper">
+      <div class="title">사진정보</div>
+      <div class="image-section">
+        <div *ngFor="let img of d.sickDetail?.imageList" class="image-wrapper">
+          <img [src]="img.imagePath" [alt]="img.imageTitle"/>
+          <span>{{img.imageTitle}}</span>
+        </div>
+      </div>
+    </div>
+    <mp-divider height="28px" direction="horizontal" color="grayLighter"></mp-divider>
+    <div class="info-wrapper">
+      <div class="title">발생환경</div>
+      <div class="description">
+        <mp-text [innerHtml]="d.sickDetail?.developmentCondition"/>
+      </div>
+    </div>
+    <mp-divider height="28px" direction="horizontal" color="grayLighter"></mp-divider>
+    <div class="info-wrapper">
+      <div class="title">증상</div>
+      <div class="description">
+        <mp-text [innerHtml]="d.sickDetail?.symptoms"/>
+      </div>
+    </div>
+    <mp-divider height="28px" direction="horizontal" color="grayLighter"></mp-divider>
+    <div class="info-wrapper">
+      <div class="title">방제방법</div>
+      <div class="description">
+        <mp-text [innerHtml]="d.sickDetail?.preventionMethod"/>
+      </div>
+    </div>
+  </div>
+</ng-container>

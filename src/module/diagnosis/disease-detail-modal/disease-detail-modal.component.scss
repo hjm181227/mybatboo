@@ -1,7 +1,58 @@
 @import "mixin";
+@import "@mapiacompany/style-utils/utils";
 
 @include set-bottom-sheet-height(var(--full-height));
 
 :host {
+  .image-section {
+    display: flex;
+    overflow-x: scroll;
+    gap: 8px;
+    width: calc(100vw - 48px);
 
+    .image-wrapper {
+      position: relative;
+      display: block;
+      width: 100%;
+
+      img {
+        width: 100%;
+        min-width: 150px;
+        max-height: 200px;
+        aspect-ratio: 1;
+      }
+
+      span {
+        display: block;
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        @include typo(13px, var(--white), 500);
+      }
+    }
+  }
+
+  .info-section {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+
+    .info-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      .title {
+        @include typo(16px, var(--grayDarker), 600);
+        padding: 0 0 0 6px;
+        margin-bottom: 12px;
+        border-left: 4px solid var(--green);
+      }
+
+      .description {
+        @include typo(15px, var(--gray), 500);
+      }
+    }
+  }
 }

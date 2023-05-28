@@ -111,8 +111,8 @@ export class ApiService {
     )
   }
 
-  public loadSickDetail(sickKey: string): Observable<DiseaseInfo> {
-    return this.http.get<ApiResponse<DiseaseInfo>>(`${this.apiUrl}/crop/sickDetail`, { params: ParamsBuilder.from({ sickKey }) }).pipe(
+  public loadSickDetail(sickKey: string): Observable<DiseaseDetail> {
+    return this.http.get<ApiResponse<DiseaseDetail>>(`${this.apiUrl}/crop/sickDetail`, { params: ParamsBuilder.from({ sickKey }) }).pipe(
       map(res => res.data)
     )
   }

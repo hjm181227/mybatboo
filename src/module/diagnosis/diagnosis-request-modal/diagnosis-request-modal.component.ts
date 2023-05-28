@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AbstractBaseComponent } from "@mapiacompany/armory";
+import { AbstractBaseComponent, AsyncStatus, bindStatus } from "@mapiacompany/armory";
 import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { Photo } from "@capacitor/camera";
 import { FormControl } from "@angular/forms";
@@ -7,7 +7,7 @@ import { GlobalState } from "../../../ngrx";
 import { Store } from "@ngrx/store";
 import { selectRecentCropType } from "../../../ngrx/user.state";
 import { filter } from "rxjs/operators";
-import { map, tap } from "rxjs";
+import { BehaviorSubject, catchError, map, tap } from "rxjs";
 import { PageHeaderComponent } from "../../shared/component/page-header/page-header.component";
 import { BsModalRef, BsModalService } from "@mapiacompany/ngx-bootstrap-modal";
 import { ApiService } from "../../../service/api.service";
@@ -16,6 +16,8 @@ import { DiagnosisService } from "../../../service/diagnosis.service";
 import { Geolocation } from "@capacitor/geolocation";
 import { CameraService } from "../../../service/camera.service";
 import { Router } from "@angular/router";
+import { Toast } from "ngx-toastr";
+import { ToastService } from "../../../service/toast.service";
 
 @Component({
   selector: 'app-diagnosis-request-modal',
@@ -33,6 +35,8 @@ export class DiagnosisRequestModalComponent extends AbstractBaseComponent {
 
   cropType = new FormControl<number>(null);
 
+  status$ = new BehaviorSubject(AsyncStatus.INITIAL);
+
   constructor(
     private store$: Store<GlobalState>,
     private modalRef: BsModalRef,
@@ -40,7 +44,8 @@ export class DiagnosisRequestModalComponent extends AbstractBaseComponent {
     private diagnosisService: DiagnosisService,
     private cameraService: CameraService,
     private router: Router,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private toast: ToastService
   ) {
     super();
   }
@@ -70,6 +75,7 @@ export class DiagnosisRequestModalComponent extends AbstractBaseComponent {
   }
 
   request() {
+    this.status$.next(AsyncStatus.PENDING);
     Geolocation.getCurrentPosition().then(position => {
       const { latitude, longitude } = position.coords;
       this.cameraService.convertPhotoToFile(this.cropPhoto).then(image => {
@@ -81,6 +87,7 @@ export class DiagnosisRequestModalComponent extends AbstractBaseComponent {
 
         this.api.requestDiagnosis(requestInput).pipe(
           tap(console.log),
+          tap(() => this.status$.next(AsyncStatus.FULFILLED)),
           map((res: ApiResponse<DiagnosisRecord>) => res.data),
           tap(res => {
             // this.router.navigate([ '/diagnosis', res.recordId ]);
@@ -92,9 +99,19 @@ export class DiagnosisRequestModalComponent extends AbstractBaseComponent {
                 }
               })
             })
+          }),
+          catchError(err => {
+            if (err.code === 'NOTHING_DETECTED') {
+              this.toast.show('검출할 대상을 찾지 못했습니다. 다시 시도해주세요.');
+              this.modalRef.hide();
+            }
+            return err;
           })
         ).subscribe();
+      }).catch(err => {
+        console.log(err);
+        this.status$.next(AsyncStatus.REJECTED);
       });
-    });
+    }).catch(err => this.status$.next(AsyncStatus.REJECTED));
   }
 }

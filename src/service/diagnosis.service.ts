@@ -39,7 +39,7 @@ export class DiagnosisService {
         //   location.next({ latitude, longitude });
         // });
       }
-    })
+    }).catch(err => console.log(err))
 
     combineLatest([
       imageFile.pipe(

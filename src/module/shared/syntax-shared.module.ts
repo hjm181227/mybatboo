@@ -14,6 +14,7 @@ import {
 } from "@mapiacompany/styled-components";
 import { ArmoryModule, LetDirective, ToHelperTextPipe } from "@mapiacompany/armory";
 import { TranslateModule } from "@mapiacompany/ngx-translate";
+import { IonicModule } from "@ionic/angular";
 
 const components = [
   MpIcon,
@@ -44,6 +45,7 @@ const pipes = [
     CommonModule,
     RouterModule,
     FormsModule,
+    IonicModule,
     ReactiveFormsModule,
     TranslateModule,
     ...components,
@@ -55,6 +57,7 @@ const pipes = [
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
+    IonicModule,
     ...components,
     ...directives,
     ...pipes

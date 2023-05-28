@@ -17,6 +17,12 @@ import { NavigateService } from "../../../service/navigate.service";
 export class DiseaseListItem {
   @Input() diseaseItem: DiagnosisItem;
 
+  constructor(
+    private bottomSheet: MpBottomSheetService,
+    private navigate: NavigateService
+  ) {
+  }
+
   get isSick() {
     switch (this.diseaseItem?.diseaseCode) {
       case 0:
@@ -29,13 +35,10 @@ export class DiseaseListItem {
     }
   }
 
-  constructor(
-    private bottomSheet: MpBottomSheetService,
-    private navigate: NavigateService
-  ) {
-  }
-
   openDiseaseDetailModal() {
-    this.navigate.openDiseaseDetailModal({ diseaseCode: this.diseaseItem.diseaseCode });
+    this.navigate.openDiseaseDetailModal({
+      sickKey: this.diseaseItem.sickKey,
+      diseaseCode: this.diseaseItem.diseaseCode
+    });
   }
 }

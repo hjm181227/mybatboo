@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Capacitor } from "@capacitor/core";
-import { catchError, Observable, tap } from "rxjs";
 import { ApiService } from "./api.service";
+import { Directory, Filesystem } from "@capacitor/filesystem";
 
 @Injectable({
   providedIn: 'root'
@@ -14,22 +14,28 @@ export class CameraService {
 
   constructor(
     public api: ApiService,
-  ) {}
+  ) {
+  }
 
   takePicture(): Promise<Photo | void> {
     const image = Camera.getPhoto({
-      quality: 90,
-      width: window.innerWidth,
-      height: window.innerWidth,
+      quality: 100,
+      width: window.innerWidth > 640 ? 640 : window.innerWidth,
+      height: window.innerWidth > 640 ? 640 : window.innerWidth,
       resultType: CameraResultType.Uri,
       source: CameraSource.Prompt,
-      allowEditing: true
+      promptLabelPicture: '사진 촬영',
+      promptLabelPhoto: '앨범에서 선택',
+      promptLabelHeader: '작물 사진',
+      promptLabelCancel: '취소',
+      allowEditing: false,
     });
+
+    image.then(image => console.log(image));
 
     return image;
 
-    let imgFile: Promise<File>
-
+    let imgFile: Promise<File>;
 
 
     return image.then(image => {
@@ -45,10 +51,16 @@ export class CameraService {
 
     // Can be set to the src of an image now
   }
+
   async convertPhotoToFile(photo: Photo): Promise<File> {
     const base64Data = await this.getBase64Data(photo);
 
     const fileName = `image_${new Date().getTime()}.jpg`;
+    await Filesystem.writeFile({
+      data: base64Data!,
+      path: fileName,
+      directory: Directory.Documents
+    });
     const contentType = this.getContentType(base64Data);
 
     const byteCharacters = atob(base64Data);
@@ -73,11 +85,11 @@ export class CameraService {
   getBase64Data(photo: Photo): Promise<string> {
     const isWebPlatform = Capacitor.getPlatform() === 'web';
 
-    if (isWebPlatform) {
-      return fetch(photo.webPath).then(res => res.blob()).then(blob => this.readFileAsBase64(blob));
-    } else {
-      return this.readFileAsBase64(photo);
-    }
+    // if (isWebPlatform) {
+    return fetch(photo.webPath).then(res => res.blob()).then(blob => this.readFileAsBase64(blob));
+    // } else {
+    //   return this.readFileAsBase64(photo);
+    // }
   }
 
   readFileAsBase64(file: any): Promise<string> {

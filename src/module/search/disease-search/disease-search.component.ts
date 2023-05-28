@@ -5,11 +5,11 @@ import { ApiService } from "../../../service/api.service";
 import { PageHeaderComponent } from "../../shared/component/page-header/page-header.component";
 import { FormControl, FormGroup } from "@angular/forms";
 import { MpBlank, MpInput, MpLabel } from "@mapiacompany/styled-components";
-import { BehaviorSubject, Observable, switchMap } from "rxjs";
-import { filter } from "rxjs/operators";
+import { BehaviorSubject, Observable, switchMap, tap } from "rxjs";
 import { MpBottomPagination } from "@mapiacompany/styled-components/pagination";
 import { CropNamePipe } from "../../../pipe/crop-name.pipe";
 import { MpCol, MpHeadDirective, MpRow, MpTable } from "@mapiacompany/styled-components/table";
+import { NavigateService } from "../../../service/navigate.service";
 
 @Component({
   selector: 'app-disease-search',
@@ -40,6 +40,10 @@ export class DiseaseSearchComponent extends AbstractBaseComponent {
   listNum = 6;
   loader$ = new BehaviorSubject(1);
   searchStatus$ = new BehaviorSubject(AsyncStatus.INITIAL);
+  searchResult: DiseaseSearchList = {
+    totalCnt: 0,
+    sickList: []
+  }
   searchResult$: Observable<DiseaseSearchList> = this.loader$.pipe(
     // filter(() => {
     //   const { keyword, cropName } = this.formGroup.value;
@@ -54,18 +58,32 @@ export class DiseaseSearchComponent extends AbstractBaseComponent {
         listNum: this.listNum,
         page
       }).pipe(
-        bindStatus(this.searchStatus$)
+        bindStatus(this.searchStatus$),
+        tap(result => this.searchResult = result)
       )
     }),
   )
 
   constructor(
-    private api: ApiService
+    private api: ApiService,
+    private navigate: NavigateService
   ) {
     super();
   }
 
   close() {
     history.back();
+  }
+
+  trackByFn(index: number, disease: any) {
+    return disease.sickKey;
+  }
+
+  openDiseaseDetailModal(disease: DiseaseSearchItem) {
+    this.navigate.openDiseaseDetailModal({
+      sickKey: disease.sickKey,
+      diseaseName: disease.sickNameKor,
+      cropName: disease.cropName,
+    });
   }
 }

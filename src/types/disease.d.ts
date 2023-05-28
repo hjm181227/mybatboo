@@ -1,4 +1,4 @@
-declare interface DiseaseInfo {
+declare interface DiseaseDetail {
   developmentCondition: string,
   symptoms: string,
   preventionMethod: string,
@@ -11,11 +11,13 @@ declare interface DiseaseInfo {
 
 declare interface DiseaseSearchList {
   totalCnt: number,
-  sickList: {
-    sickKey: string,
-    sickNameKor: string,
-    sickNameEng: string,
-    cropName: string,
-    thumbImg: string
-  }[]
+  sickList: DiseaseSearchItem[]
+}
+
+declare interface DiseaseSearchItem {
+  sickKey: string,
+  sickNameKor: string,
+  sickNameEng: string,
+  cropName: string,
+  thumbImg: string
 }
