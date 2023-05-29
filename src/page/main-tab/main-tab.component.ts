@@ -10,6 +10,8 @@ import { GlobalState } from "../../ngrx";
 import { selectCurrentUser } from "../../ngrx/user.state";
 import { selectRouteData } from "../../ngrx/router.selector";
 import { MpMenuCell } from "@mapiacompany/styled-components";
+import { NavigateService } from "../../service/navigate.service";
+import { ToastService } from "../../service/toast.service";
 
 @Component({
   selector: 'app-main-tab',
@@ -54,7 +56,18 @@ export class MainTabComponent {
 
   constructor(
     private api: ApiService,
-    private store$: Store<GlobalState>
+    private store$: Store<GlobalState>,
+    private navigate: NavigateService,
+    private toast: ToastService
   ) {
+  }
+
+  openDiseaseDetail(disease: { sickKey: string, sickNameKor: string, cropName: string }) {
+    const { sickKey, sickNameKor, cropName } = disease;
+    if (!sickKey) {
+      this.toast.show('등록된 병해 상세 정보가 없습니다.');
+      return;
+    }
+    this.navigate.openDiseaseDetailModal({ sickKey, diseaseName: sickNameKor, cropName });
   }
 }

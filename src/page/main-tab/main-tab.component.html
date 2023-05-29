@@ -51,6 +51,7 @@
         <ul>
           <li
             *ngFor="let disease of d.occurenceInfo[selectedOccurenceStep.value + 'List']"
+            (click)="openDiseaseDetail(disease)"
           >
             ({{disease.cropName}}) {{disease.sickNameKor}}
           </li>
@@ -70,7 +71,7 @@
     </div>
     <a
       class="category-section"
-      *ngIf="categories$ | async as categories"
+      *ngLet="categories$ | async as categories"
       [routerLink]="['/my-page', 'category']"
     >
       <span class="section-title">
