@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { PageHeaderComponent } from "../../shared/component/page-header/page-header.component";
-import { BsModalRef } from "@mapiacompany/ngx-bootstrap-modal";
+import { BsModalRef, MpBottomSheetService } from "@mapiacompany/ngx-bootstrap-modal";
 import { ApiService } from "../../../service/api.service";
 import { DiseaseNamePipe } from "../../../pipe/disease-name.pipe";
 import { AbstractBaseComponent, AsyncStatus, bindStatus, observeProperty$ } from "@mapiacompany/armory";
 import { filter } from "rxjs/operators";
 import { BehaviorSubject, Observable, switchMap, tap } from "rxjs";
+import { PesticideListModalComponent } from "../pesticide-list-modal/pesticide-list-modal.component";
 
 @Component({
   selector: 'app-disease-detail-modal',
@@ -36,11 +37,21 @@ export class DiseaseDetailModalComponent extends AbstractBaseComponent {
 
   constructor(
     public modalRef: BsModalRef,
-    private api: ApiService
+    private api: ApiService,
+    private bottomSheet: MpBottomSheetService,
   ) {
     super();
   }
 
   ngOnInit() {
+  }
+
+  openPesticideListModal() {
+    this.bottomSheet.show(PesticideListModalComponent, {
+      initialState: {
+        cropName: this.cropName,
+        diseaseName: this.diseaseName
+      }
+    })
   }
 }

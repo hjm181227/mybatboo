@@ -7,7 +7,8 @@ declare interface DiagnosisRecord {
   userLongitude: number,
   userLatitude: number,
   regDate: Date,
-  imagePath: string
+  imagePath: string,
+  categoryId: number
 }
 
 declare interface DiagnosisItem {
@@ -39,4 +40,11 @@ declare interface OccurenceInfo {
   cropName: string,
   sickNameKor: string,
   sickKey: string
+}
+
+declare interface DiagnosisRecordMemo {
+  id: number,
+  regDt: Date,
+  updateDt: Date,
+  contents: string
 }

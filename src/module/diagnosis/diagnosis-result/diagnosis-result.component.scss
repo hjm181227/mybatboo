@@ -42,6 +42,10 @@
       align-items: center;
       gap: 12px;
       @include typo(13px, var(--grayDark));
+
+      mp-button {
+        margin-left: auto;
+      }
     }
 
     .disease-list {

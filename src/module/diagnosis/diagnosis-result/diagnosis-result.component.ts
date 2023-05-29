@@ -1,10 +1,10 @@
 import { Component, ElementRef, Input, Optional, Renderer2, RendererStyleFlags2 } from '@angular/core';
 import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { ApiService } from "../../../service/api.service";
-import { BehaviorSubject, catchError, combineLatest, EMPTY, iif, map, of, switchMap, tap } from "rxjs";
+import { BehaviorSubject, catchError, EMPTY, iif, map, of, switchMap, tap } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { AbstractBaseComponent } from "@mapiacompany/armory";
-import { BsModalRef } from "@mapiacompany/ngx-bootstrap-modal";
+import { BsModalRef, MpBottomSheetService } from "@mapiacompany/ngx-bootstrap-modal";
 import { PageHeaderComponent } from "../../shared/component/page-header/page-header.component";
 import { FastAverageColor, FastAverageColorResult } from "fast-average-color";
 import { filter } from "rxjs/operators";
@@ -12,6 +12,9 @@ import { CropNamePipe } from "../../../pipe/crop-name.pipe";
 import { CropTypeBadge } from "../../../component/crop-type-badge/crop-type-badge.component";
 import { DiseaseListItem } from "../disease-list-item/disease-list-item.component";
 import { MpCallout } from "@mapiacompany/styled-components";
+import { RecordMemoListComponent } from "../record-memo-list/record-memo-list.component";
+import { CategoryNamePipe } from "../../../pipe/category-name.pipe";
+import { CategoryChangeModal } from "../category-change-modal/category-change-modal.component";
 
 @Component({
   selector: 'app-diagnosis-result',
@@ -22,7 +25,8 @@ import { MpCallout } from "@mapiacompany/styled-components";
     CropNamePipe,
     CropTypeBadge,
     DiseaseListItem,
-    MpCallout
+    MpCallout,
+    CategoryNamePipe
   ],
   templateUrl: './diagnosis-result.component.html',
   styleUrls: [ './diagnosis-result.component.scss' ]
@@ -44,18 +48,14 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
     }),
     catchError(() => EMPTY),
   );
-  obs$ = combineLatest([
-    this.route.params.pipe(
-      map(({ diagnosisId }) => diagnosisId),
-    ),
-  ])
 
   constructor(
     @Optional() private modalRef: BsModalRef,
     private api: ApiService,
     private route: ActivatedRoute,
     private renderer: Renderer2,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private bottomSheet: MpBottomSheetService
   ) {
     super();
   }
@@ -73,8 +73,9 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
             map(({ diagnosisId }) => +diagnosisId)
           )
         ).pipe(
-          switchMap(diagnosisId => this.api.getDiagnosisResult(diagnosisId)),
-          map(res => res.data)
+          switchMap(diagnosisId => this.api.getDiagnosisResult(diagnosisId).pipe(
+            map(record => ({ ...record, id: diagnosisId }))
+          ))
         )
       ).pipe(
         map(res => this.diagnosisResult$.next(res)),
@@ -93,5 +94,25 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
     } else {
       history.back();
     }
+  }
+
+  openMemoList() {
+    if (!this.diagnosisResult$.value) {
+      return;
+    }
+
+    this.bottomSheet.show(RecordMemoListComponent, {
+      initialState: {
+        recordId: this.diagnosisResult$.value.id
+      }
+    });
+  }
+
+  changeCategory() {
+    this.bottomSheet.show(CategoryChangeModal, {
+      initialState: {
+        diagnosisId: this.diagnosisResult$.value.id
+      },
+    })
   }
 }

@@ -24,9 +24,7 @@ export class CropManagementComponent extends AbstractBaseComponent {
   loader$ = new BehaviorSubject<void>(null);
   status$ = new BehaviorSubject(AsyncStatus.INITIAL);
   categories$ = this.loader$.pipe(
-    switchMap(() => this.api.loadUserCategories().pipe(
-      map(res => res.data)
-    ))
+    switchMap(() => this.api.loadUserCategories())
   );
 
   currentCategory = new FormControl<string>(null);

@@ -1,0 +1,56 @@
+<page-header height="64px" [title]="'메모 상세'">
+  <mp-icon left name="close" (click)="close()"></mp-icon>
+</page-header>
+<div class="content">
+  <div class="date-wrapper">
+    <span>최종 수정일: {{memo.updateDt | date: 'yyyy.MM.dd HH:mm'}}</span>
+    <span *ngIf="editMode">* 내용 수정중</span>
+  </div>
+  <mp-text
+    *ngIf="!editMode"
+    [innerHtml]="memo?.contents"
+  ></mp-text>
+  <mp-textarea
+    *ngIf="editMode"
+    [formControl]="contents"
+    autofocus="true"
+    height="300px"
+    padding="14px"
+    [placeholder]="'메모 내용을 입력해주세요'"
+    backgroundColor="white"
+    boxShadow="0px 2px 4px 0px rgba(20, 20, 20, 0.02), 0px 0px 0px 1px rgba(0, 0, 0, 0.08)"
+  ></mp-textarea>
+</div>
+<div class="button-wrapper">
+  <mp-button
+    *ngIf="!editMode"
+    variant="weak"
+    size="s"
+    color="red"
+    label="삭제"
+    [loading]="(status$ | async).pending"
+    (click)="delete()"
+  >
+    <mp-icon left name="delete"></mp-icon>
+  </mp-button>
+  <mp-button
+    *ngIf="editMode"
+    variant="weak"
+    size="s"
+    color="gray"
+    label="취소"
+    (click)="editMode = false"
+  >
+    <mp-icon left name="undo"></mp-icon>
+  </mp-button>
+  <mp-button
+    variant="weak"
+    size="s"
+    color="green"
+    label="내용 수정"
+    [loading]="(status$ | async).pending"
+    (click)="editContent()"
+  >
+    <mp-icon left name="edit"></mp-icon>
+  </mp-button>
+</div>

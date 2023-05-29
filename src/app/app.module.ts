@@ -111,16 +111,15 @@ export class AppModule {
         this.modalService._hideModal();
       } else {
         // 뒤로가기 할 history가 남아있는 경우 뒤로가기
-        if (window.history.length > 1) {
-          window.history.back();
+        if (window.location.pathname === '/main') {
+          if (data.timestamp < 1000) {
+            App.exitApp();
+          } else {
+            this.toast.show('뒤로가기 버튼을 한번 더 누르면 종료됩니다.');
+          }
         } else {
-          // 현재 경로가 '/main' 이고 1초 내에 처음 이 조건에 도달한 경우에는 toast 띄우고 두번째 도달하면 앱 종료
-          if (window.location.pathname === '/main') {
-            if (data.timestamp < 1000) {
-              App.exitApp();
-            } else {
-              this.toast.show('뒤로가기 버튼을 한번 더 누르면 종료됩니다.');
-            }
+          if (window.history.length > 1) {
+            window.history.back();
           }
         }
       }

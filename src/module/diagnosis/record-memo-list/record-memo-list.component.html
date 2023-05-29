@@ -1,0 +1,48 @@
+<page-header height="62px">
+  <mp-icon-button
+    left
+    size="m"
+    iconName="close" iconSize="16px"
+    borderRadius="8px"
+    color="gray"
+    variant="void"
+    (click)="close()"
+  ></mp-icon-button>
+  <mp-text center>작물 일지</mp-text>
+  <mp-button
+    right
+    variant="outline"
+    color="gray"
+    size="s"
+    [label]="'메모 추가'"
+    (click)="addMemo()"
+  >
+    <mp-icon left name="edit"></mp-icon>
+  </mp-button>
+</page-header>
+<ng-container *ngIf="{memoList: memoList$ | async} as d">
+  <mp-table
+    colGap="4px"
+    rowGap="12px"
+    rowPadding="12px 8px"
+    bodyPadding="12px"
+    [listNum]="10"
+    [bodyColor]="'white'"
+  >
+    <mp-row head>
+      <mp-col width="150px" align="center">내용</mp-col>
+      <mp-col [flex]="1" align="center">작성일</mp-col>
+      <mp-col [flex]="1" align="center">최종 수정일</mp-col>
+    </mp-row>
+    <mp-row *ngFor="let memo of d.memoList" (click)="openMemoDetail(memo)">
+      <mp-col class="memo-content">{{memo.contents}}</mp-col>
+      <mp-col align="right">{{memo.regDt | date:'yyyy.MM.dd HH:mm' }}</mp-col>
+      <mp-col align="right">{{memo.updateDt | date:'yyyy.MM.dd HH:mm'}}</mp-col>
+    </mp-row>
+    <mp-blank
+      *ngIf="d.memoList?.length === 0"
+      minHeight="300px"
+      title="작물에 대한 기록을 메모로 남겨보세요!"
+    ></mp-blank>
+  </mp-table>
+</ng-container>

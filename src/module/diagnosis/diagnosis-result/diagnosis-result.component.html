@@ -1,5 +1,16 @@
 <page-header height="64px" [title]="'진단 결과'">
   <mp-icon left name="arrow_back" (click)="close()"></mp-icon>
+  <mp-icon-button
+    right
+    iconName="note_alt"
+    iconType="outlined"
+    iconSize="24px"
+    size="m"
+    variant="weak"
+    borderRadius="6px"
+    color="grayDark"
+    (click)="openMemoList()"
+  ></mp-icon-button>
 </page-header>
 <ng-container *ngIf="diagnosisResult$ | async as result">
   <div class="crop-image" *ngLet="bgColor$ | async as bgColor">
@@ -16,6 +27,15 @@
       <!--                size="s"-->
       <!--      ></mp-badge>-->
       <span>{{ result.regDate | date: 'yyyy.MM.dd HH:mm' }}</span>
+      <mp-button
+        size="xs"
+        variant="outline"
+        [label]="'카테고리 변경'"
+        color="grayDark"
+        (click)="changeCategory()"
+      >
+        <mp-icon right name="chevron_right" type="outlined"></mp-icon>
+      </mp-button>
     </div>
     <div class="disease-list">
       <div class="disease-wrapper">

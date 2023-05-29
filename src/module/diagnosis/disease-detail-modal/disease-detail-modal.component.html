@@ -1,28 +1,29 @@
-<page-header height="62px">
-  <mp-icon-button
-    left
-    size="m"
-    iconName="close" iconSize="16px"
-    borderRadius="8px"
-    color="gray"
-    variant="void"
-    (click)="modalRef.hide()"
-  ></mp-icon-button>
-  <mp-text center>{{diseaseName ? diseaseName : (diseaseCode ? (diseaseCode | diseaseName) : diseaseName)}}</mp-text>
-  <mp-button
-    right
-    variant="outline"
-    color="greenDark"
-    size="s"
-    [label]="'관련 농약'"
-  >
-    <mp-icon left type="outlined" name="medication"></mp-icon>
-  </mp-button>
-</page-header>
 <ng-container *ngIf="{
   status: status$ | async,
   sickDetail: sickDetail$ | async
 } as d">
+  <page-header height="62px">
+    <mp-icon-button
+      left
+      size="m"
+      iconName="close" iconSize="16px"
+      borderRadius="8px"
+      color="gray"
+      variant="void"
+      (click)="modalRef.hide()"
+    ></mp-icon-button>
+    <mp-text center>{{diseaseName ? diseaseName : (diseaseCode ? (diseaseCode | diseaseName) : diseaseName)}}</mp-text>
+    <mp-button
+      right
+      variant="outline"
+      color="greenDark"
+      size="s"
+      [label]="'관련 농약'"
+      (click)="openPesticideListModal()"
+    >
+      <mp-icon left type="outlined" name="medication"></mp-icon>
+    </mp-button>
+  </page-header>
   <div class="info-section">
     <div class="info-wrapper">
       <div class="title">사진정보</div>

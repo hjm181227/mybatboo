@@ -52,7 +52,7 @@ export class ApiService {
     );
   }
 
-  public getDiagnosisResult(recordId: number): Observable<ApiResponse<DiagnosisRecord>> {
+  public getDiagnosisResult(recordId: number): Observable<DiagnosisRecord> {
     // return of({
     //   cropType: CropType.pepper,
     //   diagnosisResults: [
@@ -66,9 +66,46 @@ export class ApiService {
     //   regDate: new Date(),
     //   imagePath: 'http://localhost:8080/fe-test2.jpg'
     // });
-    return this.http.get(`${this.apiUrl}/crop/diagnosisRecord?diagnosisRecordId=${recordId}`).pipe(
-      map(res => res as ApiResponse<DiagnosisRecord>),
+    return this.http.get<ApiResponse<DiagnosisRecord>>(`${this.apiUrl}/crop/diagnosisRecord?diagnosisRecordId=${recordId}`).pipe(
+      map(res => res.data),
     );
+  }
+
+  public getDiagnosisMemoList(recordId: number): Observable<DiagnosisRecordMemo[]> {
+    return this.http.get<ApiResponse<DiagnosisRecordMemo[]>>(`${this.apiUrl}/crop/manage/read/list`, {
+      params: ParamsBuilder.from({ diagnosisRecordId: recordId })
+    }).pipe(
+      map(res => res.data),
+      tap(res => console.log('memo-list', res))
+    );
+  }
+
+  public getDiagnosisMemoDetail(recordId: number): Observable<DiagnosisRecordMemo> {
+    return this.http.get<ApiResponse<DiagnosisRecordMemo>>(`${this.apiUrl}/crop/manage/read/detail`, {
+      params: ParamsBuilder.from({ myCropId: recordId })
+    }).pipe(
+      map(res => res.data),
+    );
+  }
+
+  public addDiagnosisRecordMemo(recordId: number, contents: string): Observable<any> {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/crop/manage/create`, {}, { params: ParamsBuilder.from({ diagnosisId: recordId, contents })}).pipe(
+      map(res => res.data),
+    )
+  }
+
+  public updateDiagnosisRecordMemo(memoId: number, contents: string): Observable<any> {
+    return this.http.put<ApiResponse<any>>(`${this.apiUrl}/crop/manage/update`, {}, { params: ParamsBuilder.from({ myCropId: memoId, contents })}).pipe(
+      map(res => res.data),
+    )
+  }
+
+  public deleteDiagnosisRecordMemo(memoId: number): Observable<any> {
+    return this.http.delete<ApiResponse<any>>(`${this.apiUrl}/crop/manage/delete`, {
+      params: { myCropId: memoId }
+    }).pipe(
+      map(res => res.data),
+    )
   }
 
   ////
@@ -85,9 +122,9 @@ export class ApiService {
     );
   }
 
-  public loadUserCategories(): Observable<ApiResponse<Category[]>> {
-    return this.http.get(`${this.apiUrl}/crop/category/list`).pipe(
-      map(res => res as ApiResponse<Category[]>),
+  public loadUserCategories(): Observable<Category[]> {
+    return this.http.get<ApiResponse<Category[]>>(`${this.apiUrl}/crop/category/list`).pipe(
+      map(res => res.data),
       tap(console.log)
     )
   }
@@ -163,6 +200,32 @@ export class ApiService {
     )
   }
 
+  public changeDiagnosisRecordCategory(recordId: number, categoryId: number) {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/crop/diagnosisRecord/${recordId}/category/update`, {}, {
+      params: ParamsBuilder.from({ categoryId })
+    }).pipe(
+      map(res => res.data)
+    )
+  }
+
+
   ////
   //////////////////////////
+
+
+  //////////////////////////
+  //// 농약 정보 api
+
+  public loadPesticideList(input: { page: number, displayCount: number, cropName: string, diseaseName: string }): Observable<{ totalCount: number, list: Pesticide[] }> {
+    return this.http.get<ApiResponse<{ totalCount: number, list: Pesticide[] }>>(`${this.apiUrl}/crop/psisList`, {
+      params: ParamsBuilder.from({
+        startPoint: input.page - 1,
+        displayCount: input.displayCount,
+        cropName: input.cropName,
+        diseaseWeedName: input.diseaseName
+      })
+    }).pipe(
+      map(res => res.data)
+    )
+  }
 }

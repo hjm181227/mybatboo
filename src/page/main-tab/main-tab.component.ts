@@ -50,9 +50,7 @@ export class MainTabComponent {
 
   currentUser$ = this.store$.select(selectCurrentUser);
 
-  categories$ = this.api.loadUserCategories().pipe(
-    map(res => res.data)
-  );
+  categories$ = this.api.loadUserCategories();
 
   constructor(
     private api: ApiService,

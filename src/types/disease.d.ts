@@ -21,3 +21,7 @@ declare interface DiseaseSearchItem {
   cropName: string,
   thumbImg: string
 }
+
+declare interface Pesticide {
+
+}

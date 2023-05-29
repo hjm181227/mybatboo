@@ -1,0 +1,46 @@
+<page-header height="62px">
+  <mp-icon-button
+    left
+    size="m"
+    iconName="close" iconSize="16px"
+    borderRadius="8px"
+    color="gray"
+    variant="void"
+    (click)="close()"
+  ></mp-icon-button>
+  <mp-text center>카테고리 변경</mp-text>
+  <a
+    mpButton
+    right
+    size="xs"
+    label="카테고리 관리"
+    variant="outline"
+    color="grayDark"
+    [routerLink]="['my-page', 'category']"
+  >
+    <mp-icon right name="chevron_right"></mp-icon>
+  </a>
+</page-header>
+<div class="category-list" *ngIf="categories$ | async as categories">
+  <mp-radio
+    *ngFor="let category of categories"
+    [selected]="selected.value === category.id"
+    (click)="selected.patchValue(category.id)"
+    [label]="{
+     text: (category.name | categoryName) + ' (' + category.cnt + ')',
+     placement: 'right',
+     color: selected.value === category.id ? 'green' : 'gray',
+     gap: '10px'
+    }"
+  ></mp-radio>
+</div>
+<div class="button-wrapper">
+  <mp-button
+    size="m"
+    color="green"
+    label="변경하기"
+    [disabled]="initialCategoryId === selected.value"
+    [loading]="(status$ | async).pending"
+    (click)="changeCategory()"
+  ></mp-button>
+</div>

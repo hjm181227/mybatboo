@@ -1,0 +1,18 @@
+@import "@mapiacompany/style-utils/utils";
+
+:host {
+  .category-list {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    gap: 16px;
+  }
+
+  .button-wrapper {
+    padding: 24px;
+
+    mp-button {
+      width: 100%;
+    }
+  }
+}

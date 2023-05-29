@@ -8,7 +8,7 @@ import { CropNames } from "../constants";
 export class CategoryNamePipe implements PipeTransform {
   transform(value: string): string {
     if (value === 'unclassified') {
-      return '미분류된 작물';
+      return '미분류 그룹';
     } else {
       return value;
     }
