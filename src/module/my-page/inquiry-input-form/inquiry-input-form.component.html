@@ -1,0 +1,54 @@
+<page-header height="64px" [title]="'문의 작성'">
+  <mp-icon-button left iconName="arrow_back" size="m" variant="void" color="grayDark" (click)="close()"></mp-icon-button>
+</page-header>
+<div class="form-container">
+  <div class="record-label">진단 기록</div>
+  <div class="selected-record">
+    <img [src]="form.record.value?.imagePath" [alt]="'작물 이미지'">
+    <div class="info">
+      <div class="line">
+        <crop-type-badge [cropType]="form.record.value?.cropType"/>
+        <span>{{form.record.value?.regDate | date:'yyyy.MM.dd HH:mm' }}</span>
+      </div>
+      <div class="line">
+        병해: {{form.record.value?.diagnosisResults[0]?.diseaseCode | diseaseName}}({{(form.record.value?.diagnosisResults[0].accuracy * 100).toFixed(2)}}%)
+        <span *ngIf="form.record.value?.diagnosisResults.length > 1">외 {{form.record.value?.diagnosisResults.length - 1}}개</span>
+      </div>
+    </div>
+  </div>
+  <div class="input-form">
+    <mp-input
+      size="l"
+      label="문의 제목"
+      type="text"
+      [placeholder]="'제목을 입력해주세요.'"
+      [formControl]="form.title"
+      backgroundColor="white"
+      boxShadow="0 2px 4px 0 rgba(20, 20, 20, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.08)"
+    ></mp-input>
+    <div class="contents-label">문의 내용</div>
+    <mp-textarea
+      [formControl]="form.contents"
+      [placeholder]="'진단 기록에 대해 궁금한 점을 작성해보세요.'"
+      [maxLength]="500"
+      [autoFocus]="false"
+      [height]="'250px'"
+      padding="14px"
+      backgroundColor="white"
+      boxShadow="0 2px 4px 0 rgba(20, 20, 20, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.08)">
+    </mp-textarea>
+  </div>
+</div>
+<bottom-fixed-bar height="81px">
+  <mp-button
+    label="문의하기"
+    variant="fill"
+    color="blue"
+    size="m"
+    [disabled]="form.title.invalid || form.contents.invalid"
+    [loading]="(status$ | async).pending"
+    (click)="submit()"
+  >
+    <mp-icon left name="send"></mp-icon>
+  </mp-button>
+</bottom-fixed-bar>

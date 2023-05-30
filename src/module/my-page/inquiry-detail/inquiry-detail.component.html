@@ -1,0 +1,27 @@
+<page-header height="64px">
+  <mp-icon-button
+    left
+    size="m"
+    iconName="close"
+    color="grayDark"
+    variant="void"
+    (click)="close()"
+  ></mp-icon-button>
+  <mp-text center>전문가 문의</mp-text>
+</page-header>
+<ng-container *ngIf="{
+  inquiry: inquiry$ | async,
+  status: status$ | async,
+  reply: reply$ | async,
+  replyStatus: replyStatus$ | async
+} as d">
+
+<div class="inquiry-info">
+  <div class="title">
+    {{d.inquiry?.title}}
+  </div>
+  <div class="content">
+    {{d.inquiry?.contents}}
+  </div>
+</div>
+</ng-container>

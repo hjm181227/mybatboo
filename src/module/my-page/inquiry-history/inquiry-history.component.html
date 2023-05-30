@@ -1,0 +1,39 @@
+<ng-container *ngIf="history$ | async as history">
+  <div class="title-label">
+    전문가 문의 내역 ({{history.length || 0 }})
+  </div>
+  <div class="content-section">
+    <mp-table
+      colGap="8px"
+      rowGap="0px"
+      rowPadding="16px 12px"
+      bodyPadding="0"
+      [listNum]="10"
+      [bodyColor]="'white'"
+      [status]="status$ | async"
+    >
+      <mp-row head>
+        <mp-col [flex]="1" align="left">제목</mp-col>
+        <mp-col width="116px" align="left">작성일</mp-col>
+        <mp-col width="30px" align="center">답변</mp-col>
+      </mp-row>
+      <mp-row *ngFor="let inquiry of history" (click)="openInquiryDetail(inquiry.inquiryId)">
+        <mp-col>{{inquiry.title}}</mp-col>
+        <mp-col>{{inquiry.regDate | date: 'yyyy.MM.dd HH:mm'}}</mp-col>
+        <mp-col align="center">
+          <mp-icon [name]="!!(inquiry.cnt) ? 'circle' : 'close'" type="outlined" size="20px" color="grayDark"></mp-icon>
+        </mp-col>
+      </mp-row>
+      <mp-blank
+        *ngIf="history?.length === 0"
+        minHeight="300px"
+        title="전문가 문의 내역이 없습니다."
+      ></mp-blank>
+      <mp-blank
+        *ngIf="(status$ | async)?.pending"
+        minHeight="484px"
+        title="문의 내역을 불러오는중입니다."
+      ></mp-blank>
+    </mp-table>
+  </div>
+</ng-container>

@@ -4,7 +4,7 @@ import { ApiService } from "../../../service/api.service";
 import { BehaviorSubject, catchError, EMPTY, iif, map, of, switchMap, tap } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { AbstractBaseComponent } from "@mapiacompany/armory";
-import { BsModalRef, MpBottomSheetService } from "@mapiacompany/ngx-bootstrap-modal";
+import { BsModalRef, BsModalService, MpBottomSheetService } from "@mapiacompany/ngx-bootstrap-modal";
 import { PageHeaderComponent } from "../../shared/component/page-header/page-header.component";
 import { FastAverageColor, FastAverageColorResult } from "fast-average-color";
 import { filter } from "rxjs/operators";
@@ -15,6 +15,7 @@ import { MpCallout } from "@mapiacompany/styled-components";
 import { RecordMemoListComponent } from "../record-memo-list/record-memo-list.component";
 import { CategoryNamePipe } from "../../../pipe/category-name.pipe";
 import { CategoryChangeModal } from "../category-change-modal/category-change-modal.component";
+import { InquiryInputFormComponent } from "../../my-page/inquiry-input-form/inquiry-input-form.component";
 
 @Component({
   selector: 'app-diagnosis-result',
@@ -55,7 +56,8 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
     private route: ActivatedRoute,
     private renderer: Renderer2,
     private elementRef: ElementRef,
-    private bottomSheet: MpBottomSheetService
+    private bottomSheet: MpBottomSheetService,
+    private modalService: BsModalService
   ) {
     super();
   }
@@ -113,6 +115,14 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
       initialState: {
         diagnosisId: this.diagnosisResult$.value.id
       },
+    })
+  }
+
+  openInquiryForm() {
+    this.modalService.show(InquiryInputFormComponent, {
+      initialState: {
+        record: this.diagnosisResult$.value
+      }
     })
   }
 }

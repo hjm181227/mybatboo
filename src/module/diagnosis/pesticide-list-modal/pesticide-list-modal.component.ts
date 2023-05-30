@@ -1,18 +1,28 @@
 import { Component, Input } from '@angular/core';
 import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { ApiService } from "../../../service/api.service";
-import { observeProperty$ } from "@mapiacompany/armory";
+import { AsyncStatus, bindStatus, observeProperty$ } from "@mapiacompany/armory";
 import { filter, switchMap } from "rxjs/operators";
-import { BehaviorSubject, combineLatest, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, Observable, tap } from "rxjs";
 import { PageHeaderComponent } from "../../shared/component/page-header/page-header.component";
-import { BsModalRef } from "@mapiacompany/ngx-bootstrap-modal";
+import { BsModalRef, MpBottomSheetService } from "@mapiacompany/ngx-bootstrap-modal";
+import { MpCol, MpHeadDirective, MpRow, MpTable } from "@mapiacompany/styled-components/table";
+import { MpBlank } from "@mapiacompany/styled-components";
+import { MpBottomPagination } from "@mapiacompany/styled-components/pagination";
+import { PesticideDetailComponent } from "../pesticide-detail/pesticide-detail.component";
 
 @Component({
   selector: 'app-pesticide-list-modal',
   standalone: true,
   imports: [
     SyntaxSharedModule,
-    PageHeaderComponent
+    PageHeaderComponent,
+    MpTable,
+    MpCol,
+    MpRow,
+    MpHeadDirective,
+    MpBlank,
+    MpBottomPagination
   ],
   templateUrl: './pesticide-list-modal.component.html',
   styleUrls: ['./pesticide-list-modal.component.scss']
@@ -22,8 +32,9 @@ export class PesticideListModalComponent {
   @Input() diseaseName: string;
 
   loader$ = new BehaviorSubject(1);
+  status$ = new BehaviorSubject(AsyncStatus.INITIAL);
 
-  pesticideList$ = combineLatest([
+  pesticideList$: Observable<{ totalCount: number, list: Pesticide[], displayCount: number, startPoint: number }> = combineLatest([
     this.loader$,
     observeProperty$(this, 'cropName').pipe(
       filter((cropName) => cropName?.length > 0)
@@ -33,15 +44,17 @@ export class PesticideListModalComponent {
     )
   ]).pipe(
     switchMap(([ page, cropName, diseaseName ]) => {
-      console.log(page, cropName, diseaseName)
-      return this.api.loadPesticideList({ cropName, diseaseName, page, displayCount: 10 })
+      return this.api.loadPesticideList({ cropName, diseaseName, page, displayCount: 10 }).pipe(
+        bindStatus(this.status$),
+      )
     }),
     tap(console.log)
   )
 
   constructor(
     private api: ApiService,
-    private modalRef: BsModalRef
+    private modalRef: BsModalRef,
+    private bottomSheet: MpBottomSheetService
   ) {
   }
 
@@ -51,5 +64,11 @@ export class PesticideListModalComponent {
 
   close() {
     this.modalRef.hide();
+  }
+
+  openPesticideDetail(pesticide: Pesticide) {
+    this.bottomSheet.show(PesticideDetailComponent, {
+      initialState: { pesticide }
+    })
   }
 }

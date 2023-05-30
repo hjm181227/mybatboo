@@ -22,6 +22,11 @@ export const routes: Routes = [
         data: { tab: 'my-page' }
       },
       {
+        path: 'my-page/inquiry',
+        loadComponent: () => import('../../module/my-page/inquiry-history/inquiry-history.component').then(c => c.InquiryHistoryComponent),
+        data: { tab: 'my-page' }
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: '/main'

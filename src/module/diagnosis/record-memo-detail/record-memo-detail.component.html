@@ -1,5 +1,8 @@
 <page-header height="64px" [title]="'메모 상세'">
-  <mp-icon left name="close" (click)="close()"></mp-icon>
+  <mp-icon-button
+    left iconName="close" size="m"
+    variant="void" color="grayDark"
+    (click)="close()"/>
 </page-header>
 <div class="content">
   <div class="date-wrapper">

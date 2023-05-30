@@ -1,5 +1,8 @@
 <page-header height="64px" [title]="'진단 결과'">
-  <mp-icon left name="arrow_back" (click)="close()"></mp-icon>
+  <mp-icon-button
+    left iconName="arrow_back" size="m"
+    variant="void" color="grayDark"
+    (click)="close()"/>
   <mp-icon-button
     right
     iconName="note_alt"
@@ -9,8 +12,7 @@
     variant="weak"
     borderRadius="6px"
     color="grayDark"
-    (click)="openMemoList()"
-  ></mp-icon-button>
+    (click)="openMemoList()"/>
 </page-header>
 <ng-container *ngIf="diagnosisResult$ | async as result">
   <div class="crop-image" *ngLet="bgColor$ | async as bgColor">
@@ -48,6 +50,7 @@
     </div>
 
     <mp-callout
+      (click)="openInquiryForm()"
       color="green" variant="weak" size="s"
       [description]="'진단 결과에 대해 더 궁금한게 있다면 전문가에게 질문을 남겨보세요.'">
       <mp-icon left name="help_outlined" size="18px"></mp-icon>

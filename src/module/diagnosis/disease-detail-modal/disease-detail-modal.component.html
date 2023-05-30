@@ -2,16 +2,11 @@
   status: status$ | async,
   sickDetail: sickDetail$ | async
 } as d">
-  <page-header height="62px">
+  <page-header height="64px">
     <mp-icon-button
-      left
-      size="m"
-      iconName="close" iconSize="16px"
-      borderRadius="8px"
-      color="gray"
-      variant="void"
-      (click)="modalRef.hide()"
-    ></mp-icon-button>
+      left iconName="close" size="m"
+      variant="void" color="grayDark"
+      (click)="modalRef.hide()"/>
     <mp-text center>{{diseaseName ? diseaseName : (diseaseCode ? (diseaseCode | diseaseName) : diseaseName)}}</mp-text>
     <mp-button
       right

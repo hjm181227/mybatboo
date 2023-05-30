@@ -12,6 +12,7 @@ import { selectRouteData } from "../../ngrx/router.selector";
 import { MpMenuCell } from "@mapiacompany/styled-components";
 import { NavigateService } from "../../service/navigate.service";
 import { ToastService } from "../../service/toast.service";
+import { CategoryNamePipe } from "../../pipe/category-name.pipe";
 
 @Component({
   selector: 'app-main-tab',
@@ -20,7 +21,8 @@ import { ToastService } from "../../service/toast.service";
     SyntaxSharedModule,
     BottomTabBarComponent,
     LottieModule,
-    MpMenuCell
+    MpMenuCell,
+    CategoryNamePipe
   ],
   templateUrl: './main-tab.component.html',
   styleUrls: [ './main-tab.component.scss' ]

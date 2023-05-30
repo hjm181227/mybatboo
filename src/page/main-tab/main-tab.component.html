@@ -79,7 +79,7 @@
         <mp-icon name="chevron_right" size="20px" color="grayLight"></mp-icon>
       </span>
       <ul class="categories">
-        <li *ngFor="let category of categories">{{category.name === 'unclassified' ? '미분류된 작물' : category.name}}
+        <li *ngFor="let category of categories">{{category.name | categoryName}}
           ({{category.cnt || 0}})
         </li>
       </ul>

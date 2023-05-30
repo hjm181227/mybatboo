@@ -1,23 +1,52 @@
 <ng-container *ngIf="{
-  list: pesticideList$ | async
+  result: pesticideList$ | async,
+  status: status$ | async
 } as d">
-  <page-header height="62px">
+  <page-header height="64px">
     <mp-icon-button
-      left
-      size="m"
-      iconName="close" iconSize="16px"
-      borderRadius="8px"
-      color="gray"
-      variant="void"
-      (click)="close()"
-    ></mp-icon-button>
+      left iconName="arrow_back" size="m"
+      variant="void" color="grayDark"
+      (click)="close()"/>
     <mp-text center>농약 목록</mp-text>
   </page-header>
   <div class="content-section">
     <div class="related-disease">
       '({{cropName}}) {{diseaseName}}' 관련 농약 목록
     </div>
-    <div class="list-container">
-    </div>
+    <mp-table
+      colGap="4px"
+      rowGap="0px"
+      rowPadding="16px 12px"
+      bodyPadding="0"
+      bodyHeight="484px"
+      [listNum]="10"
+      [bodyColor]="'white'"
+    >
+      <mp-row head>
+        <mp-col [flex]="1" align="left">농약명</mp-col>
+        <mp-col width="100px" align="left">상표명</mp-col>
+        <mp-col width="100px" align="left">회사명</mp-col>
+      </mp-row>
+      <mp-row *ngFor="let pesti of (d.result?.list || [])" (click)="openPesticideDetail(pesti)">
+        <mp-col>{{pesti.pestiKorName}}</mp-col>
+        <mp-col>{{pesti.pestiBrandName}}</mp-col>
+        <mp-col>{{pesti.compName}}</mp-col>
+      </mp-row>
+      <mp-blank
+        *ngIf="d.result?.totalCount === 0"
+        minHeight="484px"
+        title="해당 병해에 관련된 농약이 없습니다."
+      ></mp-blank>
+      <mp-blank
+        *ngIf="d.status?.pending"
+        minHeight="484px"
+        title="농약 정보를 조회중입니다."
+      ></mp-blank>
+    </mp-table>
+    <mp-pagination
+      bottom
+      [result]="{ total: d.result?.totalCount || 0, listNum: d.result?.displayCount || 0, current: d.result?.startPoint + 1 }"
+      (changePage)="loader$.next($event)"
+    ></mp-pagination>
   </div>
 </ng-container>

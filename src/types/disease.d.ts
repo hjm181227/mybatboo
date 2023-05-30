@@ -23,5 +23,17 @@ declare interface DiseaseSearchItem {
 }
 
 declare interface Pesticide {
-
+  cropName: string,
+  diseaseWeedName: string,
+  diseaseUseSeq: number,
+  dilutUnit: string, // 희석배수
+  pestiUse: string // 사용적기
+  pestiCode: number,
+  pestiBrandName: string, //상표명
+  pestiKorName: string, //농약명
+  compName: string, //법인명
+  useSuittime: string,  //안전사용기준 (수확 ~일 전)
+  useNum: string, //안전사용기준 (~회 이내)
+  useName: string,  //용도
+  wafindex: string, //WAF지수
 }

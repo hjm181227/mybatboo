@@ -1,5 +1,8 @@
 <page-header height="64px" [title]="'병해 도감'">
-  <mp-icon left name="arrow_back" (click)="close()"></mp-icon>
+  <mp-icon-button
+    left iconName="arrow_back" size="m"
+    variant="void" color="grayDark"
+    (click)="close()"/>
 </page-header>
 <form class="input-section"
       [formGroup]="formGroup"

@@ -1,8 +1,11 @@
-<page-header height="58px" [title]="category.name | categoryName">
-  <mp-icon left name="arrow_back" (click)="close()"></mp-icon>
+<page-header height="64px" [title]="category.name | categoryName">
+  <mp-icon-button
+    left iconName="arrow_back" size="m"
+    variant="void" color="grayDark"
+    (click)="close()"/>
 </page-header>
-<ng-container *ngIf="records$ | async as records">
-  <div class="record-container">
+<div class="record-container">
+  <ng-container *ngIf="records$ | async as records">
     <a
       class="record-item"
       *ngFor="let record of records"
@@ -11,12 +14,13 @@
       <img [src]="record.imagePath">
       <crop-type-badge [cropType]="record.cropType"></crop-type-badge>
       <span>진단일: {{record.regDate | date: 'yyyy.MM.dd HH:mm'}}</span>
+      <span>병해명: {{record.diagnosisResults[0].diseaseCode | diseaseName}}</span>
     </a>
-  </div>
-  <ng-container *ngIf="records.length === 0">
-    <div class="empty">
-      <mp-icon name="cloud_off" color="grayLight" size="44px"></mp-icon>
-      <span>'{{category.name | categoryName}}'에 추가된 진단 기록이 없습니다</span>
-    </div>
+    <ng-container *ngIf="records?.length === 0">
+      <div class="empty">
+        <mp-icon name="cloud_off" color="grayLight" size="44px"></mp-icon>
+        <span>'{{category.name | categoryName}}'에 추가된 진단 기록이 없습니다</span>
+      </div>
+    </ng-container>
   </ng-container>
-</ng-container>
+</div>

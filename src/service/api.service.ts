@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, Observable, tap } from "rxjs";
+import { map, Observable } from "rxjs";
 import { ParamsBuilder } from "../params.builder";
 import { StorageService } from "@mapiacompany/armory";
 
@@ -58,7 +58,7 @@ export class ApiService {
     //     image: formData.get('image')
     //   }
     // }).then(res => res.data));
-    return this.http.post(url, formData, { headers, withCredentials: true }).pipe(
+    return this.http.post(url, formData, { headers }).pipe(
       map(res => res as ApiResponse<DiagnosisRecord>)
     );
   }
@@ -240,17 +240,59 @@ export class ApiService {
   //////////////////////////
   //// 농약 정보 api
 
-  public loadPesticideList(input: { page: number, displayCount: number, cropName: string, diseaseName: string }): Observable<{ totalCount: number, list: Pesticide[] }> {
-    return this.http.get<ApiResponse<{ totalCount: number, list: Pesticide[] }>>(`${this.apiUrl}/crop/psisList`, {
-      params: ParamsBuilder.from({
-        request: {
-          startPoint: `${input.page - 1}`,
-          displayCount: input.displayCount,
-          cropName: input.cropName,
-          diseaseWeedName: input.diseaseName
-        }
-      })
+  public loadPesticideList(input: { page: number, displayCount: number, cropName: string, diseaseName: string }): Observable<{ totalCount: number, list: Pesticide[], displayCount: number, startPoint: number }> {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/crop/psisList`, {
+      startPoint: `${input.page - 1}`.toString(),
+      displayCount: `${input.displayCount}`.toString(),
+      cropName: input.cropName,
+      diseaseWeedName: input.diseaseName
     }).pipe(
+      map(res => res.data),
+      map(({ response }) => ({
+        totalCount: response.totalCount,
+        list: response.list.item,
+        displayCount: response.displayCount,
+        startPoint: response.startPoint
+      }))
+    )
+  }
+
+
+  //////////////////////////
+  //// 전문가 문의 api
+
+  public loadInquiryHistory() {
+    return this.http.get<ApiResponse<Inquiry[]>>(`${this.apiUrl}/crop/inquiry/list`).pipe(
+      map(res => res.data)
+    )
+  }
+
+  public loadInquiryDetail(inquiryId: number) {
+    return this.http.get<ApiResponse<Inquiry>>(`${this.apiUrl}/crop/inquiry/${inquiryId}`).pipe(
+      map(res => res.data)
+    )
+  }
+
+  public sendInquiry(input: { diagnosisId: number, title: string, contents: string }) {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/crop/inquiry/register`, {
+      diagnosisRecordId: input.diagnosisId,
+      title: input.title,
+      contents: input.contents
+    }, {}).pipe(
+      map(res => res.data)
+    )
+  }
+
+  public deleteInquiry(inquiryId: number) {
+    return this.http.delete<ApiResponse<any>>(`${this.apiUrl}/crop/inquiry/delete`, {
+      params: ParamsBuilder.from({ inquiryId })
+    }).pipe(
+      map(res => res.data)
+    )
+  }
+
+  public loadInquiryReply(replyId: number): Observable<Reply> {
+    return this.http.get<ApiResponse<Reply>>(`${this.apiUrl}/crop/reply/${replyId}`).pipe(
       map(res => res.data)
     )
   }

@@ -1,0 +1,42 @@
+@import "@mapiacompany/style-utils/utils";
+
+:host {
+  padding: 24px;
+
+  page-header {
+    box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.12);
+  }
+
+  .title {
+    @include typo(16px, var(--grayDark), 600);
+    padding: 24px 0 12px 0px;
+  }
+
+  .basic-info {
+    @include grid-system((
+      columns: 1fr 1fr,
+      column-gap: 8px,
+      row-gap: 12px
+    ));
+  }
+
+  .detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 24px;
+  }
+
+  .info-label {
+    display: flex;
+    gap: 4px;
+
+    .label {
+      @include typo(14px, var(--gray), 500);
+    }
+
+    .value {
+      @include typo(14px, var(--grayDark), 500);
+    }
+  }
+}

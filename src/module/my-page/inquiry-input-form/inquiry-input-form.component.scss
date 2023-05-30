@@ -1,0 +1,68 @@
+@import "@mapiacompany/style-utils/utils";
+
+@include set-bs-modal-style(inquiry-input-form, null, null, 0) {
+  display: block;
+  border-radius: 0;
+  min-width: 100vw;
+  min-height: var(--full-height);
+  margin: 0;
+}
+
+:host {
+  page-header {
+    box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.12);
+  }
+
+  .form-container {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+
+    .record-label, .contents-label {
+      @include typo(13px, var(--gray), 500);
+      padding: 0 0 8px 6px;
+    }
+
+    .selected-record {
+      display: flex;
+      gap: 16px;
+      padding: 12px;
+      width: 100%;
+      box-shadow: 0px 6px 16px 0px rgba(20, 20, 20, 0.08), 0px 0px 0px 1px rgba(20, 20, 20, 0.06);
+      border-radius: 8px;
+      margin-bottom: 24px;
+
+      img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 8px;
+        width: 100%;
+        padding: 8px 0;
+
+        .line {
+          display: flex;
+          gap: 8px;
+        }
+      }
+    }
+
+    mp-input {
+      display: block;
+      margin-bottom: 24px;
+    }
+  }
+
+  bottom-fixed-bar {
+    padding: 24px;
+
+    mp-button {
+      width: 100%;
+    }
+  }
+}

@@ -8,6 +8,7 @@ import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { BsModalRef } from "@mapiacompany/ngx-bootstrap-modal";
 import { CategoryNamePipe } from "../../../pipe/category-name.pipe";
 import { CropTypeBadge } from "../../../component/crop-type-badge/crop-type-badge.component";
+import { DiseaseNamePipe } from "../../../pipe/disease-name.pipe";
 
 @Component({
   selector: 'app-category-diagnosis-record-list',
@@ -16,7 +17,8 @@ import { CropTypeBadge } from "../../../component/crop-type-badge/crop-type-badg
     SyntaxSharedModule,
     PageHeaderComponent,
     CategoryNamePipe,
-    CropTypeBadge
+    CropTypeBadge,
+    DiseaseNamePipe
   ],
   templateUrl: './category-diagnosis-record-list.component.html',
   styleUrls: [ './category-diagnosis-record-list.component.scss' ]
