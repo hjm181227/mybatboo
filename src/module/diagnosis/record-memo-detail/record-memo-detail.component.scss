@@ -3,6 +3,10 @@
 :host {
   padding: 24px;
 
+  page-header {
+    box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.12);
+  }
+
   .date-wrapper {
     @include typo(13px, var(--gray), 400);
     padding: 0 0 12px 4px;

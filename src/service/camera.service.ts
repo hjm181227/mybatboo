@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
-import { Capacitor } from "@capacitor/core";
 import { ApiService } from "./api.service";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 
@@ -8,21 +7,17 @@ import { Directory, Filesystem } from "@capacitor/filesystem";
   providedIn: 'root'
 })
 export class CameraService {
-  imageUrl: string = '';
-  exif: any;
-  imageUri: Photo;
-
   constructor(
     public api: ApiService,
   ) {
   }
 
-  takePicture(): Promise<Photo | void> {
-    const image = Camera.getPhoto({
+  async takePicture(): Promise<Photo | void> {
+    return await Camera.getPhoto({
       quality: 100,
       width: window.innerWidth > 640 ? 640 : window.innerWidth,
       height: window.innerWidth > 640 ? 640 : window.innerWidth,
-      resultType: CameraResultType.Uri,
+      resultType: CameraResultType.DataUrl,
       source: CameraSource.Prompt,
       promptLabelPicture: '사진 촬영',
       promptLabelPhoto: '앨범에서 선택',
@@ -30,113 +25,50 @@ export class CameraService {
       promptLabelCancel: '취소',
       allowEditing: false,
     });
-
-    image.then(image => console.log(image));
-
-    return image;
-
-    let imgFile: Promise<File>;
-
-
-    return image.then(image => {
-      this.imageUri = image;
-      this.imageUrl = image.webPath || '';
-      this.exif = image.exif;
-      return image;
-      this.convertPhotoToFile(image).then(img => {
-        console.log('before: ', image, '\nafter: ', img);
-        // this.requestDiagnosis(img)
-      });
-    });
-
-    // Can be set to the src of an image now
   }
 
-  async convertPhotoToFile(photo: Photo): Promise<File> {
-    const base64Data = await this.getBase64Data(photo);
-
-    const fileName = `image_${new Date().getTime()}.jpg`;
-    await Filesystem.writeFile({
-      data: base64Data!,
+  async writeFileToDevice(dataUrl,fileName: string) {
+    return await Filesystem.writeFile({
       path: fileName,
-      directory: Directory.Documents
+      data: dataUrl,
+      directory: Directory.Data
+    }).then(res => {
+      return ({ ...res, fileName });
     });
-    const contentType = this.getContentType(base64Data);
+  }
 
-    const byteCharacters = atob(base64Data);
-    const byteArrays = [];
+  async readFileFromDevice(fileName) {
+    const readFile = await Filesystem.readFile({
+      path: fileName,
+      directory: Directory.Data
+    });
 
-    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-      const slice = byteCharacters.slice(offset, offset + 512);
-      const byteNumbers = new Array(slice.length);
-
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
+    // Convert base64 string to binary data
+    const binaryString = window.atob(readFile.data);
+    const binaryLen = binaryString.length;
+    const bytes = new Uint8Array(binaryLen);
+    for (let i = 0; i < binaryLen; i++) {
+      const ascii = binaryString.charCodeAt(i);
+      bytes[i] = ascii;
     }
 
-    const file = new File(byteArrays, fileName, { type: contentType });
+    const blobData = new Blob([bytes], { type: 'image/jpg' });
+
+    // Convert blob to File
+    const file = new File([blobData], fileName, { type: 'image/jpg' });
+
     return file;
   }
 
-  getBase64Data(photo: Photo): Promise<string> {
-    const isWebPlatform = Capacitor.getPlatform() === 'web';
-
-    // if (isWebPlatform) {
-    return fetch(photo.webPath).then(res => res.blob()).then(blob => this.readFileAsBase64(blob));
-    // } else {
-    //   return this.readFileAsBase64(photo);
-    // }
+  async deleteImageFromDevice(fileName) {
+    try {
+      await Filesystem.deleteFile({
+        path: fileName,
+        directory: Directory.Data
+      });
+      console.log('Image deleted successfully');
+    } catch (error) {
+      console.error('Error occurred while deleting image:', error);
+    }
   }
-
-  readFileAsBase64(file: any): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result.toString().split(',')[1]);
-      reader.onerror = error => reject(error);
-    });
-  }
-
-  getContentType(base64Data: string): string {
-    const block = base64Data.split(';')[0];
-    const contentType = block.split(':')[1];
-    return contentType;
-  }
-
-  //
-
-  // async convertPhotoToFile(photo: Photo): Promise<File> {
-  //   const base64Data = photo.base64String;
-  //
-  //   const fileName = `image_${new Date().getTime()}.jpg`;
-  //   const contentType = this.getContentType(base64Data);
-  //
-  //   const byteCharacters = atob(base64Data);
-  //   const byteArrays = [];
-  //
-  //   for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-  //     const slice = byteCharacters.slice(offset, offset + 512);
-  //     const byteNumbers = new Array(slice.length);
-  //
-  //     for (let i = 0; i < slice.length; i++) {
-  //       byteNumbers[i] = slice.charCodeAt(i);
-  //     }
-  //
-  //     const byteArray = new Uint8Array(byteNumbers);
-  //     byteArrays.push(byteArray);
-  //   }
-  //
-  //   const file = new File(byteArrays, fileName, { type: contentType });
-  //   return file;
-  // }
-  //
-  // getContentType(base64Data: string): string {
-  //   const block = base64Data.split(';')[0];
-  //   const contentType = block.split(':')[1];
-  //   return contentType;
-  // }
 }

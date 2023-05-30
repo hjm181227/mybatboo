@@ -36,7 +36,7 @@ export class TokenInterceptor implements HttpInterceptor {
             const tokenExpired = [ res.body?.error?.code, res.body?.errors[0]?.code ].some(msgOrCode => errorTypes.includes(msgOrCode));
             if (tokenExpired) {
               const refreshToken = this.storage.get('refreshToken');
-              return this.http.post<{ message: string, accessToken: string, status: string}>('http://15.164.23.13:8080/member/refresh', { refreshToken }).pipe(
+              return this.http.post<{ message: string, accessToken: string, status: string }>('http://15.164.23.13:8080/member/refresh', { refreshToken }).pipe(
                 map(({ accessToken }) => accessToken),
                 tap(token => token && this.storage.set('token', token)),
                 catchError((error) => {
@@ -61,11 +61,10 @@ export class TokenInterceptor implements HttpInterceptor {
           'EXPIRED_TOKEN'
         ];
         const tokenExpired = [ err?.message, err?.error?.message, err?.error?.code ].some(msgOrCode => errorTypes.includes(msgOrCode));
-        console.log('token-interceptor', err, tokenExpired);
         if (tokenExpired) {
           const refreshToken = this.storage.get('refreshToken');
-          return this.http.post<{ accessToken: string, message: string, status: string}>('http://15.164.23.13:8080/member/refresh', { refreshToken }).pipe(
-            map(({ accessToken } ) => accessToken),
+          return this.http.post<{ accessToken: string, message: string, status: string }>('http://15.164.23.13:8080/member/refresh', { refreshToken }).pipe(
+            map(({ accessToken }) => accessToken),
             tap(token => this.storage.set('token', token)),
             catchError((error) => {
               if (error instanceof HttpErrorResponse && error.status < 500) {

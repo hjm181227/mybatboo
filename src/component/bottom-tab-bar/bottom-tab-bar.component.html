@@ -1,43 +1,37 @@
-<ng-container *ngIf="{
-  active: activeTab$ | async
-} as d">
-  <div class="tab-bar">
-    <a class="tab-item"
-       [class.active]="activeTab === 'home'"
-       routerLink="/main"
-    >
-      <mp-icon
-        name="home"
-        type="outlined"
-        size="30px"
-      ></mp-icon>
-      <!--    <span nz-icon nzType="home" [nzTheme]="activeTab.value === 'home' ? 'fill' : 'outline'"></span>-->
-      <span>홈</span>
-    </a>
-    <div class="tab-item pop-up"
-         (click)="diagnose()"
-    >
-      <mp-icon
-        name="photo_camera"
-        size="36px"
-        padding="12px"
-        backgroundColor="grayLightest"
-        color="greenDark"
-        borderRadius="50px"
-        (click)="diagnose();$event.stopPropagation();$event.preventDefault();"
-      ></mp-icon>
-      <span>작물 진단</span>
-    </div>
-    <a class="tab-item"
-       [class.active]="activeTab === 'my-page'"
-       routerLink="/my-page"
-    >
-      <mp-icon
-        name="library_books"
-        type="outlined"
-        size="30px"
-      ></mp-icon>
-      <span>내 정보</span>
-    </a>
+<div class="tab-bar">
+  <a class="tab-item"
+     routerLink="/main"
+  >
+    <mp-icon
+      name="home"
+      type="outlined"
+      size="30px"
+    ></mp-icon>
+    <span>홈</span>
+  </a>
+  <div class="tab-item pop-up"
+       (click)="diagnose()"
+  >
+    <mp-icon
+      name="photo_camera"
+      size="36px"
+      padding="12px"
+      backgroundColor="grayLightest"
+      color="greenDark"
+      borderRadius="50px"
+      (click)="diagnose();$event.stopPropagation();$event.preventDefault();"
+    ></mp-icon>
+    <span>작물 진단</span>
   </div>
-</ng-container>
+  <a class="tab-item"
+     [class.active]="activeTab === 'my-page'"
+     routerLink="/my-page"
+  >
+    <mp-icon
+      name="library_books"
+      type="outlined"
+      size="30px"
+    ></mp-icon>
+    <span>내 정보</span>
+  </a>
+</div>

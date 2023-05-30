@@ -1,11 +1,15 @@
 @import "@mapiacompany/style-utils/utils";
 
 :host {
+  page-header {
+    box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.12);
+  }
+
   .input-section {
     display: flex;
     padding: 12px;
     gap: 16px;
-    box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.12), inset 0px 1px 0px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.12);
     background-color: #f5f5f5;
 
     mp-input {

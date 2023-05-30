@@ -111,14 +111,17 @@
 
     ul {
       list-style: square;
+      height: 130px;
+      overflow: scroll;
 
       li {
         @include typo(15px, var(--gray), 500);
         margin-left: 12px;
+        padding: 4px 0;
       }
 
       li + li {
-        margin-top: 6px;
+        margin-top: 8px;
       }
     }
   }

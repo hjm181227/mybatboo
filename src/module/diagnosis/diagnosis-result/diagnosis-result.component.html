@@ -19,13 +19,7 @@
 
   <div class="content-wrapper">
     <div class="crop-info" *ngIf="result">
-<!--      <crop-type-badge [cropType]="result.cropType"></crop-type-badge>-->
-      <crop-type-badge [cropType]="0"></crop-type-badge>
-      <!--      <mp-badge [label]="result.cropType | cropName"-->
-      <!--                color="blue"-->
-      <!--                variant="weak"-->
-      <!--                size="s"-->
-      <!--      ></mp-badge>-->
+      <crop-type-badge [cropType]="result.cropType"></crop-type-badge>
       <span>{{ result.regDate | date: 'yyyy.MM.dd HH:mm' }}</span>
       <mp-button
         size="xs"
@@ -40,16 +34,15 @@
     <div class="disease-list">
       <div class="disease-wrapper">
         <span class="title">가장 유사한 결과</span>
-        <disease-list-item [diseaseItem]="result.diagnosisResults[1]"/>
+        <disease-list-item [diseaseItem]="result.diagnosisResults[0]"/>
       </div>
 
       <ng-container *ngIf="result?.diagnosisResults.length > 1">
         <div class="disease-wrapper">
           <span class="title">다른 유사 결과</span>
-          <disease-list-item [diseaseItem]="result.diagnosisResults[0]"/>
-<!--          <disease-list-item-->
-<!--            *ngFor="let item of result.diagnosisItems.slice(1, result.diagnosisItems.length)"-->
-<!--            [diseaseItem]="item"/>-->
+          <disease-list-item
+            *ngFor="let item of result.diagnosisResults.slice(1, result.diagnosisResults.length)"
+            [diseaseItem]="item"/>
         </div>
       </ng-container>
     </div>

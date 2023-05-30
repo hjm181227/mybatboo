@@ -4,12 +4,15 @@ import { ApiService } from "../../../service/api.service";
 import { observeProperty$ } from "@mapiacompany/armory";
 import { filter, switchMap } from "rxjs/operators";
 import { BehaviorSubject, combineLatest, tap } from "rxjs";
+import { PageHeaderComponent } from "../../shared/component/page-header/page-header.component";
+import { BsModalRef } from "@mapiacompany/ngx-bootstrap-modal";
 
 @Component({
   selector: 'app-pesticide-list-modal',
   standalone: true,
   imports: [
-    SyntaxSharedModule
+    SyntaxSharedModule,
+    PageHeaderComponent
   ],
   templateUrl: './pesticide-list-modal.component.html',
   styleUrls: ['./pesticide-list-modal.component.scss']
@@ -30,13 +33,23 @@ export class PesticideListModalComponent {
     )
   ]).pipe(
     switchMap(([ page, cropName, diseaseName ]) => {
+      console.log(page, cropName, diseaseName)
       return this.api.loadPesticideList({ cropName, diseaseName, page, displayCount: 10 })
     }),
     tap(console.log)
   )
 
   constructor(
-    private api: ApiService
+    private api: ApiService,
+    private modalRef: BsModalRef
   ) {
+  }
+
+  ngOnInit() {
+    this.modalRef.setClass('pesticide-list-modal');
+  }
+
+  close() {
+    this.modalRef.hide();
   }
 }

@@ -1,0 +1,60 @@
+@import "@mapiacompany/style-utils/utils";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  padding: 36px 16px 24px;
+  gap: 36px;
+
+  page-header {
+    box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.12);
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 8px;
+
+    .name {
+      @include typo(22px, var(--gray), 600);
+
+      span {
+        @include typo(26px, var(--grayDarker), 600);
+      }
+    }
+
+    .email {
+      @include typo(13px, var(--gray), 500);
+      display: flex;
+      gap: 4px;
+    }
+  }
+
+  .menu-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0;
+    border-radius: 8px;
+    border: 1px solid var(--grayLighter);
+
+    .menu-option {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 8px;
+      padding: 8px 12px;
+      @include typo(16px, var(--grayDark), 500);
+
+      &:active {
+        background-color: var(--hoverWeak);
+      }
+
+      mp-icon {
+        &.right {
+          margin-left: auto;
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType, OnInitEffects } from "@ngrx/effects";
 import { Action, Store } from "@ngrx/store";
-import { EMPTY, of} from "rxjs";
+import { EMPTY, of, switchMap } from "rxjs";
 import { catchError, filter, mergeMap, tap, withLatestFrom } from "rxjs/operators";
 import { ngrxUserActions } from "./user.reducer";
 import { Router } from "@angular/router";
@@ -31,12 +31,25 @@ export class UserEffects implements OnInitEffects {
           this.storage.remove('refreshToken');
         }),
         tap(() => {
+          this.toast.show('로그아웃 되었습니다.');
           this.router.navigate([ '/onboarding' ]);
           // location.reload();
         })
       ),
     { dispatch: false }
   );
+
+  deleteAccount$ = createEffect(
+    () => this.actions$.pipe(
+      ofType(ngrxUserActions.deleteAccount),
+      tap(() => {
+        this.store.dispatch(ngrxUserActions.logout());
+      }),
+      switchMap(() => this.api.deleteAccount().pipe(
+        tap(() => this.toast.show('회원 탈퇴 되었습니다.'))
+      ))
+    )
+  )
 
   loadCurrentUser$ = createEffect(() =>
     this.actions$.pipe(

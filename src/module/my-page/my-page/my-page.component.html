@@ -1,22 +1,36 @@
 <ng-container *ngIf="currentUser$ | async as currentUser">
   <div class="user-info">
-    <mp-label [textContent]="'내 정보'"></mp-label>
-    <div class="info-wrapper">
-      <div class="info-item">
-        <span>이름</span>
-        <span>{{currentUser.name}}</span>
-      </div>
-      <div class="info-item">
-        <span>이메일</span>
-        <span>{{currentUser.email}}</span>
-      </div>
+    <div class="name">
+      <span>{{currentUser.name}}</span> 님
     </div>
+    <span class="email">
+      <mp-icon name="email" type="outlined"></mp-icon>
+      이메일: {{currentUser.email}}
+    </span>
   </div>
 
-  <div class="menu-list">
-    <mp-menu-cell *ngFor="let menu of menus" [label]="menu.label">
-      <mp-icon left [name]="menu.icon" type="outlined"></mp-icon>
-    </mp-menu-cell>
+  <div class="menu-wrapper">
+    <ng-container *ngFor="let menu of pageMenus;let i=index;">
+      <mp-divider *ngIf="i !== 0" height="12px" direction="horizontal" color="grayLighter"></mp-divider>
+      <a
+        class="menu-option"
+        [routerLink]="menu.routerLink"
+      >
+        <mp-icon left [name]="menu.icon" size="24px" type="outlined" color="gray"></mp-icon>
+        <span>{{menu.name}}</span>
+        <mp-icon right name="chevron_right" size="24px" color="gray"></mp-icon>
+      </a>
+    </ng-container>
+  </div>
+
+  <div class="menu-wrapper">
+    <ng-container *ngFor="let menu of accountMenus;let i=index;">
+      <mp-divider *ngIf="i !== 0" height="12px" direction="horizontal" color="grayLighter"></mp-divider>
+      <div class="menu-option" (click)="accountAction(menu.action)">
+        <mp-icon left [name]="menu.icon" size="24px" type="outlined" [color]="menu.color"></mp-icon>
+        <span [style.color]="'var(--' + menu.color + ')'">{{menu.name}}</span>
+        <mp-icon right name="chevron_right" size="24px" [color]="menu.color"></mp-icon>
+      </div>
+    </ng-container>
   </div>
 </ng-container>
-<bottom-tab-bar activeTab="my-page"></bottom-tab-bar>

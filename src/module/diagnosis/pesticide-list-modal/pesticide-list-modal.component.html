@@ -1,3 +1,23 @@
 <ng-container *ngIf="{
   list: pesticideList$ | async
-} as d"></ng-container>
+} as d">
+  <page-header height="62px">
+    <mp-icon-button
+      left
+      size="m"
+      iconName="close" iconSize="16px"
+      borderRadius="8px"
+      color="gray"
+      variant="void"
+      (click)="close()"
+    ></mp-icon-button>
+    <mp-text center>농약 목록</mp-text>
+  </page-header>
+  <div class="content-section">
+    <div class="related-disease">
+      '({{cropName}}) {{diseaseName}}' 관련 농약 목록
+    </div>
+    <div class="list-container">
+    </div>
+  </div>
+</ng-container>

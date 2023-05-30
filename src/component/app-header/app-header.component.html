@@ -14,6 +14,11 @@
   >
     <mp-icon right name="login"></mp-icon>
   </mp-button>
-  <mp-icon-button *ngIf="currentUser" iconName="person" iconType="outlined" iconSize="24px" variant="void" size="m" color="greenDark"></mp-icon-button>
+  <mp-icon-button
+    *ngIf="currentUser"
+    iconName="person" iconType="outlined" iconSize="24px" variant="void" size="m" color="greenDark"
+    [routerLink]="['/my-page']"
+  >
+  </mp-icon-button>
 </ng-container>
 <!--</div>-->

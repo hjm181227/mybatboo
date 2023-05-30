@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { PageHeaderComponent } from "../../shared/component/page-header/page-header.component";
-import { BsModalRef, MpBottomSheetService } from "@mapiacompany/ngx-bootstrap-modal";
+import { BsModalRef, BsModalService } from "@mapiacompany/ngx-bootstrap-modal";
 import { ApiService } from "../../../service/api.service";
 import { DiseaseNamePipe } from "../../../pipe/disease-name.pipe";
 import { AbstractBaseComponent, AsyncStatus, bindStatus, observeProperty$ } from "@mapiacompany/armory";
@@ -38,7 +38,7 @@ export class DiseaseDetailModalComponent extends AbstractBaseComponent {
   constructor(
     public modalRef: BsModalRef,
     private api: ApiService,
-    private bottomSheet: MpBottomSheetService,
+    private modalService: BsModalService
   ) {
     super();
   }
@@ -47,7 +47,7 @@ export class DiseaseDetailModalComponent extends AbstractBaseComponent {
   }
 
   openPesticideListModal() {
-    this.bottomSheet.show(PesticideListModalComponent, {
+    this.modalService.show(PesticideListModalComponent, {
       initialState: {
         cropName: this.cropName,
         diseaseName: this.diseaseName

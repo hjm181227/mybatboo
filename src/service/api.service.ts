@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, Observable, tap } from "rxjs";
+import { map, Observable, tap } from "rxjs";
 import { ParamsBuilder } from "../params.builder";
+import { StorageService } from "@mapiacompany/armory";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class ApiService {
   private apiUrl = 'http://15.164.23.13:8080';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private storage: StorageService
   ) {
   }
 
@@ -33,21 +35,30 @@ export class ApiService {
     const headers = new HttpHeaders();
     const { latitude, longitude } = geolocation;
     const requestInput = {
-      userId: 10,
       userLatitude: latitude,
       userLongitude: longitude,
-      regDate: new Date(),
       cropType
     };
     headers.append('Content-Type', 'multipart/form-data');
 
     formData.append('requestInput', JSON.stringify(requestInput));
 
-    formData.append('image', image, 'test-image');
-    // formData.append('userName', 'fe');
-    // formData.append('saveName', 'fe-test2');
+    formData.append('image', image, image.name);
+
+    const token = this.storage.get('token');
+    // return from(Http.post({
+    //   url,
+    //   headers: {
+    //     'content-type': `multipart/form-data`,
+    //     'Content-Type': `multipart/form-data`,
+    //     'Authorization': `Bearer ${token}`
+    //   },
+    //   data: {
+    //     requestInput: JSON.stringify(requestInput),
+    //     image: formData.get('image')
+    //   }
+    // }).then(res => res.data));
     return this.http.post(url, formData, { headers, withCredentials: true }).pipe(
-      catchError(err => err),
       map(res => res as ApiResponse<DiagnosisRecord>)
     );
   }
@@ -76,7 +87,6 @@ export class ApiService {
       params: ParamsBuilder.from({ diagnosisRecordId: recordId })
     }).pipe(
       map(res => res.data),
-      tap(res => console.log('memo-list', res))
     );
   }
 
@@ -89,13 +99,23 @@ export class ApiService {
   }
 
   public addDiagnosisRecordMemo(recordId: number, contents: string): Observable<any> {
-    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/crop/manage/create`, {}, { params: ParamsBuilder.from({ diagnosisId: recordId, contents })}).pipe(
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/crop/manage/create`, {}, {
+      params: ParamsBuilder.from({
+        diagnosisId: recordId,
+        contents
+      })
+    }).pipe(
       map(res => res.data),
     )
   }
 
   public updateDiagnosisRecordMemo(memoId: number, contents: string): Observable<any> {
-    return this.http.put<ApiResponse<any>>(`${this.apiUrl}/crop/manage/update`, {}, { params: ParamsBuilder.from({ myCropId: memoId, contents })}).pipe(
+    return this.http.put<ApiResponse<any>>(`${this.apiUrl}/crop/manage/update`, {}, {
+      params: ParamsBuilder.from({
+        myCropId: memoId,
+        contents
+      })
+    }).pipe(
       map(res => res.data),
     )
   }
@@ -116,16 +136,20 @@ export class ApiService {
   ////  유저 정보 관련 api
 
   public loadCurrentUser(): Observable<User> {
-    return this.http.get(`${this.apiUrl}/member/currentUser`).pipe(
-      map(res => res as ApiResponse<User>),
+    return this.http.get<ApiResponse<User>>(`${this.apiUrl}/member/currentUser`).pipe(
       map(res => res.data),
     );
   }
 
+  public deleteAccount(): Observable<any> {
+    return this.http.delete<ApiResponse<any>>(`${this.apiUrl}/member/delete`).pipe(
+      map(res => res.data),
+    )
+  }
+
   public loadUserCategories(): Observable<Category[]> {
     return this.http.get<ApiResponse<Category[]>>(`${this.apiUrl}/crop/category/list`).pipe(
-      map(res => res.data),
-      tap(console.log)
+      map(res => res.data)
     )
   }
 
@@ -219,10 +243,12 @@ export class ApiService {
   public loadPesticideList(input: { page: number, displayCount: number, cropName: string, diseaseName: string }): Observable<{ totalCount: number, list: Pesticide[] }> {
     return this.http.get<ApiResponse<{ totalCount: number, list: Pesticide[] }>>(`${this.apiUrl}/crop/psisList`, {
       params: ParamsBuilder.from({
-        startPoint: input.page - 1,
-        displayCount: input.displayCount,
-        cropName: input.cropName,
-        diseaseWeedName: input.diseaseName
+        request: {
+          startPoint: `${input.page - 1}`,
+          displayCount: input.displayCount,
+          cropName: input.cropName,
+          diseaseWeedName: input.diseaseName
+        }
       })
     }).pipe(
       map(res => res.data)

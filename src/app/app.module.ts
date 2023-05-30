@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule, OnInit } from '@angular/core';
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,7 +18,7 @@ import { environment } from "../environments/environment";
 import { BsModalService, ModalModule } from "@mapiacompany/ngx-bootstrap-modal";
 import { AlertService, MpAlertModule } from "@mapiacompany/styled-components";
 import { AuthHandleMiddleware } from "../module/router-extend/auth-handle.middleware";
-import { App } from '@capacitor/app';
+import { App, BackButtonListenerEvent } from '@capacitor/app';
 import { ToastService } from "../service/toast.service";
 
 export function playerFactory() {
@@ -96,7 +96,9 @@ export const ROUTE_INTERCEPTORS = [
     }
   ],
 })
-export class AppModule {
+export class AppModule implements OnInit {
+  exitReady = false;
+
   constructor(
     private modalService: BsModalService,
     private toast: ToastService,
@@ -104,22 +106,23 @@ export class AppModule {
   }
 
   ngOnInit() {
-    App.addListener('backButton', (data: any) => {
+    App.addListener('backButton', (event: any) => {
       // modalService에 열려있는 모달이 있는 경우 모달 닫기
+      console.log('backButton listener', event);
       const modalCount = this.modalService.getModalsCount();
       if (modalCount > 0) {
         this.modalService._hideModal();
       } else {
-        // 뒤로가기 할 history가 남아있는 경우 뒤로가기
-        if (window.location.pathname === '/main') {
-          if (data.timestamp < 1000) {
+        if (event.canGoBack) {
+          history.back();
+        } else {
+          if (this.exitReady) {
             App.exitApp();
           } else {
-            this.toast.show('뒤로가기 버튼을 한번 더 누르면 종료됩니다.');
-          }
-        } else {
-          if (window.history.length > 1) {
-            window.history.back();
+            this.exitReady = true;
+            setTimeout(() => {
+              this.exitReady = false;
+            }, 1000);
           }
         }
       }
