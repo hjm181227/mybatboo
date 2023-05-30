@@ -14,13 +14,26 @@
   }
 
   .form-container {
-    padding: 16px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
 
     .record-label, .contents-label {
       @include typo(13px, var(--gray), 500);
       padding: 0 0 8px 6px;
+    }
+
+    .record-selector {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      width: 100%;
+      padding: 12px;
+      height: 104px;
+      box-shadow: 0px 9px 24px 0px rgba(20, 20, 20, 0.08), 0px 0px 0px 1px rgba(20, 20, 20, 0.06);
+      border-radius: 8px;
+      margin-bottom: 24px;
+      @include typo(16px, var(--redLight), 500);
     }
 
     .selected-record {
@@ -47,6 +60,7 @@
 
         .line {
           display: flex;
+          align-items: center;
           gap: 8px;
         }
       }

@@ -1,0 +1,67 @@
+@import "@mapiacompany/style-utils/utils";
+
+:host {
+  page-header {
+    box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.12);
+  }
+
+  padding: 24px;
+
+  .inquiry-info {
+    padding: 24px 0;
+
+    .label {
+      @include typo(16px, var(--grayDark), 600);
+      padding: 0 0 12px 4px;
+    }
+
+    .title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      @include typo(18px, var(--grayDarker), 600);
+      padding: 0 0 12px 4px;
+
+      span {
+        @include typo(13px, var(--gray), 500);
+        justify-self: flex-end;
+      }
+    }
+
+    .content {
+      @include typo(14px, var(--grayDark), 500);
+      padding: 4px;
+    }
+  }
+
+  .reply-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0 12px;
+    @include typo(16px, var(--grayDark), 600);
+
+    span {
+      @include typo(13px, var(--gray), 500);
+      justify-self: flex-end;
+    }
+  }
+
+  .reply-container {
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 12px;
+    margin-bottom: 24px;
+    height: 100%;
+    max-height: 300px;
+    overflow: scroll;
+    box-shadow: 0 2px 4px 0 rgba(20, 20, 20, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.08);
+
+    .reply-content {
+      @include typo(14px, var(--grayDark), 500);
+      white-space: pre-wrap;
+    }
+  }
+}

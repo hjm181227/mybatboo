@@ -296,4 +296,12 @@ export class ApiService {
       map(res => res.data)
     )
   }
+
+  // 전문가 계정만 가능
+  public replyToInquiry(inquiryId: number, contents: string) {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/crop/reply/register`, {
+      inquiryId,
+      contents
+    })
+  }
 }

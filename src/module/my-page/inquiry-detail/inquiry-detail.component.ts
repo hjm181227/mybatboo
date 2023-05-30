@@ -4,7 +4,7 @@ import { BsModalRef } from "@mapiacompany/ngx-bootstrap-modal";
 import { ApiService } from "../../../service/api.service";
 import { AsyncStatus, bindStatus, observeProperty$ } from "@mapiacompany/armory";
 import { filter, switchMap } from "rxjs/operators";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, tap } from "rxjs";
 import { PageHeaderComponent } from "../../shared/component/page-header/page-header.component";
 
 @Component({
@@ -32,7 +32,8 @@ export class InquiryDetailComponent {
   reply$ = this.inquiry$.pipe(
     filter(inquiry => !!inquiry && !!inquiry.replyId),
     switchMap(({ replyId }) => this.api.loadInquiryReply(replyId).pipe(
-      bindStatus(this.replyStatus$)
+      bindStatus(this.replyStatus$),
+      tap(console.log)
     ))
   )
 

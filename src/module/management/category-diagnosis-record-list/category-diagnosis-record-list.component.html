@@ -14,7 +14,7 @@
       <img [src]="record.imagePath">
       <crop-type-badge [cropType]="record.cropType"></crop-type-badge>
       <span>진단일: {{record.regDate | date: 'yyyy.MM.dd HH:mm'}}</span>
-      <span>병해명: {{record.diagnosisResults[0].diseaseCode | diseaseName}}</span>
+<!--      <span>병해명: {{record.diagnosisResults[0].diseaseCode | diseaseName}}</span>-->
     </a>
     <ng-container *ngIf="records?.length === 0">
       <div class="empty">

@@ -1,9 +1,14 @@
 <page-header height="64px" [title]="'문의 작성'">
-  <mp-icon-button left iconName="arrow_back" size="m" variant="void" color="grayDark" (click)="close()"></mp-icon-button>
+  <mp-icon-button left iconName="arrow_back" size="m" variant="void" color="grayDark"
+                  (click)="close()"></mp-icon-button>
 </page-header>
 <div class="form-container">
   <div class="record-label">진단 기록</div>
-  <div class="selected-record">
+  <div class="record-selector" *ngIf="!form.record.value">
+    <mp-icon name="touch_app" type="outlined" size="36px" color="redLight"></mp-icon>
+    <span>문의할 진단 기록을 선택해주세요</span>
+  </div>
+  <div class="selected-record" *ngIf="form.record.value">
     <img [src]="form.record.value?.imagePath" [alt]="'작물 이미지'">
     <div class="info">
       <div class="line">
@@ -11,8 +16,11 @@
         <span>{{form.record.value?.regDate | date:'yyyy.MM.dd HH:mm' }}</span>
       </div>
       <div class="line">
-        병해: {{form.record.value?.diagnosisResults[0]?.diseaseCode | diseaseName}}({{(form.record.value?.diagnosisResults[0].accuracy * 100).toFixed(2)}}%)
-        <span *ngIf="form.record.value?.diagnosisResults.length > 1">외 {{form.record.value?.diagnosisResults.length - 1}}개</span>
+        병해: {{form.record.value?.diagnosisResults[0]?.diseaseCode | diseaseName}}
+        ({{(form.record.value?.diagnosisResults[0].accuracy * 100).toFixed(2)}}%)
+        <span
+          *ngIf="form.record.value?.diagnosisResults.length > 1">외 {{form.record.value?.diagnosisResults.length - 1}}
+          개</span>
       </div>
     </div>
   </div>

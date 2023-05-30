@@ -16,12 +16,34 @@
   replyStatus: replyStatus$ | async
 } as d">
 
-<div class="inquiry-info">
-  <div class="title">
-    {{d.inquiry?.title}}
+  <div class="inquiry-info">
+    <!--  <div class="label">제목</div>-->
+    <div class="title">
+      {{d.inquiry?.title}}
+      <span>{{d.inquiry?.regDate | date:'yyyy.MM.dd HH:mm' }}</span>
+    </div>
+    <!--  <div class="label">내용</div>-->
+    <div class="content">
+      {{d.inquiry?.contents}}
+    </div>
   </div>
-  <div class="content">
-    {{d.inquiry?.contents}}
+
+  <div class="reply-label">
+    전문가 답변
+    <span class="date" *ngIf="d.reply">{{d.reply?.regDate}}</span>
   </div>
-</div>
+  <div class="reply-container">
+    <ng-container *ngIf="d.reply">
+      <span class="reply-content">{{d.reply?.contents}}</span>
+    </ng-container>
+    <ng-container *ngIf="!d.reply">
+      <mp-helper-text
+        label="전문가의 답변을 기다리는 중입니다."
+        size="m"
+        color="grayDark"
+      >
+        <mp-icon name="pending" type="outlined"></mp-icon>
+      </mp-helper-text>
+    </ng-container>
+  </div>
 </ng-container>

@@ -1,6 +1,15 @@
 <ng-container *ngIf="history$ | async as history">
   <div class="title-label">
     전문가 문의 내역 ({{history.length || 0 }})
+    <mp-button
+      size="xs"
+      variant="outline"
+      [label]="'문의하기'"
+      color="grayDark"
+      (click)="openInquiryInputForm()"
+    >
+      <mp-icon left name="add" type="outlined"></mp-icon>
+    </mp-button>
   </div>
   <div class="content-section">
     <mp-table
@@ -17,11 +26,11 @@
         <mp-col width="116px" align="left">작성일</mp-col>
         <mp-col width="30px" align="center">답변</mp-col>
       </mp-row>
-      <mp-row *ngFor="let inquiry of history" (click)="openInquiryDetail(inquiry.inquiryId)">
+      <mp-row *ngFor="let inquiry of history" (click)="openInquiryDetail(inquiry.id)">
         <mp-col>{{inquiry.title}}</mp-col>
         <mp-col>{{inquiry.regDate | date: 'yyyy.MM.dd HH:mm'}}</mp-col>
         <mp-col align="center">
-          <mp-icon [name]="!!(inquiry.cnt) ? 'circle' : 'close'" type="outlined" size="20px" color="grayDark"></mp-icon>
+          <mp-icon [name]="inquiry.replyId > -1 ? 'circle' : 'close'" type="outlined" size="20px" color="grayDark"></mp-icon>
         </mp-col>
       </mp-row>
       <mp-blank

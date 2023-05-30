@@ -4,9 +4,8 @@ declare interface Inquiry {
   title: string,
   contents: string,
   regDate: Date,
-  cnt: number,
   replyId: number,
-  inquiryId: number,
+  id: number,
 }
 
 declare interface Reply {
