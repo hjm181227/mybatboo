@@ -13,6 +13,8 @@ import { MpMenuCell } from "@mapiacompany/styled-components";
 import { NavigateService } from "../../service/navigate.service";
 import { ToastService } from "../../service/toast.service";
 import { CategoryNamePipe } from "../../pipe/category-name.pipe";
+import { BsModalService } from "@mapiacompany/ngx-bootstrap-modal";
+import { InquiryInputFormComponent } from "../../module/my-page/inquiry-input-form/inquiry-input-form.component";
 
 @Component({
   selector: 'app-main-tab',
@@ -60,7 +62,8 @@ export class MainTabComponent {
     private api: ApiService,
     private store$: Store<GlobalState>,
     private navigate: NavigateService,
-    private toast: ToastService
+    private toast: ToastService,
+    private modalService: BsModalService
   ) {
   }
 
@@ -71,5 +74,9 @@ export class MainTabComponent {
       return;
     }
     this.navigate.openDiseaseDetailModal({ sickKey, diseaseName: sickNameKor, cropName });
+  }
+
+  openInquiryForm() {
+    this.modalService.show(InquiryInputFormComponent);
   }
 }

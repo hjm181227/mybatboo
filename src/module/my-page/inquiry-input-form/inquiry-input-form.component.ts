@@ -37,7 +37,7 @@ export class InquiryInputFormComponent extends AbstractBaseComponent {
   @Input() record: DiagnosisRecord;
 
   form = {
-    record: new FormControl(null),
+    record: new FormControl(null, [ Validators.required ]),
     title: new FormControl('', [ Validators.required ]),
     contents: new FormControl('', [ Validators.required ])
   }
@@ -77,6 +77,9 @@ export class InquiryInputFormComponent extends AbstractBaseComponent {
   }
 
   openRecordSelector() {
+    if (this.record) {
+      return;
+    }
     const selectModal = this.bottomSheet.show(InquiryRecordSelectModalComponent);
     selectModal.onHide.pipe(
       take(1),

@@ -4,28 +4,30 @@
     variant="void" color="grayDark"
     (click)="close()"/>
 </page-header>
-<div class="record-container">
-  <ng-container *ngIf="recordList$ | async as records">
-    <div
-      class="record-item"
-      *ngFor="let record of records"
-      (click)="select(record)"
-    >
-      <img [src]="record.imagePath">
-      <crop-type-badge [cropType]="record.cropType"></crop-type-badge>
-      <span>병해명: {{record.diagnosisResults[0].diseaseCode | diseaseName}}</span>
-      <span>진단일: {{record.regDate | date: 'yyyy.MM.dd HH:mm'}}</span>
+<ng-container *ngIf="recordList$ | async as records">
+  <div class="record-container">
+        <div
+          class="record-item"
+          *ngFor="let record of records"
+          (click)="select(record)"
+        >
+          <img [src]="record.imagePath">
+          <crop-type-badge [cropType]="record.cropType"></crop-type-badge>
+          <span>병해명: {{record.diagnosisResults[0].diseaseCode | diseaseName}}</span>
+          <span>진단일: {{record.regDate | date: 'yyyy.MM.dd HH:mm'}}</span>
+        </div>
+  </div>
+  <ng-container *ngIf="records?.length === 0">
+    <div class="empty">
+      <span>아직 작물을 진단한 기록이 없습니다.</span>
+      <mp-button
+        label="작물 진단하기"
+        color="green"
+        size="m"
+        (click)="goToDiagnosis()"
+      >
+        <mp-icon left name="add_to_photos"></mp-icon>
+      </mp-button>
     </div>
-    <ng-container *ngIf="records?.length === 0">
-      <div class="empty">
-        <span>아직 작물을 진단한 기록이 없습니다.</span>
-        <mp-button
-          label="작물 진단하기"
-          color="green"
-          size="m"
-          (click)="goToDiagnosis()"
-        ></mp-button>
-      </div>
-    </ng-container>
   </ng-container>
-</div>
+</ng-container>

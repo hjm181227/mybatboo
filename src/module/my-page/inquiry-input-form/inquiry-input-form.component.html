@@ -8,7 +8,7 @@
     <mp-icon name="touch_app" type="outlined" size="36px" color="redLight"></mp-icon>
     <span>문의할 진단 기록을 선택해주세요</span>
   </div>
-  <div class="selected-record" *ngIf="form.record.value">
+  <div class="selected-record" *ngIf="form.record.value" (click)="openRecordSelector()">
     <img [src]="form.record.value?.imagePath" [alt]="'작물 이미지'">
     <div class="info">
       <div class="line">
@@ -53,7 +53,7 @@
     variant="fill"
     color="blue"
     size="m"
-    [disabled]="form.title.invalid || form.contents.invalid"
+    [disabled]="form.record.invalid || form.title.invalid || form.contents.invalid"
     [loading]="(status$ | async).pending"
     (click)="submit()"
   >

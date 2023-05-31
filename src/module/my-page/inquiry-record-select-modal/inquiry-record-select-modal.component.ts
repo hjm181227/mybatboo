@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { PageHeaderComponent } from "../../shared/component/page-header/page-header.component";
-import { BsModalRef } from "@mapiacompany/ngx-bootstrap-modal";
+import { BsModalRef, BsModalService } from "@mapiacompany/ngx-bootstrap-modal";
 import { ApiService } from "../../../service/api.service";
 import { DiagnosisService } from "../../../service/diagnosis.service";
-import { Observable, tap } from "rxjs";
+import { Observable } from "rxjs";
 import { CropTypeBadge } from "../../../component/crop-type-badge/crop-type-badge.component";
 import { CropNamePipe } from "../../../pipe/crop-name.pipe";
 import { DiseaseNamePipe } from "../../../pipe/disease-name.pipe";
 import { CategoryNamePipe } from "../../../pipe/category-name.pipe";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-inquiry-record-select-modal',
@@ -32,7 +33,9 @@ export class InquiryRecordSelectModalComponent {
   constructor(
     private modalRef: BsModalRef,
     private api: ApiService,
-    private diagnosis: DiagnosisService
+    private diagnosis: DiagnosisService,
+    private router: Router,
+    private modalService: BsModalService,
   ) {
   }
 
@@ -41,8 +44,10 @@ export class InquiryRecordSelectModalComponent {
   }
 
   goToDiagnosis() {
-    this.diagnosis.startDiagnosis();
-    this.close();
+    this.router.navigate([ '/main' ]).then(() => {
+      this.modalRef.hide();
+      this.diagnosis.startDiagnosis();
+    });
   }
 
   select(record: DiagnosisRecord) {

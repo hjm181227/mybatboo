@@ -11,6 +11,10 @@
   @include mpCssVars;
 }
 
+pwa-action-sheet {
+  z-index: 2000 !important;
+}
+
 a:-webkit-any-link {
   color: inherit;
 }

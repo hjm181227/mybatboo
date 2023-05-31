@@ -91,11 +91,17 @@
     label="병해 정보 검색하기" color="grayDarkest" gap="24px"
     [routerLink]="['/search']"
   >
-    <mp-icon adornment name="search"></mp-icon>
+    <mp-icon adornment name="search" color="green"></mp-icon>
   </a>
 
   <div class="section-wrapper">
-    <div class="guide-section"></div>
-    <div class="inquiry-section"></div>
+    <div class="guide-section">
+      <mp-icon name="help" type="filled" size="20px" color="green"></mp-icon>
+      <span>가이드 안내</span>
+    </div>
+    <div class="inquiry-section" (click)="openInquiryForm()">
+      <mp-icon name="headphones" type="outlined" size="20px" color="green"></mp-icon>
+      <span>전문가에게 추가 문의</span>
+    </div>
   </div>
 </div>
