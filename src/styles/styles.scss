@@ -11,6 +11,10 @@
   @include mpCssVars;
 }
 
+pwa-toast {
+  z-index: 2050 !important;
+}
+
 pwa-action-sheet {
   z-index: 2000 !important;
 }

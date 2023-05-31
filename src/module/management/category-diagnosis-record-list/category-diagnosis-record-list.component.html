@@ -4,26 +4,27 @@
     variant="void" color="grayDark"
     (click)="close()"/>
 </page-header>
-<div class="record-container">
-  <ng-container *ngIf="records$ | async as records">
-    <a
+<ng-container *ngIf="records$ | async as records">
+  <div class="record-container">
+    <div
       class="record-item"
       *ngFor="let record of records;let i=index;"
-      [routerLink]="['diagnosis', record.diagnosisRecord.id]"
+      (click)="openDiagnosisResult(record)"
     >
       <img [src]="record.diagnosisRecord.imagePath">
       <crop-type-badge [cropType]="record.diagnosisRecord.cropType"></crop-type-badge>
       <span>
         병해명: {{record.diagnosisResultList[0].diseaseCode | diseaseName}}
-        <ng-container *ngIf="record.diagnosisResultList.length > 1">외 {{record.diagnosisResultList.length - 1}}개</ng-container>
+        <ng-container *ngIf="record.diagnosisResultList.length > 1">외 {{record.diagnosisResultList.length - 1}}
+          개</ng-container>
       </span>
       <span>진단일: {{record.diagnosisRecord.regDate | date: 'yyyy.MM.dd HH:mm'}}</span>
-    </a>
-    <ng-container *ngIf="records?.length === 0">
-      <div class="empty">
-        <mp-icon name="cloud_off" color="grayLight" size="44px"></mp-icon>
-        <span>'{{category.name | categoryName}}'에 추가된 진단 기록이 없습니다</span>
-      </div>
-    </ng-container>
+    </div>
+  </div>
+  <ng-container *ngIf="records?.length === 0">
+    <div class="empty">
+      <mp-icon name="cloud_off" color="grayLight" size="44px"></mp-icon>
+      <span>'{{category.name | categoryName}}'에 추가된 진단 기록이 없습니다</span>
+    </div>
   </ng-container>
-</div>
+</ng-container>

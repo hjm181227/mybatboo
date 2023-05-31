@@ -44,7 +44,8 @@ export class CropManagementComponent extends AbstractBaseComponent {
       this.bottomSheet.show(c.CategoryDiagnosisRecordListComponent, {
         initialState: {
           category
-        }
+        },
+        onClose: () => this.loader$.next(null)
       })
     })
   }

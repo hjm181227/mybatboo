@@ -76,7 +76,7 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
           )
         ).pipe(
           switchMap(diagnosisId => this.api.getDiagnosisResult(diagnosisId).pipe(
-            map(record => ({ ...record, diagnosisId: diagnosisId }))
+            map(record => ({ ...record, id: diagnosisId }))
           ))
         )
       ).pipe(
@@ -105,7 +105,7 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
 
     this.bottomSheet.show(RecordMemoListComponent, {
       initialState: {
-        recordId: this.diagnosisResult$.value.id
+        recordId: this.diagnosisResult$.value.diagnosisRecordId
       }
     });
   }
@@ -113,7 +113,7 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
   changeCategory() {
     this.bottomSheet.show(CategoryChangeModal, {
       initialState: {
-        diagnosisId: this.diagnosisResult$.value.id
+        diagnosisId: this.diagnosisResult$.value.diagnosisRecordId
       },
     })
   }
