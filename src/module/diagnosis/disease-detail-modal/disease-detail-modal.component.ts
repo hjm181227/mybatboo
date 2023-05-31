@@ -8,6 +8,7 @@ import { AbstractBaseComponent, AsyncStatus, bindStatus, observeProperty$ } from
 import { filter } from "rxjs/operators";
 import { BehaviorSubject, Observable, switchMap, tap } from "rxjs";
 import { PesticideListModalComponent } from "../pesticide-list-modal/pesticide-list-modal.component";
+import { getDiseaseName } from "../../../util/util";
 
 @Component({
   selector: 'app-disease-detail-modal',
@@ -47,10 +48,11 @@ export class DiseaseDetailModalComponent extends AbstractBaseComponent {
   }
 
   openPesticideListModal() {
+    console.log(this.cropName, this.diseaseName, this.diseaseCode, this.sickKey);
     this.modalService.show(PesticideListModalComponent, {
       initialState: {
         cropName: this.cropName,
-        diseaseName: this.diseaseName
+        diseaseName: this.diseaseName || getDiseaseName(this.diseaseCode)
       }
     })
   }

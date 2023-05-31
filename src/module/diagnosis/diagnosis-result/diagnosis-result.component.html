@@ -36,7 +36,7 @@
     <div class="disease-list">
       <div class="disease-wrapper">
         <span class="title">가장 유사한 결과</span>
-        <disease-list-item [diseaseItem]="result.diagnosisResults[0]"/>
+        <disease-list-item [cropName]="result.cropType | cropName" [diseaseItem]="result.diagnosisResults[0]"/>
       </div>
 
       <ng-container *ngIf="result?.diagnosisResults.length > 1">
@@ -44,7 +44,9 @@
           <span class="title">다른 유사 결과</span>
           <disease-list-item
             *ngFor="let item of result.diagnosisResults.slice(1, result.diagnosisResults.length)"
-            [diseaseItem]="item"/>
+            [diseaseItem]="item"
+            [cropName]="result.cropType | cropName"
+          />
         </div>
       </ng-container>
     </div>

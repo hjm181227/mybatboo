@@ -13,7 +13,7 @@ import { BsModalRef, BsModalService } from "@mapiacompany/ngx-bootstrap-modal";
 import { ApiService } from "../../../service/api.service";
 import { BottomFixedBar } from "../../../component/bottom-fixed-bar/bottom-fixed-bar";
 import { DiagnosisService } from "../../../service/diagnosis.service";
-import { Geolocation } from "@capacitor/geolocation";
+import { Geolocation, Position } from "@capacitor/geolocation";
 import { CameraService } from "../../../service/camera.service";
 import { Router } from "@angular/router";
 import { ToastService } from "../../../service/toast.service";
@@ -38,6 +38,9 @@ export class DiagnosisRequestModalComponent extends AbstractBaseComponent {
 
   status$ = new BehaviorSubject(AsyncStatus.INITIAL);
 
+  geolocation: Position;
+  geoLocationPromise: Promise<Position>;
+
   constructor(
     private store$: Store<GlobalState>,
     private modalRef: BsModalRef,
@@ -54,13 +57,17 @@ export class DiagnosisRequestModalComponent extends AbstractBaseComponent {
 
   ngOnInit() {
     this.modalRef.setClass('diagnosis-request-modal');
-    console.log(this.cropPhoto);
     this.subscribeOn(
       this.store$.select(selectRecentCropType).pipe(
         filter(cropType => !!cropType),
         tap(cropType => this.cropType.patchValue(cropType))
       )
-    )
+    );
+
+    this.geoLocationPromise = Geolocation.getCurrentPosition().then(position => {
+      this.geolocation = position;
+      return position;
+    })
   }
 
   selectCropType(cropType: number) {
@@ -77,11 +84,10 @@ export class DiagnosisRequestModalComponent extends AbstractBaseComponent {
   }
 
   request() {
-    this.status$.next(AsyncStatus.PENDING);
-    Geolocation.getCurrentPosition().then(position => {
-      const { latitude, longitude } = position.coords;
+    const requestAction$ = ({ latitude, longitude }) => {
       const fileName = 'mybatboo_' + (new Date().getTime()) + '.jpg';
 
+      this.status$.next(AsyncStatus.PENDING);
       this.cameraService.writeFileToDevice(this.cropPhoto.dataUrl, fileName).then(res => {
         this.cameraService.readFileFromDevice(res.fileName).then(image => {
           const requestInput: DiagnosisRequestInput = {
@@ -130,6 +136,15 @@ export class DiagnosisRequestModalComponent extends AbstractBaseComponent {
         this.toast.show('촬영한 이미지를 가져오는데 실패했습니다. 다시 시도해주세요.');
         this.status$.next(AsyncStatus.REJECTED);
       });
-    });
+    }
+    if (this.geolocation) {
+      const { latitude, longitude } = this.geolocation.coords;
+      requestAction$({ latitude, longitude });
+    } else {
+      Geolocation.getCurrentPosition().then(position => {
+        const { latitude, longitude } = position.coords;
+        requestAction$({ latitude, longitude });
+      });
+    }
   }
 }

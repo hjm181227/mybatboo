@@ -3,6 +3,7 @@ import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { DiseaseNamePipe } from "../../../pipe/disease-name.pipe";
 import { MpBottomSheetService } from "@mapiacompany/ngx-bootstrap-modal";
 import { NavigateService } from "../../../service/navigate.service";
+import { getCropName } from "../../../util/util";
 
 @Component({
   selector: 'disease-list-item',
@@ -15,6 +16,7 @@ import { NavigateService } from "../../../service/navigate.service";
   styleUrls: [ './disease-list-item.component.scss' ]
 })
 export class DiseaseListItem {
+  @Input() cropName: string;
   @Input() diseaseItem: DiagnosisItem;
 
   constructor(
@@ -38,7 +40,8 @@ export class DiseaseListItem {
   openDiseaseDetailModal() {
     this.navigate.openDiseaseDetailModal({
       sickKey: this.diseaseItem.sickKey,
-      diseaseCode: this.diseaseItem.diseaseCode
+      diseaseCode: this.diseaseItem.diseaseCode,
+      cropName: this.cropName
     });
   }
 }

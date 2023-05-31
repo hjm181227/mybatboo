@@ -18,15 +18,15 @@ export class PesticideDetailComponent {
   @Input() pesticide: Pesticide;
 
   basicInfoLabels = [
-    { label: '작물명', key: 'cropName'},
-    { label: '적용병해충', key: 'diseaseWeedName'},
-    { label: '농약명', key: 'pestiKorName' },
-    { label: '상표명', key: 'pestiBrandName'},
-    { label: '영어명', key: 'engName' },
-    { label: '용도', key: 'useName'},
-    { label: '법인명', key: 'compName'},
   ]
   detailInfoLabels = [
+    { label: '작물명', key: 'cropName'},
+    { label: '적용병해충', key: 'diseaseWeedName'},
+    { label: '상표명', key: 'pestiBrandName'},
+    { label: '법인명', key: 'compName'},
+    { label: '용도', key: 'useName'},
+    { label: '농약명', key: 'pestiKorName' },
+    { label: '영어명', key: 'engName' },
     { label: '희석배수(10a당 사용량)', key: 'dilutUnit'},
     { label: '안전사용기준 (수확 ~일 전)', key: 'useSuittime'},
     { label: '안전사용기준 (~회 이내)', key: 'useNum'},
