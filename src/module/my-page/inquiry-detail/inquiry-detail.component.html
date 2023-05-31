@@ -12,6 +12,8 @@
 <ng-container *ngIf="{
   inquiry: inquiry$ | async,
   status: status$ | async,
+  diagnosisRecord: diagnosisRecord$ | async,
+  diagnosisRecordStatus: diagnosisStatus$ | async,
   reply: reply$ | async,
   replyStatus: replyStatus$ | async
 } as d">
@@ -28,9 +30,31 @@
     </div>
   </div>
 
+  <div class="record-label">진단 기록</div>
+  <div class="record-placeholder" *ngIf="d.diagnosisRecordStatus.pending">
+    <mp-icon name="clock_loader_60" type="outlined" size="36px" color="grayLight"></mp-icon>
+    <span>진단기록을 불러오는중입니다</span>
+  </div>
+  <div class="selected-record" *ngIf="d.diagnosisRecord">
+    <img [src]="d.diagnosisRecord?.imagePath" [alt]="'작물 이미지'">
+    <div class="info">
+      <div class="line">
+        <crop-type-badge [cropType]="d.diagnosisRecord?.cropType"/>
+        <span>{{d.diagnosisRecord?.regDate | date:'yyyy.MM.dd HH:mm' }}</span>
+      </div>
+      <div class="line">
+        병해: {{d.diagnosisRecord?.diagnosisResults[0]?.diseaseCode | diseaseName}}
+        ({{(d.diagnosisRecord?.diagnosisResults[0].accuracy * 100).toFixed(2)}}%)
+        <span
+          *ngIf="d.diagnosisRecord?.diagnosisResults.length > 1">외 {{d.diagnosisRecord?.diagnosisResults.length - 1}}
+          개</span>
+      </div>
+    </div>
+  </div>
+
   <div class="reply-label">
     전문가 답변
-    <span class="date" *ngIf="d.reply">{{d.reply?.regDate}}</span>
+    <span class="date" *ngIf="d.reply">{{d.reply?.regDate | date:'yyyy.MM.dd HH:mm' }}</span>
   </div>
   <div class="reply-container">
     <ng-container *ngIf="d.reply">

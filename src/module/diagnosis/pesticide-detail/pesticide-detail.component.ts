@@ -21,8 +21,8 @@ export class PesticideDetailComponent {
     { label: '작물명', key: 'cropName'},
     { label: '적용병해충', key: 'diseaseWeedName'},
     { label: '농약명', key: 'pestiKorName' },
-    { label: '영어명', key: 'engName' },
     { label: '상표명', key: 'pestiBrandName'},
+    { label: '영어명', key: 'engName' },
     { label: '용도', key: 'useName'},
     { label: '법인명', key: 'compName'},
   ]

@@ -8,13 +8,16 @@
   <ng-container *ngIf="records$ | async as records">
     <a
       class="record-item"
-      *ngFor="let record of records"
-      [routerLink]="['diagnosis', record.id]"
+      *ngFor="let record of records;let i=index;"
+      [routerLink]="['diagnosis', record.diagnosisRecord.id]"
     >
-      <img [src]="record.imagePath">
-      <crop-type-badge [cropType]="record.cropType"></crop-type-badge>
-      <span>진단일: {{record.regDate | date: 'yyyy.MM.dd HH:mm'}}</span>
-<!--      <span>병해명: {{record.diagnosisResults[0].diseaseCode | diseaseName}}</span>-->
+      <img [src]="record.diagnosisRecord.imagePath">
+      <crop-type-badge [cropType]="record.diagnosisRecord.cropType"></crop-type-badge>
+      <span>
+        병해명: {{record.diagnosisResultList[0].diseaseCode | diseaseName}}
+        <ng-container *ngIf="record.diagnosisResultList.length > 1">외 {{record.diagnosisResultList.length - 1}}개</ng-container>
+      </span>
+      <span>진단일: {{record.diagnosisRecord.regDate | date: 'yyyy.MM.dd HH:mm'}}</span>
     </a>
     <ng-container *ngIf="records?.length === 0">
       <div class="empty">

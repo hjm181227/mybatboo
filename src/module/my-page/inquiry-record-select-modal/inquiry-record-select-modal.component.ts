@@ -4,10 +4,11 @@ import { PageHeaderComponent } from "../../shared/component/page-header/page-hea
 import { BsModalRef } from "@mapiacompany/ngx-bootstrap-modal";
 import { ApiService } from "../../../service/api.service";
 import { DiagnosisService } from "../../../service/diagnosis.service";
-import { Observable } from "rxjs";
+import { Observable, tap } from "rxjs";
 import { CropTypeBadge } from "../../../component/crop-type-badge/crop-type-badge.component";
 import { CropNamePipe } from "../../../pipe/crop-name.pipe";
 import { DiseaseNamePipe } from "../../../pipe/disease-name.pipe";
+import { CategoryNamePipe } from "../../../pipe/category-name.pipe";
 
 @Component({
   selector: 'app-inquiry-record-select-modal',
@@ -17,7 +18,8 @@ import { DiseaseNamePipe } from "../../../pipe/disease-name.pipe";
     PageHeaderComponent,
     CropTypeBadge,
     CropNamePipe,
-    DiseaseNamePipe
+    DiseaseNamePipe,
+    CategoryNamePipe
   ],
   templateUrl: './inquiry-record-select-modal.component.html',
   styleUrls: [ './inquiry-record-select-modal.component.scss' ]
@@ -25,7 +27,7 @@ import { DiseaseNamePipe } from "../../../pipe/disease-name.pipe";
 export class InquiryRecordSelectModalComponent {
   selectedRecord: DiagnosisRecord;
 
-  recordList$: Observable<DiagnosisRecord[]>;
+  recordList$: Observable<DiagnosisRecord[]> = this.api.loadUserDiagnosisRecords();
 
   constructor(
     private modalRef: BsModalRef,
@@ -40,6 +42,11 @@ export class InquiryRecordSelectModalComponent {
 
   goToDiagnosis() {
     this.diagnosis.startDiagnosis();
+    this.close();
+  }
+
+  select(record: DiagnosisRecord) {
+    this.selectedRecord = record;
     this.close();
   }
 }

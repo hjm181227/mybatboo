@@ -15,6 +15,7 @@ import { Router } from "@angular/router";
 import {
   InquiryRecordSelectModalComponent
 } from "../inquiry-record-select-modal/inquiry-record-select-modal.component";
+import { take } from "rxjs/operators";
 
 @Component({
   selector: 'app-inquiry-input-form',
@@ -67,7 +68,7 @@ export class InquiryInputFormComponent extends AbstractBaseComponent {
 
   submit() {
     const { record, title, contents } = this.formGroup.value;
-    this.api.sendInquiry({ diagnosisId: record.recordId, title, contents }).pipe(
+    this.api.sendInquiry({ diagnosisId: record.diagnosisRecordId, title, contents }).pipe(
       bindStatus(this.status$),
       tap(() => this.toast.show('문의가 작성되었습니다.')),
       tap(() => this.close()),
@@ -78,7 +79,12 @@ export class InquiryInputFormComponent extends AbstractBaseComponent {
   openRecordSelector() {
     const selectModal = this.bottomSheet.show(InquiryRecordSelectModalComponent);
     selectModal.onHide.pipe(
-      tap(() => selectModal.content)
-    )
+      take(1),
+      tap(() => {
+        if (selectModal.content.selectedRecord) {
+          this.form.record.patchValue(selectModal.content.selectedRecord)
+        }
+      })
+    ).subscribe();
   }
 }

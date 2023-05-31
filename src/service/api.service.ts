@@ -192,9 +192,9 @@ export class ApiService {
   // ////////////////////////
   // 내 작물관리 (카테고리) 관련 api
 
-  public loadCategoryDiagnosisRecords(categoryId: number): Observable<DiagnosisRecord[]> {
+  public loadCategoryDiagnosisRecords(categoryId: number): Observable<{ diagnosisRecord: DiagnosisRecord, diagnosisResultList: DiagnosisItem[] }[]> {
     return this.http.get(`${this.apiUrl}/crop/category/record`, { params: ParamsBuilder.from({ categoryId }) }).pipe(
-      map(res => (res as ApiResponse<DiagnosisRecord[]>).data)
+      map(res => (res as ApiResponse<{ diagnosisRecord: DiagnosisRecord, diagnosisResultList: DiagnosisItem[] }[]>).data)
     )
   }
 
@@ -293,6 +293,12 @@ export class ApiService {
 
   public loadInquiryReply(replyId: number): Observable<Reply> {
     return this.http.get<ApiResponse<Reply>>(`${this.apiUrl}/crop/reply/${replyId}`).pipe(
+      map(res => res.data)
+    )
+  }
+
+  public loadUserDiagnosisRecords(): Observable<DiagnosisRecord[]> {
+    return this.http.get<ApiResponse<DiagnosisRecord[]>>(`${this.apiUrl}/crop/list/diagnosisRecord`).pipe(
       map(res => res.data)
     )
   }

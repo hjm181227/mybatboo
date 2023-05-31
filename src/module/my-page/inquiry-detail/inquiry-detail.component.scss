@@ -5,6 +5,54 @@
     box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.12);
   }
 
+  .record-label {
+    @include typo(13px, var(--gray), 500);
+    padding: 0 0 8px 4px;
+  }
+
+  .record-placeholder {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    padding: 12px;
+    height: 104px;
+    box-shadow: 0px 9px 24px 0px rgba(20, 20, 20, 0.08), 0px 0px 0px 1px rgba(20, 20, 20, 0.06);
+    border-radius: 8px;
+    margin-bottom: 24px;
+    @include typo(16px, var(--redLight), 500);
+  }
+
+  .selected-record {
+    display: flex;
+    gap: 16px;
+    padding: 12px;
+    width: 100%;
+    box-shadow: 0px 6px 16px 0px rgba(20, 20, 20, 0.08), 0px 0px 0px 1px rgba(20, 20, 20, 0.06);
+    border-radius: 8px;
+    margin-bottom: 24px;
+
+    img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+      width: 100%;
+      padding: 8px 0;
+
+      .line {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+  }
+
   padding: 24px;
 
   .inquiry-info {

@@ -27,10 +27,9 @@ export class CategoryDiagnosisRecordListComponent extends AbstractBaseComponent 
   @Input() category: Category;
 
   status$ = new BehaviorSubject(AsyncStatus.INITIAL);
-  records$: Observable<DiagnosisRecord[]> = observeProperty$(this, 'category').pipe(
+  records$: Observable<{ diagnosisRecord: DiagnosisRecord, diagnosisResultList: DiagnosisItem[] }[]> = observeProperty$(this, 'category').pipe(
     filter(category => !!category),
     switchMap(category => this.api.loadCategoryDiagnosisRecords(category.id).pipe(
-      map(res => res as DiagnosisRecord[]),
     )),
     tap(console.log)
   )

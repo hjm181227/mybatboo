@@ -76,7 +76,7 @@ export class DiagnosisResultComponent extends AbstractBaseComponent {
           )
         ).pipe(
           switchMap(diagnosisId => this.api.getDiagnosisResult(diagnosisId).pipe(
-            map(record => ({ ...record, id: diagnosisId }))
+            map(record => ({ ...record, diagnosisId: diagnosisId }))
           ))
         )
       ).pipe(

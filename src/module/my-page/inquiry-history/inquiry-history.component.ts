@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SyntaxSharedModule } from "../../shared/syntax-shared.module";
 import { ApiService } from "../../../service/api.service";
-import { BehaviorSubject, map, tap } from "rxjs";
+import { BehaviorSubject, switchMap, tap } from "rxjs";
 import { MpCol, MpHeadDirective, MpRow, MpTable } from "@mapiacompany/styled-components/table";
 import { MpBlank } from "@mapiacompany/styled-components";
 import { AsyncStatus, bindStatus } from "@mapiacompany/armory";
@@ -21,15 +21,17 @@ import { InquiryInputFormComponent } from "../inquiry-input-form/inquiry-input-f
     MpBlank
   ],
   templateUrl: './inquiry-history.component.html',
-  styleUrls: ['./inquiry-history.component.scss']
+  styleUrls: [ './inquiry-history.component.scss' ]
 })
 export class InquiryHistoryComponent {
   status$ = new BehaviorSubject(AsyncStatus.INITIAL);
-  history$ = this.api.loadInquiryHistory().pipe(
-    bindStatus(this.status$),
-    tap(console.log),
-    // map(res => res.inquiryList)
-  );
+  loader$ = new BehaviorSubject(null);
+  history$ = this.loader$.pipe(
+    switchMap(() => this.api.loadInquiryHistory().pipe(
+      bindStatus(this.status$),
+      tap(console.log),
+    ))
+  )
 
   constructor(
     private api: ApiService,
@@ -45,6 +47,8 @@ export class InquiryHistoryComponent {
   }
 
   openInquiryInputForm() {
-    this.modalService.show(InquiryInputFormComponent);
+    this.modalService.show(InquiryInputFormComponent, {
+      onClose: () => this.loader$.next(null)
+    });
   }
 }

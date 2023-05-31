@@ -4,7 +4,7 @@
 </page-header>
 <div class="form-container">
   <div class="record-label">진단 기록</div>
-  <div class="record-selector" *ngIf="!form.record.value">
+  <div class="record-selector" *ngIf="!form.record.value" (click)="openRecordSelector()">
     <mp-icon name="touch_app" type="outlined" size="36px" color="redLight"></mp-icon>
     <span>문의할 진단 기록을 선택해주세요</span>
   </div>

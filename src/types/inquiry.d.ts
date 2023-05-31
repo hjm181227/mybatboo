@@ -1,5 +1,5 @@
 declare interface Inquiry {
-  diagnosisId: number,
+  diagnosisRecordId: number,
   userId: number,
   title: string,
   contents: string,
