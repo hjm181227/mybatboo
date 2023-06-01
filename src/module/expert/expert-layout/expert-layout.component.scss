@@ -1,0 +1,13 @@
+@import "header";
+
+:host {
+  display: block;
+  height: var(--full-height);
+
+  .body-container {
+    display: block;
+    min-height: calc(var(--full-height) - #{$header-height});
+    background: #ffffff;
+    padding-top: $header-height;
+  }
+}

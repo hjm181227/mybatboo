@@ -11,7 +11,7 @@ declare interface Inquiry {
 declare interface Reply {
   replyId: number,
   userId: number,
-  content: string,
+  contents: string,
   inquiryId: number,
   regDate: Date,
 }

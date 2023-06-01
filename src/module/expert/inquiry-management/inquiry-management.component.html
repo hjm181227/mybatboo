@@ -1,0 +1,45 @@
+<div *ngIf="{
+  currentUser: currentUser$ | async,
+  inquiryList: inquiryList$ | async
+} as d" class="global-container">
+  <div class="title-label">
+    진단 문의 목록 ({{d.inquiryList?.length || 0 }})
+  </div>
+  <div class="content-section">
+    <mp-table
+      colGap="8px"
+      rowGap="0px"
+      rowPadding="16px 12px"
+      bodyPadding="0"
+      bodyHeight="529px"
+      [listNum]="10"
+      [bodyColor]="'white'"
+      [status]="status$ | async"
+    >
+      <mp-row head>
+        <mp-col width="60px">문의 ID</mp-col>
+        <mp-col [flex]="1" align="left">제목</mp-col>
+        <mp-col width="150px" align="left">작성일</mp-col>
+        <mp-col width="60px" align="center">답변</mp-col>
+      </mp-row>
+      <mp-row *ngFor="let inquiry of (d.inquiryList || [])" (click)="openInquiryDetail(inquiry.id)">
+        <mp-col>{{inquiry.id}}</mp-col>
+        <mp-col>{{inquiry.title}}</mp-col>
+        <mp-col>{{inquiry.regDate | date: 'yyyy.MM.dd HH:mm'}}</mp-col>
+        <mp-col align="center">
+          <mp-icon [name]="inquiry.replyId > -1 ? 'circle' : 'close'" type="outlined" size="20px" color="grayDark"></mp-icon>
+        </mp-col>
+      </mp-row>
+      <mp-blank
+        *ngIf="d.inquiryList?.length === 0"
+        minHeight="529px"
+        title="전문가 문의 내역이 없습니다."
+      ></mp-blank>
+      <mp-blank
+        *ngIf="(status$ | async)?.pending"
+        minHeight="529px"
+        title="문의 내역을 불러오는중입니다."
+      ></mp-blank>
+    </mp-table>
+  </div>
+</div>

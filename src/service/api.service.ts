@@ -310,4 +310,18 @@ export class ApiService {
       contents
     })
   }
+
+  public editReplyContent(replyId: number, contents: string) {
+    return this.http.put<ApiResponse<any>>(`${this.apiUrl}/crop/reply/update`, {}, {
+      params: ParamsBuilder.from({
+        replyId, contents
+      })
+    })
+  }
+
+  public loadInquiryList() {
+    return this.http.get<ApiResponse<Inquiry[]>>(`${this.apiUrl}/crop/reply/show/list`).pipe(
+      map(res => res.data)
+    )
+  }
 }

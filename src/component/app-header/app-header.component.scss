@@ -1,32 +1,59 @@
 @import 'header';
 
 :host {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   position: fixed;
-  padding: 0 16px;
   width: 100%;
   height: $header-height;
-  background: #fff;
   border-bottom: 1px solid var(--grayLightest);
 
-  .app-image {
+  > div {
     display: flex;
-    width: fit-content;
-    gap: 8px;
     align-items: center;
+    justify-content: space-between;
+    height: $header-height;
+    padding: 0 16px;
 
-    img {
-      border-radius: 10px;
-      display: block;
-      width: 36px;
-      height: 36px;
+    .app-image {
+      display: flex;
+      width: fit-content;
+      gap: 8px;
+      align-items: center;
+
+      img {
+        border-radius: 10px;
+        display: block;
+        width: 36px;
+        height: 36px;
+      }
+
+      span {
+        font-size: 20px;
+        font-weight: 700;
+      }
     }
 
-    span {
-      font-size: 20px;
-      font-weight: 700;
+    .user-simple {
+      display: block;
+    }
+
+    .user-info {
+      display: none;
+      gap: 8px;
+      align-items: center;
+
+      mp-button {
+        margin-left: 6px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    .user-info {
+      display: flex;
+    }
+
+    .user-simple {
+      display: none;
     }
   }
 }

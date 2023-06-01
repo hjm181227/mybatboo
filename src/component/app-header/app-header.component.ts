@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 import { SyntaxSharedModule } from "../../module/shared/syntax-shared.module";
 import { GlobalState } from "../../ngrx";
 import { Store } from "@ngrx/store";
 import { selectCurrentUser } from "../../ngrx/user.state";
 import { NavigateService } from "../../service/navigate.service";
-import { map } from "rxjs";
+import { map, tap } from "rxjs";
 import { StorageService } from "@mapiacompany/armory";
+import { ngrxUserActions } from "../../ngrx/user.reducer";
+import { matchMedia$ } from "../../util/util";
 
 @Component({
   selector: 'app-header',
@@ -17,8 +19,10 @@ import { StorageService } from "@mapiacompany/armory";
   styleUrls: ['./app-header.component.scss']
 })
 export class AppHeaderComponent {
-  currentUser$ = this.store.select(selectCurrentUser).pipe(
-    map(() => this.storage.get('token'))
+  @Input() mode: 'user' | 'expert' | 'admin' = 'user';
+  currentUser$ = this.store.select(selectCurrentUser).pipe();
+  screenSize$ = matchMedia$<string>({ xs: 'xs' }, 'default').pipe(
+    tap(console.log)
   );
 
   constructor(
@@ -30,5 +34,9 @@ export class AppHeaderComponent {
 
   goToLogin() {
     this.navigate.openLoginModal();
+  }
+
+  logout() {
+    this.store.dispatch(ngrxUserActions.logout());
   }
 }

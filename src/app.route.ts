@@ -37,6 +37,10 @@ const routes: Routes = [
     loadComponent: () => import('./module/diagnosis/diagnosis-result/diagnosis-result.component').then(c => c.DiagnosisResultComponent),
     canActivate: [ AuthGuard ]
   },
+  {
+    path: 'expert',
+    loadChildren: () => import('./module/expert/expert-layout.route').then(m => m.routes),
+  }
 ];
 
 @NgModule({

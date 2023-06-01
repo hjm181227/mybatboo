@@ -115,7 +115,7 @@ export class DiagnosisRequestModalComponent extends AbstractBaseComponent {
               if (err.error?.code === 'NOTHING_DETECTED' || err.code === 'NOTHING_DETECTED') {
                 this.alert.alert({
                   title: '검출 대상을 찾지 못했습니다.',
-                  content: '작물이 사진에 잘 보이도록 다시 촬영해주세요.',
+                  content: '작물이 사진 안에 잘 들어오도록 다시 촬영해주세요.',
                   closeMessage: '확인',
                   closeButtonColor: 'green'
                 }).pipe(

@@ -1,13 +1,12 @@
 @import "@mapiacompany/style-utils/utils";
 
 :host {
-  page-header {
-    box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.12);
-  }
-
   .record-label {
     @include typo(13px, var(--gray), 500);
     padding: 0 0 8px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .record-placeholder {
@@ -96,16 +95,16 @@
   }
 
   .reply-container {
-    border-radius: 10px;
+    //border-radius: 10px;
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    //padding: 16px;
     gap: 12px;
     margin-bottom: 24px;
-    height: 100%;
-    max-height: 300px;
-    overflow: scroll;
-    box-shadow: 0 2px 4px 0 rgba(20, 20, 20, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    //height: 100%;
+    //max-height: 300px;
+    //overflow: scroll;
+    //box-shadow: 0 2px 4px 0 rgba(20, 20, 20, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.08);
 
     .reply-content {
       @include typo(14px, var(--grayDark), 500);

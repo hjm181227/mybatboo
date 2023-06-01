@@ -9,7 +9,7 @@ export class ToastService {
     await Toast.show({
       text: message,
       position: 'bottom',
-      duration: 'short'
+      duration
     });
   }
 }

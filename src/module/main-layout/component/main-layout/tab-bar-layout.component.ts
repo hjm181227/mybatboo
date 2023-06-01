@@ -3,6 +3,7 @@ import { SyntaxSharedModule } from "../../../shared/syntax-shared.module";
 import { BottomTabBarComponent } from "../../../../component/bottom-tab-bar/bottom-tab-bar.component";
 import { AppHeaderComponent } from "../../../../component/app-header/app-header.component";
 import { ActivatedRoute } from "@angular/router";
+import { matchMedia$ } from "../../../../util/util";
 
 @Component({
   selector: 'app-main-layout',
@@ -16,6 +17,7 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: [ './tab-bar-layout.component.scss' ]
 })
 export class TabBarLayoutComponent implements OnInit {
+  screenSize$ = matchMedia$<string>({ xs: 'xs' }, 'default');
   constructor(
     private route: ActivatedRoute
   ) {

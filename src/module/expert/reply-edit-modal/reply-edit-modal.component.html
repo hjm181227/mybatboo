@@ -1,14 +1,3 @@
-<page-header height="64px">
-  <mp-icon-button
-    left
-    size="m"
-    iconName="close"
-    color="grayDark"
-    variant="void"
-    (click)="close()"
-  ></mp-icon-button>
-  <mp-text center>전문가 문의</mp-text>
-</page-header>
 <ng-container *ngIf="{
   inquiry: inquiry$ | async,
   status: status$ | async,
@@ -17,7 +6,14 @@
   reply: reply$ | async,
   replyStatus: replyStatus$ | async
 } as d">
-
+  <mp-icon-button
+    left
+    size="m"
+    iconName="close"
+    color="grayDark"
+    variant="void"
+    (click)="close()"
+  ></mp-icon-button>
   <div class="inquiry-info">
     <!--  <div class="label">제목</div>-->
     <div class="title">
@@ -30,7 +26,12 @@
     </div>
   </div>
 
-  <div class="record-label">진단 기록</div>
+  <div class="record-label">
+    진단 기록
+    <mp-helper-text label="이미지 클릭시 확대하여 볼 수 있습니다.">
+      <mp-icon type="outlined"></mp-icon>
+    </mp-helper-text>
+  </div>
   <div class="record-placeholder" *ngIf="d.diagnosisRecordStatus.pending">
     <mp-icon name="clock_loader_60" type="outlined" size="36px" color="grayLight"></mp-icon>
     <span>진단기록을 불러오는중입니다</span>
@@ -54,20 +55,27 @@
 
   <div class="reply-label">
     전문가 답변
-    <span class="date" *ngIf="d.inquiry?.replyId > -1">{{d.reply?.regDate | date:'yyyy.MM.dd HH:mm' }}</span>
+    <span class="date" *ngIf="d.reply">{{d.reply?.regDate | date:'yyyy.MM.dd HH:mm' }}</span>
   </div>
   <div class="reply-container">
-    <ng-container *ngIf="d.inquiry?.replyId > -1">
-      <span class="reply-content">{{d.reply?.contents}}</span>
-    </ng-container>
-    <ng-container *ngIf="d.inquiry?.replyId === -1">
-      <mp-helper-text
-        label="전문가의 답변을 기다리는 중입니다."
-        size="m"
-        color="grayDark"
-      >
-        <mp-icon name="pending" type="outlined"></mp-icon>
-      </mp-helper-text>
-    </ng-container>
+    <mp-textarea
+      [formControl]="replyContent"
+      autofocus="true"
+      height="300px"
+      padding="14px"
+      [placeholder]="'답변을 작성해주세요'"
+      backgroundColor="white"
+      boxShadow="0px 2px 4px 0px rgba(20, 20, 20, 0.02), 0px 0px 0px 1px rgba(0, 0, 0, 0.08)"
+    ></mp-textarea>
+    <mp-button
+      size="m"
+      variant="fill"
+      [loading]="d.replyStatus.pending"
+      [disabled]="d.reply?.contents === replyContent.value || replyContent.invalid"
+      [label]="d.inquiry?.replyId > -1 ? '답변 수정' : '답변 등록'"
+      (click)="d.inquiry?.replyId > -1 ? updateReply(d.inquiry.replyId) : submitReply()"
+    >
+      <mp-icon right name="send"></mp-icon>
+    </mp-button>
   </div>
 </ng-container>

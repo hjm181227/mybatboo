@@ -29,6 +29,7 @@ app-header {
   position: fixed;
   background: #fff;
   top: 0;
+  width: 100%;
   transform: translateY($transition-offset);
   height: $header-height;
   transition: $transition;

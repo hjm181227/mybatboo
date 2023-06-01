@@ -1,24 +1,47 @@
-<!--<div class="header">-->
-<a class="app-image" routerLink="/main">
-  <img src="../../assets/images/plant_app_icon.png">
-  <span>내 밭을 부탁해</span>
-</a>
-<ng-container *ngLet="currentUser$ | async as currentUser">
-  <mp-button
-    *ngIf="!currentUser"
-    label="로그인"
-    variant="outline"
-    color="grayDark"
-    size="s"
-    (click)="goToLogin()"
-  >
-    <mp-icon right name="login"></mp-icon>
-  </mp-button>
-  <mp-icon-button
-    *ngIf="currentUser"
-    iconName="person" iconType="outlined" iconSize="24px" variant="void" size="m" color="greenDark"
-    [routerLink]="['/my-page']"
-  >
-  </mp-icon-button>
+<ng-container *ngIf="{
+  currentUser: currentUser$ | async,
+  screenSize: screenSize$ | async
+} as d">
+  <!--<div class="header">-->
+  <div [class.global-container]="d.screenSize !== 'xs'">
+    <a class="app-image" routerLink="/main">
+      <img src="../../assets/images/plant_app_icon.png">
+      <span>내 밭을 부탁해</span>
+    </a>
+    <div class="user-simple">
+      <mp-button
+        *ngIf="!d.currentUser"
+        label="로그인"
+        variant="outline"
+        color="grayDark"
+        size="s"
+        (click)="goToLogin()"
+      >
+        <mp-icon right name="login"></mp-icon>
+      </mp-button>
+      <mp-icon-button
+        *ngIf="d.currentUser"
+        iconName="person" iconType="outlined" iconSize="24px" variant="void" size="m" color="greenDark"
+        [routerLink]="['/my-page']"
+      >
+      </mp-icon-button>
+    </div>
+    <div class="user-info">
+      <mp-helper-text [label]="d.currentUser?.name + ' 님'" color="grayDark" size="m">
+        <mp-icon name="school" type="outlined"></mp-icon>
+      </mp-helper-text>
+      <mp-badge *ngIf="d.currentUser?.authLevel === 2" label="전문가" color="greenDark" size="m" variant="weak"></mp-badge>
+      <mp-button
+        *ngIf="d.currentUser"
+        label="로그아웃"
+        variant="outline"
+        color="grayDark"
+        size="xs"
+        (click)="logout()"
+      >
+        <mp-icon right name="login"></mp-icon>
+      </mp-button>
+    </div>
+  </div>
 </ng-container>
 <!--</div>-->

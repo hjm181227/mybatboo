@@ -34,3 +34,11 @@ a:-webkit-any-link {
     }
   }
 }
+
+.global-container {
+  $padding: 60px;
+  max-width: #{1090px + ($padding * 2)};
+  min-width: min(1200px, 100%);
+  padding: 0 $padding !important;
+  margin: 0 auto;
+}
