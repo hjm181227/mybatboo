@@ -1,0 +1,6 @@
+<!-- chevron_down -->
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+  <path d="M 0 10 L 5 5 L 0 0" transform="translate(7.5 5) rotate(450 2.5 5)" fill="transparent"
+        stroke-width="1.6666666666666667" stroke="rgb(154, 163, 183)" stroke-linecap="round"
+        stroke-linejoin="round"></path>
+</svg>
