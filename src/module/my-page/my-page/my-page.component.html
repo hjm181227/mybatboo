@@ -9,7 +9,7 @@
     </span>
   </div>
 
-  <div class="menu-wrapper">
+  <div class="menu-wrapper" [style.margin-top]="'36px'">
     <ng-container *ngFor="let menu of pageMenus;let i=index;">
       <mp-divider *ngIf="i !== 0" height="12px" direction="horizontal" color="grayLighter"></mp-divider>
       <a
@@ -23,6 +23,19 @@
     </ng-container>
   </div>
 
+  <mp-text class="menu-title" [style.margin-top]="'36px'">전문가 기능</mp-text>
+  <div class="menu-wrapper" *ngIf="currentUser.authLevel === 2">
+    <a
+      class="menu-option"
+      [routerLink]="['/expert']"
+    >
+      <mp-icon left [name]="'list_alt'" size="24px" type="outlined" color="gray"></mp-icon>
+      <span>진단 문의 관리</span>
+      <mp-icon right name="chevron_right" size="24px" color="gray"></mp-icon>
+    </a>
+  </div>
+
+  <mp-text class="menu-title" [style.margin-top]="'36px'">계정</mp-text>
   <div class="menu-wrapper">
     <ng-container *ngFor="let menu of accountMenus;let i=index;">
       <mp-divider *ngIf="i !== 0" height="12px" direction="horizontal" color="grayLighter"></mp-divider>

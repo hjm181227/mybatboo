@@ -32,28 +32,14 @@
       }
     }
 
-    .user-simple {
-      display: block;
-    }
-
     .user-info {
-      display: none;
+      display: flex;
       gap: 8px;
       align-items: center;
 
       mp-button {
         margin-left: 6px;
       }
-    }
-  }
-
-  @media screen and (max-width: 1200px) {
-    .user-info {
-      display: flex;
-    }
-
-    .user-simple {
-      display: none;
     }
   }
 }

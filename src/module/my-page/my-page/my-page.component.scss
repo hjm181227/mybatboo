@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   padding: 36px 16px 24px;
-  gap: 36px;
 
   page-header {
     box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.12);
@@ -29,6 +28,11 @@
       display: flex;
       gap: 4px;
     }
+  }
+
+  .menu-title {
+    @include typo(14px, var(--gray), 500);
+    padding: 0 0 8px 4px;
   }
 
   .menu-wrapper {

@@ -22,9 +22,7 @@ import { filter } from "rxjs/operators";
   styleUrls: [ './my-page.component.scss' ]
 })
 export class MyPageComponent {
-  currentUser$ = this.store.select(selectCurrentUser).pipe(
-    tap(console.log)
-  )
+  currentUser$ = this.store.select(selectCurrentUser);
 
   pageMenus = [
     { name: '작물 관리', routerLink: [ 'category' ], icon: 'topic' },

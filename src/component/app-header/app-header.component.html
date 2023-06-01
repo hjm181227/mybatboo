@@ -8,7 +8,7 @@
       <img src="../../assets/images/plant_app_icon.png">
       <span>내 밭을 부탁해</span>
     </a>
-    <div class="user-simple">
+    <div class="user-simple" *ngIf="d.screenSize === 'xs'">
       <mp-button
         *ngIf="!d.currentUser"
         label="로그인"
@@ -26,7 +26,7 @@
       >
       </mp-icon-button>
     </div>
-    <div class="user-info">
+    <div class="user-info" *ngIf="d.screenSize !== 'xs'" [routerLink]="['/my-page']">
       <mp-helper-text [label]="d.currentUser?.name + ' 님'" color="grayDark" size="m">
         <mp-icon name="school" type="outlined"></mp-icon>
       </mp-helper-text>
@@ -37,7 +37,7 @@
         variant="outline"
         color="grayDark"
         size="xs"
-        (click)="logout()"
+        (click)="logout();$event.preventDefault();$event.stopPropagation()"
       >
         <mp-icon right name="login"></mp-icon>
       </mp-button>
